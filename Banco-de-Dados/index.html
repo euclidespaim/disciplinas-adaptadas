@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma interativa offline-first de Banco de Dados 101 para alunos da turma 101. Desenvolvido para modelagem conceitual, SGBDs, transformação MER e normalização de dados.">
+  <title>Banco de Dados 101 - Turma 101</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO SUPERIOR -->
+  <header>
+    <div class="header-brand">
+      <button class="sidebar-toggle-btn" onclick="toggleSidebar()" id="btn-toggle-sidebar" title="Alternar Menu Lateral">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <span>Menu</span>
+      </button>
+      <div class="logo-section">
+        <h1>🗄️ BD <span>101</span></h1>
+        <p>Modelagem &amp; Administração de Dados</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <div class="app-container">
+
+    <!-- BARRA LATERAL ACCORDION (MENU SANFONA) -->
+    <aside class="sidebar" id="main-sidebar">
+      
+      <!-- Grupo 1: Visão Geral -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>🏠 Visão Geral</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link active" data-tab="home" onclick="switchTab('home')">
+            <span class="badge-icon">📌</span> Início &amp; Progresso
+          </button>
+          <button class="nav-link" data-tab="simulator" onclick="switchTab('simulator')">
+            <span class="badge-icon">⚡</span> Live Sandbox
+          </button>
+        </div>
+      </div>
+
+      <!-- Grupo 2: Teoria Interativa -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>📖 Teoria &amp; Slides</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link" data-tab="theory" data-concept="data-info" onclick="switchTab('theory'); selectTheoryConcept('data-info')">
+            <span class="badge-icon">🔍</span> Mod 1: Dado x Info
+          </button>
+          <button class="nav-link" data-tab="theory" data-concept="sgbd-intro" onclick="switchTab('theory'); selectTheoryConcept('sgbd-intro')">
+            <span class="badge-icon">🗄️</span> Mod 2: SGBD e Pilares
+          </button>
+          <button class="nav-link" data-tab="theory" data-concept="mer-elements" onclick="switchTab('theory'); selectTheoryConcept('mer-elements')">
+            <span class="badge-icon">📐</span> Mod 3: Modelo ER
+          </button>
+          <button class="nav-link" data-tab="theory" data-concept="transformation-rules" onclick="switchTab('theory'); selectTheoryConcept('transformation-rules')">
+            <span class="badge-icon">🔄</span> Mod 4: Transformação
+          </button>
+          <button class="nav-link" data-tab="theory" data-concept="normalization-intro" onclick="switchTab('theory'); selectTheoryConcept('normalization-intro')">
+            <span class="badge-icon">🧼</span> Mod 5: Normalização
+          </button>
+        </div>
+      </div>
+
+      <!-- Grupo 3: Prática e Atividades -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>🧩 Prática</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link" data-tab="quiz" onclick="switchTab('quiz')">
+            <span class="badge-icon">🎯</span> Quiz Teórico (15Q)
+          </button>
+          <button class="nav-link" data-tab="challenges" onclick="switchTab('challenges')">
+            <span class="badge-icon">🏆</span> Desafios Conceituais
+          </button>
+        </div>
+      </div>
+
+      <!-- Grupo 4: Relatórios & Provas -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>📋 Gestão &amp; Provas</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link" data-tab="report" onclick="switchTab('report')">
+            <span class="badge-icon">📝</span> Relatório Escolar
+          </button>
+          <button class="nav-link" data-tab="exam" onclick="switchTab('exam')">
+            <span class="badge-icon">🔒</span> Avaliação 1
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA PRINCIPAL DE CONTEÚDO (WORKSPACE) -->
+    <main class="main-workspace">
+
+      <!-- ABA 1: INÍCIO E PROGRESSO -->
+      <section id="home-tab" class="tab-content active">
+        <div class="welcome-grid">
+          <div class="card welcome-box">
+            <h2>Olá, Administrador de Dados! 👋</h2>
+            <p class="intro-text">
+              Seja bem-vindo à plataforma prática de <strong>Banco de Dados 101</strong> para a Turma 101. 
+              Aqui você aprenderá a planejar, transformar e organizar dados de sistemas digitais!
+            </p>
+            
+            <div style="margin-top: 1.5rem;">
+              <h3 style="font-family: var(--font-title); color: var(--primary-navy); margin-bottom: 0.5rem;">O que estudaremos nesta trilha?</h3>
+              <ul style="margin-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; color: #334155;">
+                <li>🔍 <strong>Fundamentos:</strong> Compreender a diferença entre Dados, Informação e Conhecimento.</li>
+                <li>🗄️ <strong>SGBD:</strong> O papel do gerenciador, os 4 pilares e os modelos de dados.</li>
+                <li>📐 <strong>Modelo ER:</strong> Criar plantas de dados com Entidades, Atributos e Cardinalidades.</li>
+                <li>🔄 <strong>Mapeamento Relacional:</strong> Traduzir diagramas DER em tabelas com Chaves PK e FK.</li>
+                <li>🧼 <strong>Normalização:</strong> Organizar e limpar as tabelas aplicando a 1FN, 2FN e 3FN.</li>
+              </ul>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+              <button onclick="switchTab('theory')" class="primary-btn">Começar Módulos Teóricos ➔</button>
+            </div>
+          </div>
+          
+          <div class="stats-card">
+            <div class="stats-header">Progresso do Aluno</div>
+            
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem;">
+                <span>Conclusão da Trilha</span>
+                <span id="progress-percent-text">0% concluído</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-fill" id="total-progress-fill"></div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+              <div style="font-weight: 600; font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.5rem;">Status dos Desafios (Níveis 1-5):</div>
+              <div class="level-badge-container">
+                <div class="level-badge" id="badge-lvl-1" onclick="switchTab('challenges'); selectChallenge(1);">1</div>
+                <div class="level-badge" id="badge-lvl-2" onclick="switchTab('challenges'); selectChallenge(2);">2</div>
+                <div class="level-badge" id="badge-lvl-3" onclick="switchTab('challenges'); selectChallenge(3);">3</div>
+                <div class="level-badge" id="badge-lvl-4" onclick="switchTab('challenges'); selectChallenge(4);">4</div>
+                <div class="level-badge" id="badge-lvl-5" onclick="switchTab('challenges'); selectChallenge(5);">5</div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+              <button onclick="resetProgress()" class="btn-secondary" style="width: 100%; font-size: 0.85rem; color: var(--color-error); border-color: #FECDD3;">
+                Resetar Estudos 🔄
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="final-achievement-banner" class="achievement-banner" style="display: none;">
+          <span class="achievement-icon">🏆</span>
+          <div>
+            <h3>Parabéns! Trilha Concluída com Sucesso!</h3>
+            <p>Você compreendeu a teoria, acertou o quiz completo e venceu os 5 níveis de desafios conceituais de Banco de Dados!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 2: TEORIA E SLIDES -->
+      <section id="theory-tab" class="tab-content">
+        <div class="card">
+          <h2 class="card-title">📖 Guia de Teoria e Modelagem</h2>
+          
+          <div class="theory-nav">
+            <button class="theory-tab-btn active" data-concept="data-info" onclick="selectTheoryConcept('data-info')">Mod 1: Dado x Info</button>
+            <button class="theory-tab-btn" data-concept="sgbd-intro" onclick="selectTheoryConcept('sgbd-intro')">Mod 2: SGBD e Pilares</button>
+            <button class="theory-tab-btn" data-concept="mer-elements" onclick="selectTheoryConcept('mer-elements')">Mod 3: Modelo ER</button>
+            <button class="theory-tab-btn" data-concept="transformation-rules" onclick="selectTheoryConcept('transformation-rules')">Mod 4: Transformação</button>
+            <button class="theory-tab-btn" data-concept="normalization-intro" onclick="selectTheoryConcept('normalization-intro')">Mod 5: Normalização</button>
+          </div>
+          
+          <div class="theory-grid">
+            <div class="theory-text-container">
+              <!-- Renderizado dinamicamente via data.js e app.js -->
+              <div id="theory-concept-body"></div>
+            </div>
+            
+            <div class="flowchart-card">
+              <h4 style="font-family: var(--font-title); color: var(--primary-navy); margin-bottom: 0.75rem; text-align: center;">Visualizador de Conceitos</h4>
+              <div class="visualizer-container" id="theory-visualizer-area">
+                <!-- Gráficos e Tabelas simuladas renderizados via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 3: LIVE SANDBOX SIMULATOR (DUAL-MODE) -->
+      <section id="simulator-tab" class="tab-content">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+            <h2 class="card-title" style="margin-bottom:0;">⚡ Live Sandbox &amp; Simulação</h2>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-secondary" id="sim-btn-sql" onclick="setSimulatorMode('sql')">Executar SQL 🖥️</button>
+              <button class="btn-secondary" id="sim-btn-modeling" onclick="setSimulatorMode('modeling')">Tradução MER &amp; Normalização 🧩</button>
+            </div>
+          </div>
+          
+          <!-- Modo 1: SQL Sandbox -->
+          <div id="simulator-sql-view" class="simulator-layout">
+            <div class="sim-editor-column">
+              <div class="editor-header">
+                <span>Editor SQL Simulado (Modo Didático)</span>
+                <span class="lang">sql</span>
+              </div>
+              <div class="editor-container">
+                <div class="editor-wrapper notranslate" translate="no">
+                  <textarea id="sim-sql-editor" class="code-textarea" spellcheck="false" translate="no" oninput="onSQLInput(this.value); syncPreScroll(this)" onscroll="syncPreScroll(this)"></textarea>
+                  <pre id="sim-sql-highlight"><code></code></pre>
+                </div>
+              </div>
+              <div class="editor-toolbar">
+                <button onclick="resetSQLSandbox()" class="btn-secondary">Restaurar Banco 🔄</button>
+                <button onclick="runSQLSandboxQuery()" class="primary-btn">Executar SQL ⚡</button>
+              </div>
+            </div>
+            
+            <div class="sim-preview-column">
+              <div class="sim-preview-header">
+                <span>Visualizador do Estado das Tabelas</span>
+                <span>Banco de Dados Ativo</span>
+              </div>
+              
+              <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1rem; overflow-y: auto; height: 280px; display: flex; flex-direction: column; gap: 1rem;">
+                <div id="sim-db-tables-list">
+                  <!-- Exibição de todas as tabelas em tempo real -->
+                </div>
+              </div>
+              
+              <!-- Console do SQL -->
+              <div class="results-panel" id="sim-sql-console">
+                <div class="console-msg">Pronto para receber consultas SQL... Tente rodar: SELECT * FROM alunos</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modo 2: Mapeamento MER e Normalização Visualizer -->
+          <div id="simulator-modeling-view" style="display: none;">
+            <div class="theory-grid" style="grid-template-columns: 1fr 1fr;">
+              <div>
+                <h3 style="color: var(--primary-navy); margin-bottom: 0.5rem;">Visualizador Passo-a-Passo de Modelagem</h3>
+                <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                  Entenda graficamente como os dados são organizados no mundo conceitual (MER) e como eles são traduzidos em estruturas que o computador armazena.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <button onclick="triggerModelingDemo('mer')" class="btn-secondary" style="text-align: left; padding: 0.8rem 1rem;">1. Do Desenho (MER) para as Tabelas ➔</button>
+                  <button onclick="triggerModelingDemo('1fn')" class="btn-secondary" style="text-align: left; padding: 0.8rem 1rem;">2. Limpeza da Primeira Forma Normal (1FN) ➔</button>
+                  <button onclick="triggerModelingDemo('2fn')" class="btn-secondary" style="text-align: left; padding: 0.8rem 1rem;">3. Separação da Segunda Forma Normal (2FN) ➔</button>
+                  <button onclick="triggerModelingDemo('3fn')" class="btn-secondary" style="text-align: left; padding: 0.8rem 1rem;">4. Ajuste da Terceira Forma Normal (3FN) ➔</button>
+                </div>
+              </div>
+              <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.5rem;" id="modeling-visual-screen">
+                <h4 style="color: var(--primary-navy); text-align: center; margin-bottom: 1rem;">Selecione um passo para visualizar a simulação gráfica</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 4: QUIZ INTERATIVO (15 QUESTÕES) -->
+      <section id="quiz-tab" class="tab-content">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <h2 class="card-title">🧠 Teste de Conhecimentos: Banco de Dados 101</h2>
+          <div id="quiz-container">
+            <!-- Gerado via app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 5: DESAFIOS CONCEITUAIS -->
+      <section id="challenges-tab" class="tab-content">
+        <div class="challenges-grid">
+          
+          <div class="challenge-list">
+            <div class="challenge-list-title">Níveis do Curso</div>
+            <div id="challenge-list-container">
+              <!-- Gerado via app.js -->
+            </div>
+          </div>
+          
+          <div class="card workspace-card" style="padding: 1.5rem;">
+            <div class="challenge-desc">
+              <h3 id="chal-title">Carregando Desafio...</h3>
+              <p id="chal-description">Carregando descrição do nível...</p>
+            </div>
+            
+            <div id="challenge-interactive-area" style="min-height: 250px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1.5rem; background-color: #FFFFFF;">
+              <!-- Área injetada dinamicamente com base no tipo de atividade (Drag and Drop ou Questão) -->
+            </div>
+            
+            <div class="editor-toolbar">
+              <button onclick="resetChallengeActivity()" class="btn-secondary">Resetar Desafio 🔄</button>
+              <button onclick="validateChallengeSelection()" class="primary-btn">Validar Resposta ⚡</button>
+            </div>
+            
+            <div id="chal-results-panel" class="results-panel" style="background-color: #0F172A; color: #FFFFFF; display: none;">
+              <!-- Painel de feedback de acerto/erro -->
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ABA 6: RELATÓRIO ESCOLAR -->
+      <section id="report-tab" class="tab-content">
+        <div class="card" style="max-width: 850px; margin: 0 auto;">
+          <h2 class="card-title">📝 Relatório de Desempenho Escolar</h2>
+          <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+            Insira o nome completo do aluno para obter o boletim de estudos contendo progresso, média de quiz e diagnóstico pedagógico personalizado de forças e fraquezas.
+          </p>
+          
+          <div class="report-grid">
+            <div>
+              <div class="form-group">
+                <label for="student-name-input">Nome Completo do Aluno:</label>
+                <input type="text" id="student-name-input" class="form-control" placeholder="Ex: Maria Clara Souza" oninput="onStudentNameChange(this.value)">
+              </div>
+              <div class="form-group" style="margin-top: 1rem;">
+                <label>Diagnóstico Rápido:</label>
+                <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); padding: 1rem; border-radius: var(--border-radius-sm); font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; color: #334155;">
+                  <div>📚 <strong>Teoria Visualizada:</strong> <span id="report-viewed-concepts">0/5</span> conceitos</div>
+                  <div>🎯 <strong>Respostas de Quiz:</strong> <span id="report-quiz-score">0/15</span> acertos</div>
+                  <div>🏆 <strong>Desafios Resolvidos:</strong> <span id="report-challenges-completed">0/5</span> concluídos</div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <div class="editor-header">
+                <span>Relatório Final em Texto Plano</span>
+                <span class="lang">Relatório</span>
+              </div>
+              <div class="report-box" id="report-text-display">Digite o nome do aluno à esquerda para visualizar seu boletim escolar estruturado.</div>
+              <div class="editor-toolbar" style="margin-top: 0.75rem;">
+                <button class="btn-secondary" onclick="copyReportText()">Copiar Relatório 📋</button>
+                <button class="btn-secondary" onclick="downloadReportFile()">Baixar Arquivo .txt 💾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 7: AVALIAÇÃO 1 (ÁREA PROTEGIDA) -->
+      <section id="exam-tab" class="tab-content">
+        <!-- Autenticação de Prova -->
+        <div id="exam-auth-card" class="card" style="max-width: 500px; margin: 2rem auto; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔒</div>
+          <h2 class="card-title" style="justify-content: center; margin-bottom: 0.5rem;">Área Restrita: Avaliação 1</h2>
+          <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+            Esta seção é reservada para a prova de Banco de Dados. Digite a senha fornecida pelo professor para ter acesso.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: center;">
+            <input type="password" id="exam-password-input" class="form-control" placeholder="Digite a senha de acesso" style="max-width: 300px; text-align: center; font-size: 1rem; width: 100%;" onkeydown="if(event.key === 'Enter') unlockExam()">
+            <button class="primary-btn" onclick="unlockExam()" style="width: 100%; max-width: 300px; justify-content: center;">Acessar Prova ➔</button>
+            <div id="exam-auth-error" style="color: var(--color-error); font-weight: 600; font-size: 0.85rem; margin-top: 0.5rem; display: none;">Senha incorreta. Tente novamente!</div>
+          </div>
+        </div>
+
+        <!-- Conteúdo da Prova Desbloqueado -->
+        <div id="exam-content-card" style="display: none;">
+          <div class="card" style="max-width: 800px; margin: 0 auto 1.5rem;">
+            <h2 class="card-title">📝 Identificação das Duplas ou Individual</h2>
+            <p style="color: var(--text-light); margin-bottom: 1rem;">
+              Insira o nome completo dos alunos integrantes da dupla para a realização do exame.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 600px;">
+              <div class="form-group" style="margin-bottom:0.25rem;">
+                <input type="text" id="exam-student-name-1" class="form-control" placeholder="Nome Completo do Aluno 1" oninput="onExamNameChange()">
+              </div>
+              <div class="form-group" style="margin-bottom:0.25rem;">
+                <input type="text" id="exam-student-name-2" class="form-control" placeholder="Nome Completo do Aluno 2 (Opcional)" oninput="onExamNameChange()">
+              </div>
+            </div>
+          </div>
+
+          <div class="exam-workspace-container" id="exam-questions-area" style="display: none; max-width: 1200px; margin: 0 auto;">
+            <div class="challenges-grid">
+              
+              <div class="challenge-list">
+                <div class="challenge-list-title" style="background-color: var(--primary-navy); color: white;">Questões da Prova</div>
+                <div id="exam-list-container">
+                  <!-- Gerado via app.js -->
+                </div>
+              </div>
+
+              <div class="card workspace-card" style="padding: 1.5rem;">
+                <div class="challenge-desc">
+                  <h3 id="exam-q-title">Questão da Avaliação</h3>
+                  <p id="exam-q-description">Descrição da pergunta...</p>
+                </div>
+                
+                <div id="exam-interactive-area" style="min-height: 220px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1.5rem; background-color: #FFFFFF;">
+                  <!-- Injetado dinamicamente -->
+                </div>
+
+                <div class="editor-toolbar">
+                  <button onclick="runAndValidateExamCode()" class="primary-btn" style="background-color: var(--primary-navy);">Confirmar Resposta ⚡</button>
+                </div>
+                
+                <div id="exam-results-panel" class="results-panel" style="background-color: #0F172A; color: #FFFFFF; display: none;">
+                  <!-- Painel de acerto/erro da questão -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Botões de Finalização da Prova -->
+            <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 1.25rem; box-shadow: var(--shadow-sm); flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h4 style="font-family: var(--font-title); color: var(--primary-navy);">Pronto para entregar?</h4>
+                <p style="color: var(--text-light); font-size: 0.85rem;">Certifique-se de que respondeu e confirmou todas as questões antes de enviar.</p>
+              </div>
+              <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <button onclick="resetEntireExam()" class="btn-secondary" style="border-color: #FECDD3; color: var(--color-error);">Resetar Prova 🔄</button>
+                <button onclick="openExamReview()" class="primary-btn" style="background-color: var(--accent-teal);" id="exam-review-btn">Revisar e Enviar Prova ➔</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Revisão da Prova -->
+        <div id="exam-review-modal" class="modal-backdrop" style="display: none;">
+          <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+              <h3>📋 Revisão das Respostas da Avaliação</h3>
+              <button onclick="closeExamReview()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+              <div id="exam-review-student-info" style="margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color);"></div>
+              <div id="exam-review-questions-list" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+              
+              <div class="quiz-feedback error" style="margin-top: 1.25rem; display: block; background-color: #FEF3C7; border-left: 4px solid #F59E0B; color: #92400E; padding: 1rem; border-radius: 4px;">
+                <strong>⚠️ Instruções de Envio:</strong><br>
+                Ao clicar em confirmar, o sistema enviará um relatório das suas respostas ao professor no e-mail <strong>euclidespaim@gmail.com</strong> via EmailJS.<br>
+                Caso o envio online falhe, será aberto o seu aplicativo de e-mail (mailto) com o texto já pronto para envio, ou você poderá salvar e copiar o boletim na tela final.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button onclick="closeExamReview()" class="btn-secondary">Voltar à Prova</button>
+              <button onclick="submitExamFinal()" class="primary-btn" style="background-color: var(--accent-teal);">Enviar para o Professor ✉️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sucesso do Envio -->
+        <div id="exam-success-card" class="card" style="display: none; text-align: center; max-width: 650px; margin: 2rem auto;">
+          <div style="font-size: 3.5rem; color: var(--color-success);">🎉</div>
+          <h2>Avaliação Entregue com Sucesso!</h2>
+          <p style="color: var(--text-light); margin-top: 0.5rem; margin-bottom: 1.5rem;">
+            O boletim da sua dupla foi gerado e registrado. Se o e-mail local não foi aberto automaticamente ou você está sem rede na escola, copie ou baixe o relatório abaixo para enviar manualmente:
+          </p>
+          
+          <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding: 1rem; text-align: left; margin-bottom: 1.5rem;">
+            <textarea id="exam-report-text-copy" readonly style="width:100%; height:180px; font-family:var(--font-code); font-size:0.8rem; padding:0.5rem; border:1px solid var(--border-color); border-radius:4px; resize:none; background-color:#FAFDFE; outline:none;"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+            <button onclick="copyExamReportToClipboard()" class="btn-secondary" id="exam-copy-btn">Copiar Relatório 📋</button>
+            <button onclick="downloadExamReportAsTxt()" class="btn-secondary">Baixar Arquivo .txt 💾</button>
+            <button onclick="resetSubmittedExam()" class="btn-secondary" style="border-color:#FECDD3; color:var(--color-warning);">Liberar Envio (Senha do Professor) 🔑</button>
+            <button onclick="resetEntireExam()" class="btn-secondary" style="border-color:#FECDD3; color:var(--color-error);">Resetar Prova 🔄</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer style="text-align: center; padding: 1.25rem; color: var(--text-light); border-top: 1px solid var(--border-color); background-color: var(--bg-card); font-size: 0.85rem;">
+    <p>&copy; 2026 - Banco de Dados | Trilha de Estudos Turma 101 - Prof. Euclides Paim</p>
+  </footer>
+
+  <!-- Carregamento de Scripts -->
+  <script src="data.js"></script>
+  <script src="validator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
