@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal de acesso às plataformas didáticas interativas de disciplinas adaptadas para a turma 101.">
+  <title>Disciplinas Adaptadas - Turma 101</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-cream: #FAF9F6;
+      --bg-slate: #0F172A;
+      --primary-indigo: #1E1B4B;
+      --accent-cyan: #06B6D4;
+      --text-main: #0F172A;
+      --text-light: #475569;
+      --border-color: #E2E8F0;
+      
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 span {
+      color: var(--accent-cyan);
+    }
+
+    header p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 1100px;
+      width: 100%;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .portal-card {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.25rem;
+      box-shadow: 0 4px 6px -1px rgba(30, 27, 75, 0.03), 0 2px 4px -1px rgba(30, 27, 75, 0.02);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background-color: var(--accent-cyan);
+    }
+
+    .portal-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(30, 27, 75, 0.05), 0 4px 6px -2px rgba(30, 27, 75, 0.03);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .card-title {
+      font-family: var(--font-title);
+      font-size: 1.5rem;
+      color: var(--primary-indigo);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .card-desc {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
+      flex-grow: 1;
+    }
+
+    .card-link {
+      background-color: var(--primary-indigo);
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      transition: background-color 0.2s;
+      font-size: 0.95rem;
+      display: block;
+    }
+
+    .card-link:hover {
+      background-color: var(--accent-cyan);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      background-color: white;
+      margin-top: auto;
+    }
+
+    /* Cores personalizadas para os cards */
+    .portal-card.devweb::before { background-color: #EC4899; } /* Pink */
+    .portal-card.devweb .card-link:hover { background-color: #EC4899; }
+    
+    .portal-card.python::before { background-color: #F59E0B; } /* Amber */
+    .portal-card.python .card-link:hover { background-color: #F59E0B; }
+    
+    .portal-card.db::before { background-color: var(--accent-cyan); } /* Cyan */
+    .portal-card.db .card-link:hover { background-color: var(--accent-cyan); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <h1>Disciplinas <span>Adaptadas</span></h1>
+      <p>Portal de acesso às plataformas práticas de estudos da Turma 101</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="portal-grid">
+      
+      <!-- Card Desenvolvimento Web -->
+      <div class="portal-card devweb">
+        <div>
+          <span class="card-icon">🎨</span>
+          <h2 class="card-title">Desenvolvimento Web</h2>
+          <p class="card-desc">Aprenda a estruturar e estilizar páginas usando HTML, CSS, layouts com Flexbox, formulários interativos e responsividade.</p>
+        </div>
+        <a href="./Desenvolvimento-web/index.html" class="card-link">Acessar Trilha ➔</a>
+      </div>
+
+      <!-- Card Lógica de Programação -->
+      <div class="portal-card python">
+        <div>
+          <span class="card-icon">🐍</span>
+          <h2 class="card-title">Lógica de Programação</h2>
+          <p class="card-desc">Domine a lógica computacional e dê os seus primeiros passos em programação utilizando a linguagem Python, condicionais e laços.</p>
+        </div>
+        <a href="./Logica-de-Programacao/index.html" class="card-link">Acessar Trilha ➔</a>
+      </div>
+
+      <!-- Card Banco de Dados -->
+      <div class="portal-card db">
+        <div>
+          <span class="card-icon">🗄️</span>
+          <h2 class="card-title">Banco de Dados</h2>
+          <p class="card-desc">Desenvolva diagramas Entidade-Relacionamento, converta o modelo conceitual em tabelas físicas e organize tudo aplicando formas normais.</p>
+        </div>
+        <a href="./Banco-de-Dados/index.html" class="card-link">Acessar Trilha ➔</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 - Disciplinas Adaptadas | Prof. Euclides Paim - Turma 101</p>
+  </footer>
+
+</body>
+</html>
