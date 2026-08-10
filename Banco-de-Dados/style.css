@@ -445,6 +445,17 @@ header {
   margin-top: 1rem;
 }
 
+.code-snippet pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.code-snippet code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 /* Dynamic Flowchart & Normalization Visualizer */
 .flowchart-card {
   background-color: #F8FAFC;
