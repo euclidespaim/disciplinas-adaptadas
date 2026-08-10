@@ -92,12 +92,12 @@ header {
 }
 
 .sidebar-toggle-btn {
+  display: none;
   background: none;
   border: 1px solid var(--border-color);
   padding: 0.5rem 0.8rem;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
-  display: flex;
   align-items: center;
   gap: 0.4rem;
   font-family: var(--font-body);
@@ -136,6 +136,9 @@ header {
 }
 
 @media (max-width: 900px) {
+  .sidebar-toggle-btn {
+    display: flex;
+  }
   .sidebar {
     position: absolute;
     left: 0;
