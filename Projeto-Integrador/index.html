@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma didática interativa de Projeto Integrador para alunos da turma 301. Soluções para a comunidade e Objetivos de Desenvolvimento Sustentável da ONU.">
+  <title>Projeto Integrador - Turma 301</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="header-brand">
+      <div class="logo-section">
+        <h1>🌍 Projeto <span>Integrador</span></h1>
+        <p>Desenvolvimento Sustentável &amp; Ação Comunitária</p>
+      </div>
+      <div class="header-actions">
+        <a href="../index.html" class="back-portal-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Portal de Disciplinas
+        </a>
+        <button class="sidebar-toggle-btn" onclick="toggleSidebar()" id="btn-toggle-sidebar" title="Alternar Menu Lateral">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <span>Menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTAINER DA APLICAÇÃO -->
+  <div class="app-container">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" id="main-sidebar">
+      
+      <!-- Visão Geral -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>🏠 Apresentação</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link active" data-tab="home" onclick="switchTab('home')">
+            <span class="badge-icon">📌</span> Início &amp; Material
+          </button>
+          <button class="nav-link" data-tab="metodologia" onclick="switchTab('metodologia')">
+            <span class="badge-icon">📐</span> Metodologia PI
+          </button>
+        </div>
+      </div>
+
+      <!-- ODS da ONU -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>🌱 Sustentabilidade</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link" data-tab="ods" onclick="switchTab('ods')">
+            <span class="badge-icon">🌍</span> ODS da ONU
+          </button>
+        </div>
+      </div>
+
+      <!-- Turma 301 -->
+      <div class="accordion-group open">
+        <button class="accordion-header">
+          <span>👥 Turma 301</span>
+          <span class="chevron">❯</span>
+        </button>
+        <div class="accordion-body">
+          <button class="nav-link" data-tab="turma" onclick="switchTab('turma')">
+            <span class="badge-icon">📋</span> Equipes &amp; Projetos
+          </button>
+          <button class="nav-link" data-tab="galeria" onclick="switchTab('galeria')">
+            <span class="badge-icon">✨</span> Galeria de Projetos (9)
+          </button>
+          <button class="nav-link" data-tab="proposta" onclick="switchTab('proposta')">
+            <span class="badge-icon">📝</span> Gerador de Propostas
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <main class="main-workspace">
+
+      <!-- ABA 1: INÍCIO E MATERIAL -->
+      <section id="home-tab" class="tab-content active">
+        <div class="welcome-grid">
+          <div class="card welcome-box">
+            <h2>Bem-vindo ao Projeto Integrador! 🚀</h2>
+            <p class="intro-text">
+              Esta disciplina é o espaço onde a teoria se transforma em impacto social prático. Aqui, você e sua equipe trabalharão no desenvolvimento de propostas para <strong>solucionar problemas da comunidade local</strong>, alinhando suas ações aos <strong>Objetivos de Desenvolvimento Sustentável (ODS) da ONU</strong>.
+            </p>
+            
+            <div class="info-section">
+              <h3>🎯 O que é o Projeto Integrador?</h3>
+              <p>O PI é uma metodologia ativa baseada em projetos, na qual você exercita:</p>
+              <ul>
+                <li>🔍 <strong>Empatia e Investigação:</strong> Identificar problemas enfrentados pelas pessoas no seu bairro ou escola.</li>
+                <li>💡 <strong>Ideação Criativa:</strong> Pensar fora da caixa para propor soluções inovadoras e viáveis.</li>
+                <li>🔨 <strong>Prototipagem:</strong> Criar uma versão inicial da sua proposta (um site, aplicativo, maquete, cartilha ou plano de ação).</li>
+                <li>📢 <strong>Comunicação e Impacto:</strong> Apresentar a solução (Pitch) e coletar feedback da comunidade.</li>
+              </ul>
+            </div>
+
+            <div class="materials-section">
+              <h3>📥 Material Didático &amp; Referências</h3>
+              <p>Acesse as diretrizes e materiais de apoio recomendados pelo professor:</p>
+              <div class="download-grid">
+                <div class="download-card">
+                  <span class="file-icon">📘</span>
+                  <div class="file-info">
+                    <strong>Manual do Projeto Integrador</strong>
+                    <span>Estrutura do documento e instruções por capítulo</span>
+                  </div>
+                  <a href="./manual.html" class="btn-download">Acessar ➔</a>
+                </div>
+                <div class="download-card">
+                  <span class="file-icon">🌍</span>
+                  <div class="file-info">
+                    <strong>Guia das ODS da ONU</strong>
+                    <span>Os 17 objetivos com ideias de projetos</span>
+                  </div>
+                  <a href="./guia-ods.html" class="btn-download">Acessar ➔</a>
+                </div>
+                <div class="download-card evaluation-card">
+                  <span class="file-icon">📝</span>
+                  <div class="file-info">
+                    <strong>Atividade Avaliativa do Trimestre</strong>
+                    <span>Versionamento &amp; Documentação (GitHub)</span>
+                  </div>
+                  <a href="./Atividade-Avaliativa-Trimestre.pdf" download class="btn-download highlight">Baixar PDF</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD DE ATALHOS RÁPIDOS -->
+          <div class="stats-card">
+            <div class="stats-header">Atalhos da Disciplina</div>
+            <div class="quick-links">
+              <a href="./manual.html" class="quick-link-card">
+                <span class="quick-link-icon">📘</span>
+                <span class="quick-link-info">
+                  <strong>Manual do PI</strong>
+                  <span>Como elaborar cada capítulo do documento</span>
+                </span>
+              </a>
+              <a href="./guia-ods.html" class="quick-link-card">
+                <span class="quick-link-icon">🌍</span>
+                <span class="quick-link-info">
+                  <strong>Guia das ODS</strong>
+                  <span>Os 17 quadros com ideias de projetos</span>
+                </span>
+              </a>
+              <a href="#" class="quick-link-card" onclick="switchTab('proposta'); return false;">
+                <span class="quick-link-icon">📝</span>
+                <span class="quick-link-info">
+                  <strong>Gerador de Propostas</strong>
+                  <span>Monte a proposta formal da sua equipe</span>
+                </span>
+              </a>
+            </div>
+
+            <div class="progress-preview">
+              <h4>Cronograma PI - 2026</h4>
+              <div class="timeline-mini">
+                <div class="mini-step completed"><span>1</span> Etapas Iniciais</div>
+                <div class="mini-step active"><span>2</span> Definição &amp; ODS</div>
+                <div class="mini-step"><span>3</span> Protótipo &amp; Teste</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 2: METODOLOGIA PI -->
+      <section id="metodologia-tab" class="tab-content">
+        <div class="card">
+          <h2>📐 Metodologia de Projetos (Design Thinking)</h2>
+          <p class="subtitle">Siga as 6 etapas fundamentais para estruturar e validar o seu Projeto Integrador com sucesso.</p>
+
+          <div class="timeline-container">
+            
+            <!-- Etapa 1 -->
+            <div class="timeline-item" onclick="showTimelineDetail(1)">
+              <div class="timeline-number">1</div>
+              <div class="timeline-content">
+                <h3>🔍 1. Empatia (Imersão)</h3>
+                <p>Observar a comunidade, ouvir os moradores e entender as dificuldades reais vividas por eles.</p>
+              </div>
+            </div>
+
+            <!-- Etapa 2 -->
+            <div class="timeline-item" onclick="showTimelineDetail(2)">
+              <div class="timeline-number">2</div>
+              <div class="timeline-content">
+                <h3>🎯 2. Definição (Foco)</h3>
+                <p>Delimitar qual problema específico será atacado e associá-lo a uma das 17 ODS da ONU.</p>
+              </div>
+            </div>
+
+            <!-- Etapa 3 -->
+            <div class="timeline-item" onclick="showTimelineDetail(3)">
+              <div class="timeline-number">3</div>
+              <div class="timeline-content">
+                <h3>💡 3. Ideação (Criação)</h3>
+                <p>Fazer brainstormings com o grupo para criar soluções criativas, sustentáveis e de baixo custo.</p>
+              </div>
+            </div>
+
+            <!-- Etapa 4 -->
+            <div class="timeline-item" onclick="showTimelineDetail(4)">
+              <div class="timeline-number">4</div>
+              <div class="timeline-content">
+                <h3>🔨 4. Prototipação</h3>
+                <p>Criar uma representação física ou digital da solução para mostrar como ela funcionará.</p>
+              </div>
+            </div>
+
+            <!-- Etapa 5 -->
+            <div class="timeline-item" onclick="showTimelineDetail(5)">
+              <div class="timeline-number">5</div>
+              <div class="timeline-content">
+                <h3>🧪 5. Validação (Testes)</h3>
+                <p>Apresentar o protótipo para a comunidade, recolher sugestões e fazer as melhorias necessárias.</p>
+              </div>
+            </div>
+
+            <!-- Etapa 6 -->
+            <div class="timeline-item" onclick="showTimelineDetail(6)">
+              <div class="timeline-number">6</div>
+              <div class="timeline-content">
+                <h3>📢 6. Entrega (Pitch)</h3>
+                <p>Criar uma apresentação de 3 a 5 minutos resumindo a jornada, o protótipo e o impacto esperado.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- DETALHAMENTO DA ETAPA SELECIONADA -->
+          <div class="detail-box" id="timeline-detail-panel">
+            <h3>Clique em qualquer etapa acima para ver o checklist de tarefas e dicas de execução!</h3>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ABA 3: ODS DA ONU -->
+      <section id="ods-tab" class="tab-content">
+        <div class="card">
+          <h2>🌍 Os 17 Objetivos de Desenvolvimento Sustentável (ODS)</h2>
+          <p class="subtitle">Clique em um dos objetivos abaixo para conhecer os detalhes e ver sugestões de projetos práticos que sua equipe pode desenvolver.</p>
+
+          <div class="ods-grid" id="ods-grid-container">
+            <!-- Gerado dinamicamente via JS -->
+          </div>
+        </div>
+
+        <!-- MODAL DE DETALHES DA ODS -->
+        <div class="modal-backdrop" id="ods-modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header" id="ods-modal-header">
+              <span class="ods-modal-number" id="ods-modal-num">00</span>
+              <h3 id="ods-modal-title">Objetivo</h3>
+              <button onclick="closeOdsModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+              <h4>📋 Descrição da ONU</h4>
+              <p id="ods-modal-desc">Descrição oficial...</p>
+              
+              <div class="ideas-section">
+                <h4>💡 Ideias de Projetos Escolares/Comunitários</h4>
+                <ul id="ods-modal-ideas">
+                  <!-- Ideias injetadas pelo JS -->
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="primary-btn" onclick="useOdsInProposal()">Rascunhar Proposta com esta ODS ➔</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 4: TURMA 301 HUB -->
+      <section id="turma-tab" class="tab-content">
+        <div class="card">
+          <h2>👥 Hub de Projetos da Turma 301</h2>
+          <p class="subtitle">Gerencie as equipes da turma, os temas de trabalho e acompanhe a etapa atual de cada projeto.</p>
+
+          <div class="turma-grid">
+            <!-- Gerenciamento de Grupos -->
+            <div class="groups-section">
+              <div class="section-title-bar">
+                <h3>Equipes &amp; Projetos Cadastrados</h3>
+                <button onclick="openAddGroupModal()" class="primary-btn sm">+ Nova Equipe</button>
+              </div>
+
+              <div class="groups-list" id="groups-list-container">
+                <!-- Lista de equipes salvas em localStorage -->
+              </div>
+            </div>
+
+            <!-- Legenda das Etapas do Projeto -->
+            <div class="sidebar-info-card">
+              <h3>📈 Etapas do Projeto</h3>
+              <p>Cada equipe registra em qual fase da metodologia o seu projeto está. As etapas seguem o Design Thinking:</p>
+              <ol class="stage-legend">
+                <li><span>1</span> Empatia (Imersão)</li>
+                <li><span>2</span> Definição (Foco)</li>
+                <li><span>3</span> Ideação (Criação)</li>
+                <li><span>4</span> Prototipação (MVP)</li>
+                <li><span>5</span> Validação (Testes)</li>
+                <li><span>6</span> Entrega (Pitch)</li>
+              </ol>
+              <p class="stage-legend-note">Para elaborar o documento do projeto — incluindo resultados, conclusão e bibliografia — consulte o <a href="./manual.html">Manual do Projeto Integrador</a>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL ADICIONAR/EDITAR GRUPO -->
+        <div class="modal-backdrop" id="group-modal" style="display: none;">
+          <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+              <h3 id="group-modal-title">Nova Equipe</h3>
+              <button onclick="closeGroupModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="edit-group-index">
+              <div class="form-group">
+                <label for="group-name">Nome da Equipe *</label>
+                <input type="text" id="group-name" class="form-control" placeholder="Ex: SustentaLíderes">
+              </div>
+              <div class="form-group">
+                <label for="group-members">Integrantes (separados por vírgula) *</label>
+                <input type="text" id="group-members" class="form-control" placeholder="Ex: Ana, Bruno, Carlos, Daniela">
+              </div>
+              <div class="form-group">
+                <label for="group-project-title">Título do Projeto *</label>
+                <input type="text" id="group-project-title" class="form-control" placeholder="Ex: Horta Comunitária Suspensa">
+              </div>
+              <div class="form-group">
+                <label for="group-ods">ODS Principal relacionada *</label>
+                <select id="group-ods" class="form-control">
+                  <option value="">Selecione uma ODS...</option>
+                  <!-- Opções preenchidas dinamicamente -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="group-stage">Etapa Atual do Projeto</label>
+                <select id="group-stage" class="form-control">
+                  <option value="1">1. Empatia</option>
+                  <option value="2">2. Definição</option>
+                  <option value="3">3. Ideação</option>
+                  <option value="4">4. Prototipação</option>
+                  <option value="5">5. Validação (Testes)</option>
+                  <option value="6">6. Entrega (Pitch)</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button onclick="closeGroupModal()" class="btn-secondary">Cancelar</button>
+              <button onclick="saveGroup()" class="primary-btn">Salvar Equipe</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 5: GERADOR DE PROPOSTAS -->
+      <section id="galeria-tab" class="tab-content">
+        <div class="card">
+          <h2>✨ Galeria de Projetos da Turma 301</h2>
+          <p class="subtitle">Conheça as soluções em desenvolvimento pelas 9 equipes da turma, focadas em problemas locais e alinhadas aos Objetivos de Desenvolvimento Sustentável da ONU.</p>
+
+          <div class="gallery-grid" id="gallery-grid-container">
+            <!-- Projetos injetados dinamicamente via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 6: GERADOR DE PROPOSTAS -->
+      <section id="proposta-tab" class="tab-content">
+        <div class="card">
+          <h2>📝 Formulário Gerador de Proposta de PI</h2>
+          <p class="subtitle">Preencha os campos abaixo com as informações iniciais do seu projeto para gerar uma proposta formal estruturada para o professor.</p>
+
+          <div class="proposal-container">
+            <!-- Formulário -->
+            <div class="proposal-form">
+              <div class="form-group">
+                <label for="prop-team-name">Nome da Equipe:</label>
+                <input type="text" id="prop-team-name" class="form-control" placeholder="Ex: EcoTec" oninput="updateProposalPreview()">
+              </div>
+              
+              <div class="form-group">
+                <label for="prop-members">Alunos Integrantes:</label>
+                <input type="text" id="prop-members" class="form-control" placeholder="Ex: João Silva, Maria Costa..." oninput="updateProposalPreview()">
+              </div>
+
+              <div class="form-group">
+                <label for="prop-title">Título Provisório do Projeto:</label>
+                <input type="text" id="prop-title" class="form-control" placeholder="Ex: Reutilização de Água da Chuva na Escola" oninput="updateProposalPreview()">
+              </div>
+
+              <div class="form-group">
+                <label for="prop-ods">ODS da ONU Focada:</label>
+                <select id="prop-ods" class="form-control" onchange="updateProposalPreview()">
+                  <option value="">Selecione uma ODS...</option>
+                  <!-- Preenchido por JS -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="prop-problem">Qual o problema comunitário identificado? (Por que o projeto é necessário?):</label>
+                <textarea id="prop-problem" class="form-control text-area" placeholder="Descreva a dor da comunidade, as dificuldades locais observadas..." oninput="updateProposalPreview()"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="prop-solution">Qual é a proposta de solução? (O que vocês pretendem fazer?):</label>
+                <textarea id="prop-solution" class="form-control text-area" placeholder="Descreva como o projeto resolverá ou aliviará o problema apontado..." oninput="updateProposalPreview()"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="prop-resources">Quais recursos e materiais vocês precisarão?</label>
+                <textarea id="prop-resources" class="form-control text-area" placeholder="Ex: Garrafas PET, canos de PVC, cartolina, acesso à internet, etc." oninput="updateProposalPreview()"></textarea>
+              </div>
+            </div>
+
+            <!-- Preview do Relatório -->
+            <div class="proposal-preview-panel">
+              <div class="editor-header">
+                <span>Pré-visualização da Proposta de PI</span>
+                <span class="lang">Relatório</span>
+              </div>
+              <div class="report-box" id="proposal-text-display">
+                Preencha os campos à esquerda para começar a montar o documento de proposta de projeto.
+              </div>
+              <div class="editor-toolbar" style="margin-top: 1rem;">
+                <button class="btn-secondary" onclick="copyProposalText()">Copiar Texto 📋</button>
+                <button class="btn-secondary" onclick="downloadProposalFile()">Baixar Proposta .txt 💾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>&copy; 2026 - Projeto Integrador | Trilha Adaptada para a Turma 301 - Prof. Euclides Paim</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

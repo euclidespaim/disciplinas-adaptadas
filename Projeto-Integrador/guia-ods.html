@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guia dos 17 Objetivos de Desenvolvimento Sustentável (ODS) da ONU com ideias de projetos escolares e comunitários para o Projeto Integrador da Turma 301.">
+  <title>Guia das ODS - Projeto Integrador 301</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-cream: #F8FAF9;
+      --primary-indigo: #064E3B;
+      --primary-navy: #0B2545;
+      --accent-teal: #10B981;
+      --accent-mint: #D1FAE5;
+      --text-main: #1F2937;
+      --text-light: #4B5563;
+      --border-color: #E5E7EB;
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header.page-header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 1.5rem;
+    }
+
+    .page-header h1 span { color: var(--accent-teal); }
+
+    .page-header p { font-size: 0.85rem; color: var(--text-light); }
+
+    .back-btn {
+      background-color: #F3F4F6;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover { background-color: var(--primary-indigo); color: white; }
+
+    main {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      margin-bottom: 0.75rem;
+    }
+
+    .intro-card p { color: var(--text-light); margin-bottom: 0.75rem; }
+
+    .howto-box {
+      margin-top: 1.25rem;
+      background-color: var(--accent-mint);
+      border-radius: 12px;
+      padding: 1.25rem;
+      color: #065F46;
+      font-size: 0.95rem;
+    }
+
+    .howto-box strong { display: block; margin-bottom: 0.35rem; }
+
+    /* PAINEL DE QUADROS */
+    .ods-poster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.9rem;
+      margin-top: 1.25rem;
+    }
+
+    .ods-quadro {
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      padding: 0.9rem;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .ods-quadro:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+    }
+
+    .quadro-num {
+      font-family: var(--font-title);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .quadro-title {
+      font-family: var(--font-title);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    /* DETALHES */
+    .ods-detail {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      scroll-margin-top: 90px;
+    }
+
+    .ods-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.5rem;
+      color: white;
+    }
+
+    .detail-num {
+      font-family: var(--font-title);
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .ods-detail-header h3 {
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .ods-detail-body { padding: 1.5rem; }
+
+    .ods-detail-body h4 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .ods-detail-body p {
+      color: var(--text-light);
+      margin-bottom: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .ods-detail-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .ods-detail-body li {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .ods-detail-body li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: var(--accent-teal);
+      font-weight: bold;
+    }
+
+    .back-top {
+      font-size: 0.85rem;
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-top:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      background-color: white;
+      margin-top: 3rem;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    @media print {
+      header.page-header { position: static; }
+      .back-btn, .back-top { display: none; }
+      .ods-quadro { box-shadow: none; }
+      .ods-detail { break-inside: avoid; }
+    }
+
+    @media (max-width: 600px) {
+      .ods-poster-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+      main { margin-top: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div>
+      <h1>🌍 Guia das <span>ODS da ONU</span></h1>
+      <p>Material de apoio do Projeto Integrador - Turma 301</p>
+    </div>
+    <a href="./index.html" class="back-btn">← Voltar ao site da disciplina</a>
+  </header>
+
+  <main>
+
+    <section class="card intro-card">
+      <h2>O que são os Objetivos de Desenvolvimento Sustentável?</h2>
+      <p>Os <strong>17 Objetivos de Desenvolvimento Sustentável (ODS)</strong> fazem parte da <strong>Agenda 2030</strong>, um plano de ação global adotado em 2015 por 193 países-membros da ONU. Eles apontam os maiores desafios do planeta — como pobreza, fome, desigualdade, educação e mudanças climáticas — e definem metas concretas para serem alcançadas até 2030.</p>
+      <p>Cada objetivo é representado por um quadro colorido. Juntos, eles formam um mapa dos problemas que também existem <strong>na nossa cidade e no nosso bairro</strong> — e é aí que entra o seu Projeto Integrador.</p>
+      <div class="howto-box">
+        <strong>🎯 Como usar este guia no seu projeto</strong>
+        Explore os quadros abaixo e identifique qual ODS tem mais a ver com o problema comunitário que a sua equipe observou. Todo projeto deve estar alinhado a pelo menos uma ODS — ela entra na proposta, na justificativa e na apresentação final (Pitch). Clique em um quadro para ver a descrição do objetivo e ideias de projetos práticos.
+      </div>
+    </section>
+
+    <section class="card" id="painel-ods">
+      <h2>Os 17 Objetivos</h2>
+      <div class="ods-poster-grid">
+      <a class="ods-quadro" href="#ods-1" style="background-color: #E5243B;">
+        <span class="quadro-num">1</span>
+        <span class="quadro-title">Erradicação da Pobreza</span>
+      </a>
+      <a class="ods-quadro" href="#ods-2" style="background-color: #DDA63A;">
+        <span class="quadro-num">2</span>
+        <span class="quadro-title">Fome Zero e Agricultura Sustentável</span>
+      </a>
+      <a class="ods-quadro" href="#ods-3" style="background-color: #4C9F38;">
+        <span class="quadro-num">3</span>
+        <span class="quadro-title">Saúde e Bem-Estar</span>
+      </a>
+      <a class="ods-quadro" href="#ods-4" style="background-color: #C5192D;">
+        <span class="quadro-num">4</span>
+        <span class="quadro-title">Educação de Qualidade</span>
+      </a>
+      <a class="ods-quadro" href="#ods-5" style="background-color: #FF3A21;">
+        <span class="quadro-num">5</span>
+        <span class="quadro-title">Igualdade de Gênero</span>
+      </a>
+      <a class="ods-quadro" href="#ods-6" style="background-color: #26BDE2;">
+        <span class="quadro-num">6</span>
+        <span class="quadro-title">Água Potável e Saneamento</span>
+      </a>
+      <a class="ods-quadro" href="#ods-7" style="background-color: #FCC30B;">
+        <span class="quadro-num">7</span>
+        <span class="quadro-title">Energia Limpa e Acessível</span>
+      </a>
+      <a class="ods-quadro" href="#ods-8" style="background-color: #A21942;">
+        <span class="quadro-num">8</span>
+        <span class="quadro-title">Trabalho Decente e Crescimento Econômico</span>
+      </a>
+      <a class="ods-quadro" href="#ods-9" style="background-color: #FD6925;">
+        <span class="quadro-num">9</span>
+        <span class="quadro-title">Indústria, Inovação e Infraestrutura</span>
+      </a>
+      <a class="ods-quadro" href="#ods-10" style="background-color: #DD1367;">
+        <span class="quadro-num">10</span>
+        <span class="quadro-title">Redução das Desigualdades</span>
+      </a>
+      <a class="ods-quadro" href="#ods-11" style="background-color: #FD9D24;">
+        <span class="quadro-num">11</span>
+        <span class="quadro-title">Cidades e Comunidades Sustentáveis</span>
+      </a>
+      <a class="ods-quadro" href="#ods-12" style="background-color: #C99439;">
+        <span class="quadro-num">12</span>
+        <span class="quadro-title">Consumo e Produção Responsáveis</span>
+      </a>
+      <a class="ods-quadro" href="#ods-13" style="background-color: #3F7E44;">
+        <span class="quadro-num">13</span>
+        <span class="quadro-title">Ação Contra a Mudança Global do Clima</span>
+      </a>
+      <a class="ods-quadro" href="#ods-14" style="background-color: #0A97D9;">
+        <span class="quadro-num">14</span>
+        <span class="quadro-title">Vida na Água</span>
+      </a>
+      <a class="ods-quadro" href="#ods-15" style="background-color: #56C02B;">
+        <span class="quadro-num">15</span>
+        <span class="quadro-title">Vida Terrestre</span>
+      </a>
+      <a class="ods-quadro" href="#ods-16" style="background-color: #00689D;">
+        <span class="quadro-num">16</span>
+        <span class="quadro-title">Paz, Justiça e Instituições Eficazes</span>
+      </a>
+      <a class="ods-quadro" href="#ods-17" style="background-color: #19486A;">
+        <span class="quadro-num">17</span>
+        <span class="quadro-title">Parcerias e Meios de Implementação</span>
+      </a>
+      </div>
+    </section>
+
+    <article class="ods-detail" id="ods-1">
+      <header class="ods-detail-header" style="background-color: #E5243B;">
+        <span class="detail-num">01</span>
+        <h3>Erradicação da Pobreza</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Acabar com a pobreza em todas as suas formas, em todos os lugares, garantindo acesso a recursos básicos para as populações mais vulneráveis.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Campanhas de capacitação profissional e elaboração de currículos para jovens e adultos em situação de desemprego na comunidade.</li>
+          <li>Criar um guia digital ou físico contendo informações sobre serviços sociais, abrigos, postos de saúde e apoio jurídico gratuito do município.</li>
+          <li>Desenvolver um banco de doação permanente de agasalhos e materiais escolares na escola ou bairro.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-2">
+      <header class="ods-detail-header" style="background-color: #DDA63A;">
+        <span class="detail-num">02</span>
+        <h3>Fome Zero e Agricultura Sustentável</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição, e promover a agricultura sustentável.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Planejar e implantar uma horta comunitária suspensa em áreas ociosas da escola ou de um centro comunitário local.</li>
+          <li>Propor uma campanha de combate ao desperdício de alimentos no refeitório da escola, com pesagem diária das sobras e conscientização.</li>
+          <li>Desenvolver cartilhas digitais com receitas de aproveitamento integral dos alimentos (cascas, talos e sementes).</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-3">
+      <header class="ods-detail-header" style="background-color: #4C9F38;">
+        <span class="detail-num">03</span>
+        <h3>Saúde e Bem-Estar</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Assegurar uma vida saudável e promover o bem-estar para todos, em todas as idades.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Criar um aplicativo simulado ou site que mapeie as academias ao ar livre, quadras e parques locais, indicando horários de atividades gratuitas.</li>
+          <li>Desenvolver uma campanha de conscientização sobre saúde mental e controle de ansiedade para os estudantes em época de exames.</li>
+          <li>Montar um guia de plantas medicinais e chás comuns, detalhando suas indicações científicas e cuidados no uso.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-4">
+      <header class="ods-detail-header" style="background-color: #C5192D;">
+        <span class="detail-num">04</span>
+        <h3>Educação de Qualidade</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Assegurar a educação inclusiva e equitativa e de qualidade, e promover oportunidades de aprendizagem ao longo da vida para todos.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Organizar um cronograma de monitoria escolar onde alunos do 3º ano auxiliam alunos mais jovens com dificuldades em matemática e leitura.</li>
+          <li>Criar uma geladeira-biblioteca (geladeiroteca) instalada em praça pública ou pátio escolar para troca livre de livros usados.</li>
+          <li>Desenvolver videoaulas ou podcasts educativos sobre temas cotidianos e disponibilizar em um canal comunitário.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-5">
+      <header class="ods-detail-header" style="background-color: #FF3A21;">
+        <span class="detail-num">05</span>
+        <h3>Igualdade de Gênero</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Alcançar a igualdade de gênero e empoderar todas as mulheres e meninas.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Criar rodas de conversa e debates periódicos sobre a representatividade feminina nas áreas de ciências, tecnologia e engenharia (STEM).</li>
+          <li>Elaborar cartazes e posts para redes sociais informando canais de denúncia de violência doméstica e redes de apoio locais.</li>
+          <li>Propor um clube do livro escolar com foco exclusivo em obras escritas por autoras mulheres importantes da história.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-6">
+      <header class="ods-detail-header" style="background-color: #26BDE2;">
+        <span class="detail-num">06</span>
+        <h3>Água Potável e Saneamento</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Garantir disponibilidade e manejo sustentável da água e saneamento para todos.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Desenvolver um protótipo de cisterna de baixo custo para captação de água da chuva para regar jardins e limpeza da escola.</li>
+          <li>Criar filtros caseiros simplificados usando areia, carvão ativado e pedras para demonstrar processos de purificação didáticos.</li>
+          <li>Criar um infográfico ou site de dicas para detecção rápida de vazamentos invisíveis em residências da comunidade.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-7">
+      <header class="ods-detail-header" style="background-color: #FCC30B;">
+        <span class="detail-num">07</span>
+        <h3>Energia Limpa e Acessível</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Garantir acesso a fontes de energia modernas, confiáveis, sustentáveis e a preços acessíveis para todos.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Projetar maquetes ou modelos funcionais de pequenos geradores de energia solar ou eólica usando motores reciclados de eletrônicos.</li>
+          <li>Campanha escolar sobre eficiência energética: dicas visuais para reduzir a conta de luz e o consumo de eletrodomésticos.</li>
+          <li>Investigar o uso de iluminação natural na escola e sugerir mudanças na disposição de salas ou janelas para economizar lâmpadas.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-8">
+      <header class="ods-detail-header" style="background-color: #A21942;">
+        <span class="detail-num">08</span>
+        <h3>Trabalho Decente e Crescimento Econômico</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Promover o crescimento econômico sustentado, inclusivo e sustentável, emprego pleno e produtivo, e trabalho decente para todos.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Criar um site-vitrine para divulgar os serviços dos microempreendedores e autônomos locais (pedreiros, costureiras, doceiros do bairro).</li>
+          <li>Organizar um workshop simulado ou guia prático de introdução às finanças pessoais e economia doméstica para jovens.</li>
+          <li>Desenvolver um painel físico ou digital de vagas de estágio, jovem aprendiz e cursos técnicos gratuitos da região.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-9">
+      <header class="ods-detail-header" style="background-color: #FD6925;">
+        <span class="detail-num">09</span>
+        <h3>Indústria, Inovação e Infraestrutura</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Construir infraestrutura resiliente, promover a industrialização inclusiva e sustentável, e fomentar a inovação.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Mapear pontos críticos de acessibilidade (falta de rampas, calçadas quebradas) no entorno escolar e propor melhorias formais à prefeitura.</li>
+          <li>Criar um aplicativo simulado de caronas solidárias para estudantes ou trabalhadores locais, visando otimizar a infraestrutura viária.</li>
+          <li>Propor o uso de materiais de construção ecológicos (tijolo ecológico, concreto reciclado) para melhorias no pátio escolar.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-10">
+      <header class="ods-detail-header" style="background-color: #DD1367;">
+        <span class="detail-num">10</span>
+        <h3>Redução das Desigualdades</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Reduzir a desigualdade dentro dos países e entre eles, promovendo a inclusão social de todas as pessoas.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Desenvolver materiais táteis, audiodescrições ou tradução básica de termos escolares em Libras para promover a inclusão de alunos PCD.</li>
+          <li>Elaborar uma cartilha bilíngue (Português/Espanhol ou Inglês) de acolhimento para estudantes imigrantes recém-chegados na escola.</li>
+          <li>Promover eventos culturais integrativos celebrando a diversidade étnico-racial, cultural e culinária do bairro.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-11">
+      <header class="ods-detail-header" style="background-color: #FD9D24;">
+        <span class="detail-num">11</span>
+        <h3>Cidades e Comunidades Sustentáveis</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Tornar as cidades e os assentamentos humanos inclusivos, seguros, resilientes e sustentáveis.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Mapear e sugerir áreas subutilizadas no bairro para transformação em pequenas praças urbanas ('pocket parks') ou jardins verticais.</li>
+          <li>Desenvolver um plano de rotas seguras para ciclistas e pedestres irem de casa para a escola no bairro.</li>
+          <li>Organizar mutirões comunitários para revitalização e pintura artística de muros vandalizados ou praças degradadas da vizinhança.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-12">
+      <header class="ods-detail-header" style="background-color: #C99439;">
+        <span class="detail-num">12</span>
+        <h3>Consumo e Produção Responsáveis</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Assegurar padrões de produção e de consumo sustentáveis, reduzindo a pegada ecológica e o desperdício.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Organizar uma feira periódica de trocas ('swap meet') de brinquedos, livros, uniformes e roupas na escola.</li>
+          <li>Desenvolver um coletor didático de pilhas, baterias e lixo eletrônico na escola, com divulgação sobre o descarte correto.</li>
+          <li>Criar um workshop demonstrativo de compostagem doméstica com resíduos orgânicos gerados no próprio domicílio.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-13">
+      <header class="ods-detail-header" style="background-color: #3F7E44;">
+        <span class="detail-num">13</span>
+        <h3>Ação Contra a Mudança Global do Clima</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Adotar medidas urgentes para combater a mudança climática e seus impactos na biosfera.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Realizar um cálculo da pegada de carbono média dos estudantes da escola e criar um guia com ações individuais para reduzi-la.</li>
+          <li>Propor um plano de arborização para o pátio da escola ou calçadas da rua da escola para melhorar o microclima local.</li>
+          <li>Desenvolver cartilhas informativas ilustradas sobre as consequências das queimadas urbanas e do acúmulo de lixo.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-14">
+      <header class="ods-detail-header" style="background-color: #0A97D9;">
+        <span class="detail-num">14</span>
+        <h3>Vida na Água</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Conservação e uso sustentável dos oceanos, dos mares e dos recursos marinhos para o desenvolvimento sustentável.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Organizar mutirões de limpeza das margens de córregos, riachos ou praias locais, registrando o volume de plásticos recolhido.</li>
+          <li>Elaborar cartazes educativos sobre o impacto do descarte de óleo de cozinha usado na pia e criar um ponto de coleta escolar.</li>
+          <li>Estudar os pequenos ecossistemas aquáticos locais (como lagos de praças) e propor melhorias para a circulação de água.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-15">
+      <header class="ods-detail-header" style="background-color: #56C02B;">
+        <span class="detail-num">15</span>
+        <h3>Vida Terrestre</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Proteger, recuperar e promover o uso sustentável dos ecossistemas terrestres, gerir de forma sustentável as florestas e combater a desertificação.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Criar comedouros ecológicos e bebedouros seguros para aves urbanas e insetos polinizadores nos jardins da escola.</li>
+          <li>Elaborar um guia fotográfico das espécies de plantas nativas e árvores que compõem o bairro ou a escola.</li>
+          <li>Montar ações informativas para banir o uso de sacolas plásticas descartáveis substituindo-as por ecobags fabricadas com tecidos reciclados.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-16">
+      <header class="ods-detail-header" style="background-color: #00689D;">
+        <span class="detail-num">16</span>
+        <h3>Paz, Justiça e Instituições Eficazes</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Promover sociedades pacíficas e inclusivas, proporcionar o acesso à justiça para todos e construir instituições eficazes, responsáveis e inclusivas.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Criar um projeto piloto de 'Mediação Escolar de Conflitos', treinando alunos para resolverem pequenos desentendimentos de forma pacífica.</li>
+          <li>Organizar simulações de assembleias comunitárias na escola para ensinar aos estudantes como propor projetos de lei municipais.</li>
+          <li>Desenvolver cartazes explicativos sobre os Direitos Humanos e o Estatuto da Criança e do Adolescente em linguagem infanto-juvenil.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+    <article class="ods-detail" id="ods-17">
+      <header class="ods-detail-header" style="background-color: #19486A;">
+        <span class="detail-num">17</span>
+        <h3>Parcerias e Meios de Implementação</h3>
+      </header>
+      <div class="ods-detail-body">
+        <h4>📋 Descrição da ONU</h4>
+        <p>Fortalecer os meios de implementação e revitalizar a parceria global para o desenvolvimento sustentável.</p>
+        <h4>💡 Ideias de projetos escolares e comunitários</h4>
+        <ul>
+          <li>Criar um catálogo de ONGs, cooperativas de reciclagem e projetos sociais do município dispostos a fechar parcerias com a escola.</li>
+          <li>Organizar um bazar beneficente em colaboração com artesãos locais para arrecadar recursos para causas comunitárias.</li>
+          <li>Fomentar a criação de redes de comunicação online entre escolas vizinhas para compartilhamento de ideias de projetos integradores bem-sucedidos.</li>
+        </ul>
+        <a class="back-top" href="#painel-ods">↑ Voltar aos quadros</a>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 - Projeto Integrador | Trilha Adaptada para a Turma 301 - Prof. Euclides Paim</p>
+  </footer>
+
+</body>
+</html>

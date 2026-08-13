@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manual do Projeto Integrador da Turma 301: estrutura do documento conforme normas acadêmicas, com instruções de elaboração para cada capítulo — da capa às referências.">
+  <title>Manual do Projeto Integrador - Turma 301</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-cream: #F8FAF9;
+      --primary-indigo: #064E3B;
+      --primary-navy: #0B2545;
+      --accent-teal: #10B981;
+      --accent-mint: #D1FAE5;
+      --text-main: #1F2937;
+      --text-light: #4B5563;
+      --border-color: #E5E7EB;
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-code: 'Courier New', Courier, monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header.page-header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 1.5rem;
+    }
+
+    .page-header h1 span { color: var(--accent-teal); }
+
+    .page-header p { font-size: 0.85rem; color: var(--text-light); }
+
+    .back-btn {
+      background-color: #F3F4F6;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover { background-color: var(--primary-indigo); color: white; }
+
+    main {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      margin-bottom: 0.75rem;
+    }
+
+    .intro-card p { color: var(--text-light); margin-bottom: 0.75rem; }
+
+    /* MAPA DA ESTRUTURA */
+    .structure-map {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .structure-chip {
+      background-color: var(--accent-mint);
+      color: #065F46;
+      font-family: var(--font-title);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .structure-chip:hover { background-color: var(--accent-teal); color: white; }
+
+    /* ETAPAS */
+    .step-card {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      overflow: hidden;
+      scroll-margin-top: 90px;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.75rem;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F5FBF7 100%);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--primary-indigo);
+      color: white;
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-header h3 {
+      font-family: var(--font-title);
+      color: var(--primary-navy);
+      font-size: 1.25rem;
+    }
+
+    .step-body { padding: 1.5rem 1.75rem; }
+
+    .step-block { margin-bottom: 1.25rem; }
+
+    .step-block:last-child { margin-bottom: 0; }
+
+    .step-block h4 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .step-block p { color: var(--text-light); font-size: 0.95rem; }
+
+    .step-block ul, .step-block ol {
+      margin-top: 0.4rem;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .step-block ul li, .step-block ol li {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .step-block ul li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: var(--accent-teal);
+      font-weight: bold;
+    }
+
+    .step-block ol { counter-reset: item; }
+
+    .step-block ol li { counter-increment: item; padding-left: 1.75rem; }
+
+    .step-block ol li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 0.2rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      background-color: var(--accent-mint);
+      color: #065F46;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tip-box {
+      background-color: #FFFBEB;
+      border-left: 4px solid #F59E0B;
+      padding: 0.85rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #B45309;
+      margin-top: 1.1rem;
+    }
+
+    .tip-box strong { color: #92400E; }
+
+    .warn-box {
+      background-color: #FEF2F2;
+      border-left: 4px solid #EF4444;
+      padding: 0.85rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #B91C1C;
+      margin-top: 0.75rem;
+    }
+
+    .warn-box strong { color: #991B1B; }
+
+    .example-box {
+      background-color: #F8FAF9;
+      border: 1px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    .ref-format {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      background-color: #F3F4F6;
+      border-radius: 6px;
+      padding: 0.6rem 0.9rem;
+      display: block;
+      margin-top: 0.4rem;
+      color: var(--text-main);
+    }
+
+    /* METODOLOGIAS (accordion) */
+    details.method {
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-top: 0.6rem;
+      background-color: #FDFDFC;
+    }
+
+    details.method summary {
+      cursor: pointer;
+      padding: 0.8rem 1.1rem;
+      font-family: var(--font-title);
+      font-weight: 600;
+      color: var(--primary-navy);
+      font-size: 0.95rem;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    details.method summary::-webkit-details-marker { display: none; }
+
+    details.method summary::after {
+      content: "❯";
+      font-size: 0.8rem;
+      color: var(--text-light);
+      transition: transform 0.2s ease;
+    }
+
+    details.method[open] summary::after { transform: rotate(90deg); }
+
+    details.method .method-body {
+      padding: 0 1.1rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    details.method .method-body strong { color: var(--primary-indigo); }
+
+    .citation {
+      background-color: var(--accent-mint);
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+      color: #065F46;
+      font-style: italic;
+      font-size: 0.88rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      background-color: white;
+      margin-top: 3rem;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    @media print {
+      header.page-header { position: static; }
+      .back-btn { display: none; }
+      .step-card { break-inside: avoid; }
+      details.method { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div>
+      <h1>📘 Manual do <span>Projeto Integrador</span></h1>
+      <p>Orientações para Desenvolvimento do Documento - Turma 301</p>
+    </div>
+    <a href="./index.html" class="back-btn">← Voltar ao site da disciplina</a>
+  </header>
+
+  <main>
+
+    <section class="card intro-card">
+      <h2>Como usar este manual</h2>
+      <p>O documento final do Projeto Integrador segue a estrutura de um trabalho acadêmico, conforme as <strong>normas ABNT</strong>. Este manual apresenta, capítulo por capítulo, <strong>o que escrever</strong> e <strong>como escrever</strong> — de forma clara, formal e objetiva, conectando a teoria estudada com a prática do seu projeto.</p>
+      <p>Use os atalhos abaixo para navegar até o capítulo que você está elaborando:</p>
+      <div class="structure-map">
+        <a class="structure-chip" href="#etapa-1">1. Capa e Folha de Rosto</a>
+        <a class="structure-chip" href="#etapa-2">2. Resumo</a>
+        <a class="structure-chip" href="#etapa-3">3. Introdução</a>
+        <a class="structure-chip" href="#etapa-4">4. Revisão de Literatura</a>
+        <a class="structure-chip" href="#etapa-5">5. Metodologia e Execução</a>
+        <a class="structure-chip" href="#etapa-6">6. Resultados e Discussão</a>
+        <a class="structure-chip" href="#etapa-7">7. Conclusão</a>
+        <a class="structure-chip" href="#etapa-8">8. Referências</a>
+      </div>
+    </section>
+
+    <!-- ETAPA 1 -->
+    <section class="step-card" id="etapa-1">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <h3>Capa e Folha de Rosto</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <ul>
+            <li>Título do projeto;</li>
+            <li>Nome da instituição e do curso;</li>
+            <li>Turma e nome dos integrantes;</li>
+            <li>Professor orientador;</li>
+            <li>Cidade e ano.</li>
+          </ul>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Como escrever</h4>
+          <p>Seguir o padrão ABNT: elementos centralizados e título em letras maiúsculas.</p>
+        </div>
+        <div class="tip-box"><strong>💡 Dica:</strong> escolha um título claro e direto, que represente o problema ou a solução proposta pela equipe.</div>
+      </div>
+    </section>
+
+    <!-- ETAPA 2 -->
+    <section class="step-card" id="etapa-2">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <h3>Resumo (Abstract)</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <p>Breve apresentação do projeto, entre <strong>150 e 250 palavras</strong>, destacando:</p>
+          <ul>
+            <li>Tema abordado;</li>
+            <li>Problema de pesquisa ou desafio;</li>
+            <li>Objetivo principal;</li>
+            <li>Metodologia adotada;</li>
+            <li>Resultados esperados ou alcançados.</li>
+          </ul>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Como escrever</h4>
+          <p>Em parágrafo único, sem citações, sempre na 3ª pessoa.</p>
+          <div class="example-box">"Este trabalho apresenta o desenvolvimento de um sistema de alerta de enchentes para comunidades ribeirinhas..."</div>
+        </div>
+        <div class="tip-box"><strong>💡 Dica:</strong> escreva o resumo por último, quando todo o trabalho estiver pronto.</div>
+      </div>
+    </section>
+
+    <!-- ETAPA 3 -->
+    <section class="step-card" id="etapa-3">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <h3>Introdução</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <p>Contextualização do tema, relevância do problema, justificativa da escolha e objetivos (geral e específicos).</p>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Estrutura interna sugerida</h4>
+          <ol>
+            <li><strong>Contexto:</strong> qual é a situação atual ou o problema observado na comunidade;</li>
+            <li><strong>Justificativa:</strong> por que é importante estudar e resolver isso;</li>
+            <li><strong>Objetivo geral:</strong> uma frase ampla resumindo o que o projeto pretende alcançar;</li>
+            <li><strong>Objetivos específicos:</strong> em tópicos, com verbos no infinitivo (desenvolver, analisar, implementar...).</li>
+          </ol>
+        </div>
+        <div class="tip-box"><strong>💡 Dica:</strong> aqui é o lugar de citar a <a href="./guia-ods.html">ODS da ONU</a> à qual o projeto está alinhado, conectando o problema local ao objetivo global.</div>
+      </div>
+    </section>
+
+    <!-- ETAPA 4 -->
+    <section class="step-card" id="etapa-4">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <h3>Revisão de Literatura</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <p>Conceitos, teorias e referências bibliográficas que sustentam o projeto.</p>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Como escrever</h4>
+          <ul>
+            <li>Sempre com base em fontes confiáveis: livros, artigos, teses e sites institucionais (Scielo, IEEE, Google Scholar);</li>
+            <li>Fazer citações diretas e indiretas conforme a ABNT;</li>
+            <li>Organizar cada seção com subtítulos (ex.: "Redes Neurais", "Banco de Dados Relacional", "Metodologia Ágil").</li>
+          </ul>
+        </div>
+        <div class="warn-box"><strong>⚠️ Erro comum a evitar:</strong> não transformar em "copia e cola" — o texto precisa ser conectado ao seu projeto.</div>
+      </div>
+    </section>
+
+    <!-- ETAPA 5 -->
+    <section class="step-card" id="etapa-5">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <h3>Metodologia e Execução</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <p>Como o projeto foi desenvolvido: metodologias usadas (ex.: Scrum, prototipagem, pesquisa aplicada), ferramentas, linguagens e etapas.</p>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Como escrever</h4>
+          <p>Em ordem cronológica ou lógica, detalhando cada fase. Subtítulos sugeridos:</p>
+          <ol>
+            <li>Planejamento;</li>
+            <li>Levantamento de requisitos;</li>
+            <li>Arquitetura do sistema;</li>
+            <li>Implementação;</li>
+            <li>Testes.</li>
+          </ol>
+        </div>
+        <div class="step-block">
+          <h4>🧭 Tipos de metodologia — qual usar e como citar</h4>
+          <p>Os tipos abaixo podem ser adotados (ou combinados) no seu projeto. Cada um traz um exemplo de redação pronta para a seção de Metodologia:</p>
+
+          <details class="method">
+            <summary>1. Metodologia Exploratória</summary>
+            <div class="method-body">
+              <p><strong>Objetivo:</strong> investigar o tema e entender as possibilidades técnicas e conceituais antes da construção.</p>
+              <p><strong>Quando usar:</strong> na fase inicial do projeto, para compreender o problema (ex.: descarte de lixo, enchentes, monitoramento de academias).</p>
+              <p><strong>Métodos típicos:</strong> levantamento de dados, entrevistas, benchmarking de soluções existentes, estudos de caso.</p>
+              <p class="citation">"Trata-se de uma pesquisa de caráter exploratório, com o objetivo de compreender as tecnologias e abordagens existentes relacionadas ao problema proposto."</p>
+            </div>
+          </details>
+
+          <details class="method">
+            <summary>2. Revisão Bibliográfica / Revisão de Literatura</summary>
+            <div class="method-body">
+              <p><strong>Objetivo:</strong> construir a base teórica que justifica as decisões do projeto.</p>
+              <p><strong>Quando usar:</strong> logo no início, e continuar atualizando durante o desenvolvimento.</p>
+              <p><strong>Como fazer:</strong> pesquisa em bases como Scielo, IEEE, Google Scholar e ResearchGate, analisando conceitos, tecnologias e metodologias similares.</p>
+              <p class="citation">"A metodologia inclui uma revisão bibliográfica para embasar teoricamente o desenvolvimento do protótipo."</p>
+            </div>
+          </details>
+
+          <details class="method">
+            <summary>3. Prototipagem (Design Thinking / Engenharia Experimental)</summary>
+            <div class="method-body">
+              <p><strong>Objetivo:</strong> desenvolver, testar e aprimorar um modelo funcional da solução.</p>
+              <p><strong>Quando usar:</strong> nas fases intermediárias e finais do projeto.</p>
+              <p><strong>Como estruturar:</strong> Ideação (requisitos e possíveis soluções) → Modelagem (primeiro protótipo em papel, Figma, Tinkercad ou hardware) → Implementação (versão funcional mínima, o MVP) → Testes e ajustes (feedback e iterações).</p>
+              <p class="citation">"A metodologia de prototipagem foi adotada para validar a viabilidade técnica do sistema proposto, permitindo ajustes iterativos a partir de testes práticos."</p>
+            </div>
+          </details>
+
+          <details class="method">
+            <summary>4. Pesquisa Aplicada</summary>
+            <div class="method-body">
+              <p><strong>Objetivo:</strong> aplicar o conhecimento teórico para resolver um problema concreto.</p>
+              <p><strong>Quando usar:</strong> sempre que o projeto tem um produto ou serviço final (apps, sensores, sistemas).</p>
+              <p class="citation">"Esta pesquisa caracteriza-se como aplicada, pois visa propor e testar uma solução tecnológica para um problema real da comunidade."</p>
+            </div>
+          </details>
+
+          <details class="method">
+            <summary>5. Pesquisa Experimental</summary>
+            <div class="method-body">
+              <p><strong>Objetivo:</strong> comprovar hipóteses por meio de testes controlados.</p>
+              <p><strong>Quando usar:</strong> quando houver medições, comparações de desempenho ou testes controlados (ex.: comparar dois sensores de umidade para verificar qual tem melhor precisão).</p>
+              <p class="citation">"A etapa experimental consistiu na coleta de dados em condições controladas para validar o funcionamento dos sensores utilizados."</p>
+            </div>
+          </details>
+
+          <details class="method">
+            <summary>6. Metodologia Mista (Integrada) — ideal para o PI</summary>
+            <div class="method-body">
+              <p><strong>Objetivo:</strong> unir mais de um tipo de metodologia de forma coerente. Ideal para projetos integradores, pois combina revisão bibliográfica (fundamentação teórica), prototipagem (validação prática) e pesquisa aplicada/exploratória (contextualização do problema).</p>
+              <p class="citation">"A metodologia adotada é de natureza mista, envolvendo uma revisão bibliográfica para embasamento teórico e o desenvolvimento de um protótipo funcional. O estudo possui caráter exploratório e aplicado, com enfoque na resolução de um problema real utilizando recursos tecnológicos."</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ETAPA 6 -->
+    <section class="step-card" id="etapa-6">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <h3>Resultados e Discussão</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <p>Apresentar o que foi alcançado, comparando com os objetivos definidos na Introdução.</p>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Como escrever</h4>
+          <ul>
+            <li>Incluir tabelas, gráficos, prints de telas, fotos do protótipo ou métricas coletadas;</li>
+            <li>Sempre interpretar os resultados, não apenas exibi-los;</li>
+            <li>Relacionar cada resultado ao objetivo que ele atende.</li>
+          </ul>
+          <div class="example-box">"Os dados mostram que...", "Com a solução proposta foi possível..."</div>
+        </div>
+        <div class="warn-box"><strong>⚠️ Erro comum a evitar:</strong> apenas listar resultados sem analisá-los. Cada tabela ou gráfico precisa de um parágrafo de interpretação.</div>
+      </div>
+    </section>
+
+    <!-- ETAPA 7 -->
+    <section class="step-card" id="etapa-7">
+      <div class="step-header">
+        <div class="step-num">7</div>
+        <h3>Conclusão</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <ul>
+            <li>Síntese do trabalho realizado;</li>
+            <li>Principais aprendizados da equipe;</li>
+            <li>Limitações encontradas no caminho;</li>
+            <li>Sugestões para trabalhos futuros.</li>
+          </ul>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Como escrever</h4>
+          <p>Texto corrido, retomando o problema inicial e mostrando se o objetivo foi cumprido.</p>
+        </div>
+        <div class="tip-box"><strong>💡 Dica:</strong> evite introduzir ideias novas aqui — a conclusão fecha o que já foi apresentado.</div>
+      </div>
+    </section>
+
+    <!-- ETAPA 8 -->
+    <section class="step-card" id="etapa-8">
+      <div class="step-header">
+        <div class="step-num">8</div>
+        <h3>Referências (Bibliografia)</h3>
+      </div>
+      <div class="step-body">
+        <div class="step-block">
+          <h4>📝 O que escrever</h4>
+          <p>Lista de todas as fontes citadas ao longo do trabalho, no padrão <strong>ABNT (NBR 6023)</strong>, em ordem alfabética.</p>
+        </div>
+        <div class="step-block">
+          <h4>✍️ Formatos mais usados</h4>
+          <p><strong>Livro:</strong></p>
+          <span class="ref-format">SOBRENOME, Nome. Título do livro. Edição. Local: Editora, ano.</span>
+          <p style="margin-top: 0.75rem;"><strong>Artigo:</strong></p>
+          <span class="ref-format">SOBRENOME, Nome. Título do artigo. Nome da Revista, v., n., p., ano.</span>
+          <p style="margin-top: 0.75rem;"><strong>Site:</strong></p>
+          <span class="ref-format">AUTOR (ou INSTITUIÇÃO). Título. Disponível em: &lt;link&gt;. Acesso em: data.</span>
+        </div>
+        <div class="step-block">
+          <h4>📚 Referências recomendadas pelo professor</h4>
+          <ul>
+            <li>PRESSMAN, Roger S.; MAXIM, Bruce R. Engenharia de Software. 9. ed. McGraw Hill Brasil, 2021.</li>
+            <li>SOMMERVILLE, Ian. Engenharia de Software. 10. ed. São Paulo: Pearson Education do Brasil, 2019.</li>
+            <li>DUARTE, Luiz. Scrum e Métodos Ágeis: um guia prático. 2016.</li>
+            <li>SANTOS, Gerson Tontini dos. Modelagem de Sistemas de Informação. São Paulo: Érica, 2013.</li>
+            <li>SILVA, Marco Aurélio. Análise e Projeto de Sistemas: enfoque em modelagem UML. São Paulo: Atlas, 2011.</li>
+            <li>BOOCH, Grady. UML: guia do usuário. Elsevier Brasil, 2006.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKLIST FINAL -->
+    <section class="card">
+      <h2>✅ Checklist antes de entregar</h2>
+      <div class="step-block">
+        <ul>
+          <li>O documento contém todos os capítulos: capa, resumo, introdução, revisão de literatura, metodologia, resultados, conclusão e referências;</li>
+          <li>O texto está na 3ª pessoa, com linguagem formal, clara e objetiva;</li>
+          <li>Os objetivos específicos usam verbos no infinitivo;</li>
+          <li>Toda fonte citada no texto aparece nas referências (e vice-versa);</li>
+          <li>Tabelas, gráficos e imagens estão numerados e interpretados no texto;</li>
+          <li>O projeto está claramente alinhado a pelo menos uma <a href="./guia-ods.html">ODS da ONU</a>;</li>
+          <li>A versão final foi revisada por todos os integrantes da equipe.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 - Projeto Integrador | Trilha Adaptada para a Turma 301 - Prof. Euclides Paim</p>
+  </footer>
+
+</body>
+</html>

@@ -19,3 +19,11 @@ Thumbs.db
 .eslintcache
 .cache/
 .npm/
+
+# Raw Drive files
+301 - Projeto Integrador/
+301 - Projeto Integrador-20260813T114256Z-1-001.zip
+
+# Claude Code local config
+.claude/
+
