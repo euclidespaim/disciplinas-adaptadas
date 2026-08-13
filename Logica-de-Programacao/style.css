@@ -1389,3 +1389,128 @@ main {
 #recovery-tab .editor-wrapper {
   height: 350px;
 }
+
+/* --- Estilos da Seção de Slides PDF --- */
+.pdf-slides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.pdf-slide-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pdf-slide-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-teal), var(--primary-navy));
+}
+
+.pdf-slide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: #CBD5E1;
+}
+
+.pdf-slide-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.pdf-icon-wrapper {
+  background-color: #FEF2F2;
+  color: #EF4444;
+  padding: 0.6rem;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pdf-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pdf-slide-title {
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--primary-navy);
+  line-height: 1.3;
+}
+
+.pdf-slide-meta {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.pdf-slide-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pdf-btn-primary {
+  flex-grow: 1;
+  background-color: var(--accent-teal);
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.pdf-btn-primary:hover {
+  background-color: var(--accent-teal-hover);
+}
+
+.pdf-btn-secondary {
+  background-color: #F1F5F9;
+  color: var(--text-light);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+}
+
+.pdf-btn-secondary:hover {
+  background-color: #E2E8F0;
+  color: var(--primary-navy);
+}
