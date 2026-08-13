@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portal de acesso às plataformas didáticas interativas de disciplinas adaptadas para a turma 101.">
-  <title>Disciplinas Adaptadas - Turma 101</title>
+  <meta name="description" content="Portal de acesso às plataformas didáticas interativas de disciplinas adaptadas para as turmas do Prof. Euclides Paim.">
+  <title>Portal de Disciplinas Adaptadas</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 
@@ -167,6 +167,56 @@
     
     .portal-card.db::before { background-color: var(--accent-cyan); } /* Cyan */
     .portal-card.db .card-link:hover { background-color: var(--accent-cyan); }
+
+    .portal-card.pi::before { background-color: #10B981; } /* Emerald */
+    .portal-card.pi .card-link:hover { background-color: #10B981; }
+
+    /* Filtro de Turmas */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary-indigo);
+      color: var(--primary-indigo);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn.active {
+      background-color: var(--primary-indigo);
+      border-color: var(--primary-indigo);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(30, 27, 75, 0.15);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -174,15 +224,22 @@
   <header>
     <div class="header-container">
       <h1>Disciplinas <span>Adaptadas</span></h1>
-      <p>Portal de acesso às plataformas práticas de estudos da Turma 101</p>
+      <p>Portal de acesso às plataformas didáticas interativas do Prof. Euclides Paim</p>
     </div>
   </header>
 
   <main>
+    <!-- Filtro de Turmas -->
+    <div class="filter-container">
+      <button class="filter-btn active" onclick="filterTurma('all', event)">Todas as Turmas</button>
+      <button class="filter-btn" onclick="filterTurma('101', event)">Turma 101</button>
+      <button class="filter-btn" onclick="filterTurma('301', event)">Turma 301</button>
+    </div>
+
     <div class="portal-grid">
       
       <!-- Card Desenvolvimento Web -->
-      <div class="portal-card devweb">
+      <div class="portal-card devweb" data-turma="101">
         <div>
           <span class="card-icon">🎨</span>
           <h2 class="card-title">Desenvolvimento Web</h2>
@@ -192,7 +249,7 @@
       </div>
 
       <!-- Card Lógica de Programação -->
-      <div class="portal-card python">
+      <div class="portal-card python" data-turma="101">
         <div>
           <span class="card-icon">🐍</span>
           <h2 class="card-title">Lógica de Programação</h2>
@@ -202,7 +259,7 @@
       </div>
 
       <!-- Card Banco de Dados -->
-      <div class="portal-card db">
+      <div class="portal-card db" data-turma="101">
         <div>
           <span class="card-icon">🗄️</span>
           <h2 class="card-title">Banco de Dados</h2>
@@ -211,12 +268,44 @@
         <a href="./Banco-de-Dados/index.html" class="card-link">Acessar Trilha ➔</a>
       </div>
 
+      <!-- Card Projeto Integrador -->
+      <div class="portal-card pi" data-turma="301">
+        <div>
+          <span class="card-icon">🌍</span>
+          <h2 class="card-title">Projeto Integrador</h2>
+          <p class="card-desc">Desenvolva soluções práticas para problemas reais da sua comunidade alinhadas aos Objetivos de Desenvolvimento Sustentável (ODS) da ONU.</p>
+        </div>
+        <a href="./Projeto-Integrador/index.html" class="card-link">Acessar Trilha ➔</a>
+      </div>
+
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2026 - Disciplinas Adaptadas | Prof. Euclides Paim - Turma 101</p>
+    <p>&copy; 2026 - Disciplinas Adaptadas | Prof. Euclides Paim</p>
   </footer>
+
+  <script>
+    function filterTurma(turma, event) {
+      // Atualiza botão ativo
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+
+      // Filtra os cards
+      const cards = document.querySelectorAll('.portal-card');
+      cards.forEach(card => {
+        const cardTurma = card.getAttribute('data-turma');
+        if (turma === 'all' || cardTurma === turma) {
+          card.style.display = 'flex';
+          card.style.animation = 'fadeIn 0.3s ease forwards';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
