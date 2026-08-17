@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma didática de Desenvolvimento de Sistemas: análise de requisitos, modelagem UML, arquitetura e engenharia de software. Prof. Euclides Paim.">
+  <title>Desenvolvimento de Sistemas</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-cream: #FAF9F6;
+      --primary-indigo: #1E1B4B;
+      --accent: #8B5CF6;
+      --accent-soft: #EDE9FE;
+      --text-main: #0F172A;
+      --text-light: #475569;
+      --border-color: #E2E8F0;
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 1.5rem;
+    }
+
+    header h1 span { color: var(--accent); }
+
+    header p { font-size: 0.85rem; color: var(--text-light); }
+
+    .back-btn {
+      background-color: #F3F4F6;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover { background-color: var(--primary-indigo); color: white; }
+
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(30, 27, 75, 0.05);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 6px solid var(--accent);
+    }
+
+    .hero .icon { font-size: 3.5rem; display: block; margin-bottom: 0.75rem; }
+
+    .hero h2 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .construction-badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background-color: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 30px;
+    }
+
+    .card h3 {
+      font-family: var(--font-title);
+      color: var(--primary-indigo);
+      margin-bottom: 0.75rem;
+    }
+
+    .card > p { color: var(--text-light); margin-bottom: 1rem; }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .topic {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background-color: var(--accent-soft);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .topic .emoji { font-size: 1.5rem; }
+
+    .topic strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--primary-indigo);
+      font-family: var(--font-title);
+    }
+
+    .topic span { font-size: 0.85rem; color: var(--text-light); }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      background-color: white;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>⚙️ Desenvolvimento de <span>Sistemas</span></h1>
+      <p>Prof. Euclides Paim</p>
+    </div>
+    <a href="../index.html" class="back-btn">← Portal de Disciplinas</a>
+  </header>
+
+  <main>
+
+    <section class="card hero">
+      <span class="icon">⚙️</span>
+      <h2>Bem-vindo a Desenvolvimento de Sistemas!</h2>
+      <p>Nesta disciplina você vai aprender a transformar necessidades reais em software bem projetado: do levantamento de requisitos à modelagem, arquitetura e construção de sistemas completos.</p>
+      <span class="construction-badge">🚧 Plataforma em construção — o conteúdo interativo chega em breve!</span>
+    </section>
+
+    <section class="card">
+      <h3>🎯 O que você vai aprender</h3>
+      <p>A trilha da disciplina abordará as etapas do ciclo de vida de um sistema:</p>
+      <div class="topics-grid">
+        <div class="topic">
+          <span class="emoji">🔍</span>
+          <div>
+            <strong>Análise de Requisitos</strong>
+            <span>Entrevistar usuários, levantar necessidades e escrever requisitos funcionais e não funcionais.</span>
+          </div>
+        </div>
+        <div class="topic">
+          <span class="emoji">📐</span>
+          <div>
+            <strong>Modelagem UML</strong>
+            <span>Diagramas de casos de uso, classes e sequência para representar o sistema antes de programar.</span>
+          </div>
+        </div>
+        <div class="topic">
+          <span class="emoji">🏗️</span>
+          <div>
+            <strong>Arquitetura de Sistemas</strong>
+            <span>Organizar as camadas da aplicação: interface, regras de negócio e persistência de dados.</span>
+          </div>
+        </div>
+        <div class="topic">
+          <span class="emoji">🧪</span>
+          <div>
+            <strong>Testes e Qualidade</strong>
+            <span>Planejar e executar testes para garantir que o sistema faz o que deveria fazer.</span>
+          </div>
+        </div>
+        <div class="topic">
+          <span class="emoji">🔀</span>
+          <div>
+            <strong>Versionamento</strong>
+            <span>Controlar a evolução do código com Git e GitHub, trabalhando em equipe.</span>
+          </div>
+        </div>
+        <div class="topic">
+          <span class="emoji">📋</span>
+          <div>
+            <strong>Metodologias Ágeis</strong>
+            <span>Organizar o trabalho com Scrum e Kanban, entregando valor em ciclos curtos.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 - Desenvolvimento de Sistemas | Portal de Disciplinas - Prof. Euclides Paim</p>
+  </footer>
+
+</body>
+</html>
