@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portal de acesso às plataformas didáticas interativas de disciplinas adaptadas para as turmas do Prof. Euclides Paim.">
-  <title>Portal de Disciplinas Adaptadas</title>
+  <meta name="description" content="Portal de acesso às plataformas didáticas interativas das disciplinas do Prof. Euclides Paim.">
+  <title>Portal de Disciplinas</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
@@ -172,7 +172,25 @@
     .portal-card.pi::before { background-color: #10B981; } /* Emerald */
     .portal-card.pi .card-link:hover { background-color: #10B981; }
 
-    /* Filtro de Turmas */
+    .portal-card.devsis::before { background-color: #8B5CF6; } /* Violet */
+    .portal-card.devsis .card-link:hover { background-color: #8B5CF6; }
+
+    .portal-card.appdev::before { background-color: #3B82F6; } /* Blue */
+    .portal-card.appdev .card-link:hover { background-color: #3B82F6; }
+
+    .construction-tag {
+      display: inline-block;
+      background-color: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Filtro por Área */
     .filter-container {
       display: flex;
       justify-content: center;
@@ -224,23 +242,25 @@
 
   <header>
     <div class="header-container">
-      <h1>Disciplinas <span>Adaptadas</span></h1>
-      <p>Portal de acesso às plataformas didáticas interativas do Prof. Euclides Paim</p>
+      <h1>Portal de <span>Disciplinas</span></h1>
+      <p>Plataformas didáticas interativas do Prof. Euclides Paim</p>
     </div>
   </header>
 
   <main>
-    <!-- Filtro de Turmas -->
+    <!-- Filtro por Área -->
     <div class="filter-container">
-      <button class="filter-btn active" onclick="filterTurma('all', event)">Todas as Turmas</button>
-      <button class="filter-btn" onclick="filterTurma('101', event)">Turma 101</button>
-      <button class="filter-btn" onclick="filterTurma('301', event)">Turma 301</button>
+      <button class="filter-btn active" onclick="filterArea('all', event)">Todas as Áreas</button>
+      <button class="filter-btn" onclick="filterArea('programacao', event)">Programação</button>
+      <button class="filter-btn" onclick="filterArea('web', event)">Web</button>
+      <button class="filter-btn" onclick="filterArea('dados', event)">Dados</button>
+      <button class="filter-btn" onclick="filterArea('sistemas', event)">Sistemas &amp; Projetos</button>
     </div>
 
     <div class="portal-grid">
       
       <!-- Card Desenvolvimento Web -->
-      <div class="portal-card devweb" data-turma="101">
+      <div class="portal-card devweb" data-area="web">
         <div>
           <span class="card-icon">🎨</span>
           <h2 class="card-title">Desenvolvimento Web</h2>
@@ -250,7 +270,7 @@
       </div>
 
       <!-- Card Lógica de Programação -->
-      <div class="portal-card python" data-turma="101">
+      <div class="portal-card python" data-area="programacao">
         <div>
           <span class="card-icon">🐍</span>
           <h2 class="card-title">Lógica de Programação</h2>
@@ -260,7 +280,7 @@
       </div>
 
       <!-- Card Banco de Dados -->
-      <div class="portal-card db" data-turma="101">
+      <div class="portal-card db" data-area="dados">
         <div>
           <span class="card-icon">🗄️</span>
           <h2 class="card-title">Banco de Dados</h2>
@@ -270,7 +290,7 @@
       </div>
 
       <!-- Card Projeto Integrador -->
-      <div class="portal-card pi" data-turma="301">
+      <div class="portal-card pi" data-area="sistemas">
         <div>
           <span class="card-icon">🌍</span>
           <h2 class="card-title">Projeto Integrador</h2>
@@ -279,15 +299,37 @@
         <a href="./Projeto-Integrador/index.html" class="card-link">Acessar Trilha ➔</a>
       </div>
 
+      <!-- Card Desenvolvimento de Sistemas -->
+      <div class="portal-card devsis" data-area="sistemas">
+        <div>
+          <span class="card-icon">⚙️</span>
+          <h2 class="card-title">Desenvolvimento de Sistemas</h2>
+          <span class="construction-tag">Em construção</span>
+          <p class="card-desc">Analise requisitos, modele sistemas com UML e projete a arquitetura de software completo, do planejamento aos testes.</p>
+        </div>
+        <a href="https://euclidespaim.github.io/desenvolvimento-de-sistemas/" class="card-link">Acessar Trilha ➔</a>
+      </div>
+
+      <!-- Card Programação de Aplicativos -->
+      <div class="portal-card appdev" data-area="programacao">
+        <div>
+          <span class="card-icon">📱</span>
+          <h2 class="card-title">Programação de Aplicativos</h2>
+          <span class="construction-tag">Em construção</span>
+          <p class="card-desc">Crie aplicativos do zero: interfaces, lógica, consumo de APIs e publicação de apps para dispositivos móveis.</p>
+        </div>
+        <a href="https://euclidespaim.github.io/programacao-de-aplicativos/" class="card-link">Acessar Trilha ➔</a>
+      </div>
+
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2026 - Disciplinas Adaptadas | Prof. Euclides Paim</p>
+    <p>&copy; 2026 - Portal de Disciplinas | Prof. Euclides Paim</p>
   </footer>
 
   <script>
-    function filterTurma(turma, event) {
+    function filterArea(area, event) {
       // Atualiza botão ativo
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -297,8 +339,8 @@
       // Filtra os cards
       const cards = document.querySelectorAll('.portal-card');
       cards.forEach(card => {
-        const cardTurma = card.getAttribute('data-turma');
-        if (turma === 'all' || cardTurma === turma) {
+        const cardArea = card.getAttribute('data-area');
+        if (area === 'all' || cardArea === area) {
           card.style.display = 'flex';
           card.style.animation = 'fadeIn 0.3s ease forwards';
         } else {
