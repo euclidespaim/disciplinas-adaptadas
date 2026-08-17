@@ -1337,8 +1337,12 @@ window.runAndValidateExamCode = function() {
 // ==========================================================
 const EMAILJS_CONFIG = {
   serviceId: 'service_9u2sac8',
-  templateId: 'COLE_AQUI_O_TEMPLATE_ID',
-  publicKey: 'COLE_AQUI_A_PUBLIC_KEY'
+  templateId: 'template_yew74so',
+  publicKey: 'krM3uc38ucTfqux-q',
+  // O template usa {{email}} como destinatário. O ideal é fixar o endereço
+  // direto no campo "To Email" do template, no painel do EmailJS — assim o
+  // destino não depende do código da página.
+  destinatario: 'euclidespaim@gmail.com'
 };
 
 function emailJsConfigurado() {
@@ -1367,6 +1371,7 @@ function montarRelatorioExame() {
   }).join('\n\n');
 
   return {
+    email: EMAILJS_CONFIG.destinatario,
     aluno_1: nome1,
     aluno_2: nome2,
     data_envio: new Date().toLocaleString('pt-BR'),
