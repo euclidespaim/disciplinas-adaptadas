@@ -775,164 +775,202 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
   ],
 
   // Banco da Avaliação 1 Prática (3 Questões Prova)
+  // Conteúdo restrito ao que é ensinado na Teoria:
+  // Módulo 1 (seletores de classe, color, background-color, Box Model) e Módulo 2 (Flexbox).
   exam: [
     {
       id: 1,
-      name: "Questão 1: Botão Customizado de Ação 🔘",
-      description: "Crie um botão (<code>&lt;button&gt;</code>) com a classe <code>btn-acao</code> e o texto 'Clique Aqui'. No bloco CSS, estilize o botão para ter:<br>• Cor de fundo azul (<code>blue</code>) e cor de texto branca (<code>white</code>).<br>• Preenchimento interno (<code>padding</code>) de <code>10px</code> na vertical e <code>20px</code> na horizontal.<br>• Sem borda externa (<code>border: none</code>).",
-      starterCode: `<style>\n  /* Estilize o botão .btn-acao abaixo: */\n  \n</style>\n\n<!-- Crie o botão com a classe btn-acao abaixo: -->\n`,
+      name: "Questão 1: Botão de Ação",
+      description: "Crie um botão e pinte as suas cores.<br><br><strong>Passo 1.</strong> Crie um <code>&lt;button&gt;</code> com a classe <code>btn-acao</code>.<br><strong>Passo 2.</strong> Escreva dentro dele o texto <code>Clique Aqui</code>.<br><strong>Passo 3.</strong> No CSS, na regra <code>.btn-acao</code>, escreva:<br>• <code>background-color: blue;</code><br>• <code>color: white;</code><br>• <code>padding: 20px;</code>",
+      starterCode: `<style>
+  .btn-acao {
+    /* Passo 3: escreva as 3 regras aqui */
+
+  }
+</style>
+
+<!-- Passos 1 e 2: crie o botão aqui -->
+`,
       testCases: [
         {
           id: 1,
-          label: "Existe o botão com a classe btn-acao?",
+          label: "Existe um <button> com a classe btn-acao?",
           validate: (doc) => doc.querySelector('button.btn-acao') !== null
         },
         {
           id: 2,
           label: "O texto do botão é 'Clique Aqui'?",
-          validate: (doc) => doc.querySelector('button.btn-acao')?.innerText.trim() === "Clique Aqui"
-        },
-        {
-          id: 3,
-          label: "Fundo azul e texto branco?",
           validate: (doc) => {
             const btn = doc.querySelector('button.btn-acao');
             if (!btn) return false;
-            const style = window.getComputedStyle(btn);
-            const isBlue = style.backgroundColor === "rgb(0, 0, 255)" || style.backgroundColor === "blue";
-            const isWhite = style.color === "rgb(255, 255, 255)" || style.color === "white";
-            return isBlue && isWhite;
+            return btn.textContent.trim().toLowerCase() === "clique aqui";
+          }
+        },
+        {
+          id: 3,
+          label: "A cor de fundo é azul (blue)?",
+          validate: (doc) => {
+            const btn = doc.querySelector('button.btn-acao');
+            if (!btn) return false;
+            return window.getComputedStyle(btn).backgroundColor === "rgb(0, 0, 255)";
           }
         },
         {
           id: 4,
-          label: "Padding vertical 10px e horizontal 20px?",
+          label: "A cor do texto é branca (white)?",
           validate: (doc) => {
             const btn = doc.querySelector('button.btn-acao');
             if (!btn) return false;
-            const style = window.getComputedStyle(btn);
-            return style.paddingTop === "10px" && style.paddingBottom === "10px" &&
-                   style.paddingLeft === "20px" && style.paddingRight === "20px";
+            return window.getComputedStyle(btn).color === "rgb(255, 255, 255)";
           }
         },
         {
           id: 5,
-          label: "Sem borda (border: none)?",
+          label: "O padding é de 20px?",
           validate: (doc) => {
             const btn = doc.querySelector('button.btn-acao');
             if (!btn) return false;
-            const style = window.getComputedStyle(btn);
-            return style.borderStyle === "none" || style.borderWidth === "0px";
+            const s = window.getComputedStyle(btn);
+            return s.paddingTop === "20px" && s.paddingRight === "20px" &&
+                   s.paddingBottom === "20px" && s.paddingLeft === "20px";
           }
         }
       ]
     },
     {
       id: 2,
-      name: "Questão 2: Lista de Tarefas sem Marcadores 📋",
-      description: "Crie uma lista não ordenada (<code>&lt;ul&gt;</code>) contendo três itens de lista (<code>&lt;li&gt;</code>) com os seguintes textos exatos em ordem: 'Aprender HTML', 'Aprender CSS' e 'Criar Sites'. No CSS:<br>• Remova as bolinhas padrão da lista (<code>list-style-type: none</code>).<br>• Adicione um espaçamento inferior (<code>margin-bottom</code>) de <code>8px</code> a cada item <code>li</code>.",
-      starterCode: `<style>\n  /* Remova as bolinhas da lista ul e adicione margem aos itens li abaixo: */\n  \n</style>\n\n<!-- Crie a lista ul com os três itens li abaixo: -->\n`,
+      name: "Questão 2: Caixa com Box Model",
+      description: "Monte uma caixa usando as camadas do Box Model.<br><br><strong>Passo 1.</strong> Crie uma <code>&lt;div&gt;</code> com a classe <code>cartao</code>.<br><strong>Passo 2.</strong> Escreva dentro dela o texto <code>Meu Cartao</code>.<br><strong>Passo 3.</strong> No CSS, na regra <code>.cartao</code>, escreva:<br>• <code>width: 250px;</code><br>• <code>padding: 20px;</code><br>• <code>border: 2px solid black;</code><br>• <code>margin: 15px;</code>",
+      starterCode: `<style>
+  .cartao {
+    /* Passo 3: escreva as 4 regras aqui */
+
+  }
+</style>
+
+<!-- Passos 1 e 2: crie a div aqui -->
+`,
       testCases: [
         {
           id: 1,
-          label: "Existe a tag <ul>?",
-          validate: (doc) => doc.querySelector('ul') !== null
+          label: "Existe uma <div> com a classe cartao?",
+          validate: (doc) => doc.querySelector('div.cartao') !== null
         },
         {
           id: 2,
-          label: "Existem 3 itens <li> internos?",
-          validate: (doc) => doc.querySelectorAll('ul li').length === 3
+          label: "O texto da div é 'Meu Cartao'?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.cartao');
+            if (!el) return false;
+            return el.textContent.trim().toLowerCase() === "meu cartao";
+          }
         },
         {
           id: 3,
-          label: "Textos dos itens <li> estão corretos?",
+          label: "A largura (width) é de 250px?",
           validate: (doc) => {
-            const lis = doc.querySelectorAll('ul li');
-            if (lis.length !== 3) return false;
-            return lis[0].innerText.trim() === "Aprender HTML" &&
-                   lis[1].innerText.trim() === "Aprender CSS" &&
-                   lis[2].innerText.trim() === "Criar Sites";
+            const el = doc.querySelector('div.cartao');
+            if (!el) return false;
+            return window.getComputedStyle(el).width === "250px";
           }
         },
         {
           id: 4,
-          label: "Marcadores removidos da lista?",
+          label: "O padding é de 20px?",
           validate: (doc) => {
-            const ul = doc.querySelector('ul');
-            const li = doc.querySelector('ul li');
-            if (!ul || !li) return false;
-            return window.getComputedStyle(ul).listStyleType === "none" ||
-                   window.getComputedStyle(li).listStyleType === "none";
+            const el = doc.querySelector('div.cartao');
+            if (!el) return false;
+            const s = window.getComputedStyle(el);
+            return s.paddingTop === "20px" && s.paddingLeft === "20px";
           }
         },
         {
           id: 5,
-          label: "Espaçamento inferior (margin-bottom: 8px) nos itens li?",
+          label: "A borda é preta, sólida e de 2px?",
           validate: (doc) => {
-            const li = doc.querySelector('ul li');
-            if (!li) return false;
-            return window.getComputedStyle(li).marginBottom === "8px";
+            const el = doc.querySelector('div.cartao');
+            if (!el) return false;
+            const s = window.getComputedStyle(el);
+            return s.borderTopWidth === "2px" &&
+                   s.borderTopStyle === "solid" &&
+                   s.borderTopColor === "rgb(0, 0, 0)";
+          }
+        },
+        {
+          id: 6,
+          label: "A margem (margin) é de 15px?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.cartao');
+            if (!el) return false;
+            const s = window.getComputedStyle(el);
+            return s.marginTop === "15px" && s.marginLeft === "15px";
           }
         }
       ]
     },
     {
       id: 3,
-      name: "Questão 3: Layout de Destaque com Borda 💎",
-      description: "Crie uma seção (<code>&lt;section&gt;</code>) com o ID <code>destaque</code>. Dentro dela, insira um título <code>&lt;h2&gt;Aviso Urgente&lt;/h2&gt;</code> e um parágrafo <code>&lt;p&gt;Matrículas abertas.&lt;/p&gt;</code>. No CSS, estilize:<br>• A seção <code>#destaque</code> deve ter fundo amarelo claro (use cor <code>lightyellow</code> ou <code>#ffffcc</code>) e uma borda lateral esquerda sólida vermelha de <code>5px</code> (<code>border-left: 5px solid red</code>).<br>• O título <code>h2</code> dentro do destaque deve ter cor vermelha (<code>red</code>).",
-      starterCode: `<style>\n  /* Estilize o ID #destaque e o h2 interno abaixo: */\n  \n</style>\n\n<!-- Crie a section #destaque com h2 e p abaixo: -->\n`,
+      name: "Questão 3: Painel Alinhado com Flexbox",
+      description: "Use o Flexbox para alinhar três caixas lado a lado.<br><br><strong>Passo 1.</strong> Crie uma <code>&lt;div&gt;</code> com a classe <code>painel</code>.<br><strong>Passo 2.</strong> Dentro dela, crie <strong>3</strong> elementos <code>&lt;div&gt;</code>.<br><strong>Passo 3.</strong> No CSS, na regra <code>.painel</code>, escreva:<br>• <code>display: flex;</code><br>• <code>justify-content: space-between;</code><br>• <code>align-items: center;</code><br>• <code>gap: 16px;</code>",
+      starterCode: `<style>
+  .painel {
+    /* Passo 3: escreva as 4 regras aqui */
+
+  }
+</style>
+
+<!-- Passos 1 e 2: crie a div .painel com 3 divs dentro -->
+`,
       testCases: [
         {
           id: 1,
-          label: "Existe a <section id=\"destaque\">?",
-          validate: (doc) => doc.querySelector('section#destaque') !== null
+          label: "Existe uma <div> com a classe painel?",
+          validate: (doc) => doc.querySelector('div.painel') !== null
         },
         {
           id: 2,
-          label: "Possui h2 e p dentro da section?",
+          label: "Existem 3 <div> dentro do painel?",
           validate: (doc) => {
-            const sec = doc.querySelector('section#destaque');
-            if (!sec) return false;
-            return sec.querySelector('h2') !== null && sec.querySelector('p') !== null;
+            const el = doc.querySelector('div.painel');
+            if (!el) return false;
+            return el.querySelectorAll(':scope > div').length === 3;
           }
         },
         {
           id: 3,
-          label: "Fundo amarelo claro na section?",
+          label: "O painel usa display: flex?",
           validate: (doc) => {
-            const sec = doc.querySelector('section#destaque');
-            if (!sec) return false;
-            const bg = window.getComputedStyle(sec).backgroundColor;
-            if (!bg || bg === "transparent" || bg === "rgba(0, 0, 0, 0)") return false;
-            const rgb = bg.match(/\d+/g);
-            if (!rgb || rgb.length < 3) return false;
-            const r = parseInt(rgb[0]);
-            const g = parseInt(rgb[1]);
-            const b = parseInt(rgb[2]);
-            return r > 200 && g > 200 && b < 240;
+            const el = doc.querySelector('div.painel');
+            if (!el) return false;
+            return window.getComputedStyle(el).display === "flex";
           }
         },
         {
           id: 4,
-          label: "Borda esquerda vermelha sólida de 5px?",
+          label: "O justify-content é space-between?",
           validate: (doc) => {
-            const sec = doc.querySelector('section#destaque');
-            if (!sec) return false;
-            const style = window.getComputedStyle(sec);
-            const isRed = style.borderLeftColor === "rgb(255, 0, 0)" || style.borderLeftColor === "red";
-            const isSolid = style.borderLeftStyle === "solid";
-            const is5px = style.borderLeftWidth === "5px";
-            return isRed && isSolid && is5px;
+            const el = doc.querySelector('div.painel');
+            if (!el) return false;
+            return window.getComputedStyle(el).justifyContent === "space-between";
           }
         },
         {
           id: 5,
-          label: "O h2 interno possui cor vermelha?",
+          label: "O align-items é center?",
           validate: (doc) => {
-            const h2 = doc.querySelector('section#destaque h2');
-            if (!h2) return false;
-            const color = window.getComputedStyle(h2).color;
-            return color === "rgb(255, 0, 0)" || color === "red";
+            const el = doc.querySelector('div.painel');
+            if (!el) return false;
+            return window.getComputedStyle(el).alignItems === "center";
+          }
+        },
+        {
+          id: 6,
+          label: "O gap é de 16px?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.painel');
+            if (!el) return false;
+            const s = window.getComputedStyle(el);
+            return s.gap === "16px" || s.rowGap === "16px" || s.columnGap === "16px";
           }
         }
       ]

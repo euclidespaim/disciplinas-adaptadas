@@ -1309,14 +1309,133 @@ window.runAndValidateExamCode = function() {
   renderExamList();
   
   if (resultsPanel) {
-    let headerHtml = valResult.success ? `<div class="results-header" style="color: var(--color-success)">✅ Questão Aprovada!</div>` : `<div class="results-header" style="color: var(--color-error)">❌ Correção necessária.</div>`;
-    resultsPanel.innerHTML = `${headerHtml}`;
+    // Mostra o resultado item a item para que o aluno saiba exatamente o que falta ajustar.
+    const feitos = valResult.results.filter(r => r.pass).length;
+    const total = valResult.results.length;
+
+    const headerHtml = valResult.success
+      ? `<div class="results-header" style="color: var(--color-success)">✅ Questão Aprovada! (${feitos} de ${total})</div>`
+      : `<div class="results-header" style="color: var(--color-error)">Faltam ajustes: ${feitos} de ${total} itens prontos.</div>`;
+
+    const listHtml = valResult.results.map(r => `
+      <li style="display: flex; gap: 0.5rem; align-items: flex-start; padding: 0.35rem 0;">
+        <span aria-hidden="true">${r.pass ? '✅' : '⬜'}</span>
+        <span style="color: ${r.pass ? 'var(--color-success)' : 'var(--text-light)'}">
+          ${r.label}${r.error ? ` <em style="opacity:.75">(${r.error})</em>` : ''}
+        </span>
+      </li>`).join('');
+
+    resultsPanel.innerHTML = `
+      ${headerHtml}
+      <ul style="list-style: none; margin: 0.75rem 0 0; padding: 0;">${listHtml}</ul>`;
     resultsPanel.classList.add('visible');
   }
 };
 
+// ==========================================================
+// ENTREGA DA AVALIAÇÃO (EmailJS)
+// ==========================================================
+const EMAILJS_CONFIG = {
+  serviceId: 'service_9u2sac8',
+  templateId: 'COLE_AQUI_O_TEMPLATE_ID',
+  publicKey: 'COLE_AQUI_A_PUBLIC_KEY'
+};
+
+function emailJsConfigurado() {
+  return typeof emailjs !== 'undefined' &&
+         !EMAILJS_CONFIG.templateId.startsWith('COLE_AQUI') &&
+         !EMAILJS_CONFIG.publicKey.startsWith('COLE_AQUI');
+}
+
+// Monta o relatório que o professor recebe por e-mail.
+function montarRelatorioExame() {
+  const nome1 = (STATE.progress.examName1 || "").trim() || "(não informado)";
+  const nome2 = (STATE.progress.examName2 || "").trim() || "(sem dupla)";
+  const aprovadas = SITE_DATA.exam.filter(q => STATE.progress.examResults[q.id]).length;
+
+  const blocos = SITE_DATA.exam.map(q => {
+    const ok = STATE.progress.examResults[q.id];
+    const codigo = (STATE.progress.examCodes[q.id] || "").trim() || "(nenhum código enviado)";
+    return [
+      `--------------------------------------------------`,
+      `${q.name}`,
+      `Resultado: ${ok ? 'APROVADA' : 'NAO APROVADA'}`,
+      ``,
+      `Código enviado:`,
+      codigo
+    ].join('\n');
+  }).join('\n\n');
+
+  return {
+    aluno_1: nome1,
+    aluno_2: nome2,
+    data_envio: new Date().toLocaleString('pt-BR'),
+    resumo: `${aprovadas} de ${SITE_DATA.exam.length} questões aprovadas`,
+    detalhes: blocos
+  };
+}
+
+function mostrarStatusEnvio(texto, tipo) {
+  const el = document.getElementById('exam-send-status');
+  if (!el) return;
+  const cores = {
+    enviando: ['#EFF6FF', '#1D4ED8'],
+    erro:     ['#FEF2F2', '#B91C1C'],
+    ok:       ['#F0FDF4', '#166534']
+  };
+  const [bg, fg] = cores[tipo] || cores.enviando;
+  el.style.display = 'block';
+  el.style.backgroundColor = bg;
+  el.style.color = fg;
+  el.textContent = texto;
+}
+
+// Fallback: se o e-mail falhar, o aluno baixa o relatório e entrega por outro meio.
+function baixarRelatorioExame() {
+  const r = montarRelatorioExame();
+  const texto = [
+    `AVALIACAO 1 - DESENVOLVIMENTO WEB`,
+    `Aluno(a) 1: ${r.aluno_1}`,
+    `Aluno(a) 2: ${r.aluno_2}`,
+    `Data: ${r.data_envio}`,
+    `Resultado: ${r.resumo}`,
+    ``,
+    r.detalhes
+  ].join('\n');
+
+  const nomeArquivo = `avaliacao_devweb_${r.aluno_1.toLowerCase().replace(/\s+/g, '_')}.txt`;
+  const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = nomeArquivo;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+window.baixarRelatorioExame = baixarRelatorioExame;
+
 window.openExamReview = function() {
   const modal = document.getElementById('exam-review-modal');
+  const resumo = document.getElementById('exam-review-summary');
+  const status = document.getElementById('exam-send-status');
+
+  if (status) status.style.display = 'none';
+
+  if (resumo) {
+    const nome1 = (STATE.progress.examName1 || "").trim() || "(não informado)";
+    const nome2 = (STATE.progress.examName2 || "").trim() || "(sem dupla)";
+    const linhas = SITE_DATA.exam.map(q => {
+      const ok = STATE.progress.examResults[q.id];
+      return `<li style="padding: 0.3rem 0;">${ok ? '✅' : '⬜'} ${q.name}</li>`;
+    }).join('');
+
+    resumo.innerHTML = `
+      <p style="margin-bottom: 0.75rem;"><strong>Aluno(a) 1:</strong> ${nome1}<br><strong>Aluno(a) 2:</strong> ${nome2}</p>
+      <p style="margin-bottom: 0.35rem;">Situação das questões:</p>
+      <ul style="list-style: none; margin: 0 0 1rem; padding: 0;">${linhas}</ul>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Ao confirmar, a sua prova será enviada por e-mail para o professor. Depois disso não é possível alterar as respostas.</p>`;
+  }
+
   if (modal) modal.style.display = 'flex';
 };
 
@@ -1325,9 +1444,50 @@ window.closeExamReview = function() {
   if (modal) modal.style.display = 'none';
 };
 
-window.submitExamFinal = function() {
-  STATE.progress.examSubmitted = true;
-  saveProgress();
-  closeExamReview();
-  refreshExamUI();
+window.submitExamFinal = async function() {
+  const btn = document.getElementById('exam-submit-btn');
+  const btnVoltar = document.getElementById('exam-review-back');
+
+  if (!emailJsConfigurado()) {
+    mostrarStatusEnvio('O envio por e-mail ainda não está configurado. Avise o professor e baixe o relatório para entregar.', 'erro');
+    if (btn) btn.textContent = 'Baixar relatório ⬇️';
+    if (btn) btn.onclick = baixarRelatorioExame;
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+  if (btnVoltar) btnVoltar.disabled = true;
+  mostrarStatusEnvio('Enviando a sua prova. Aguarde um momento.', 'enviando');
+
+  try {
+    await emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      montarRelatorioExame(),
+      { publicKey: EMAILJS_CONFIG.publicKey }
+    );
+
+    // Só marca como entregue depois que o envio foi confirmado.
+    STATE.progress.examSubmitted = true;
+    saveProgress();
+    mostrarStatusEnvio('Prova enviada com sucesso!', 'ok');
+    setTimeout(() => { closeExamReview(); refreshExamUI(); }, 1200);
+  } catch (err) {
+    console.error('Falha no envio da avaliação:', err);
+    mostrarStatusEnvio('Não foi possível enviar agora. As suas respostas continuam salvas. Baixe o relatório e entregue ao professor, ou tente novamente.', 'erro');
+    if (btn) { btn.disabled = false; btn.textContent = 'Tentar novamente ✉️'; }
+    if (btnVoltar) btnVoltar.disabled = false;
+
+    // Oferece o download como saída garantida.
+    const status = document.getElementById('exam-send-status');
+    if (status && !document.getElementById('exam-download-fallback')) {
+      const b = document.createElement('button');
+      b.id = 'exam-download-fallback';
+      b.className = 'btn-secondary';
+      b.style.marginTop = '0.75rem';
+      b.textContent = 'Baixar relatório ⬇️';
+      b.onclick = baixarRelatorioExame;
+      status.after(b);
+    }
+  }
 };

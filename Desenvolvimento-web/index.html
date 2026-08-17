@@ -448,18 +448,20 @@
               <button onclick="closeExamReview()" class="close-btn">&times;</button>
             </div>
             <div class="modal-body">
-              <p>Confirme a entrega final da sua prova.</p>
+              <div id="exam-review-summary"></div>
+              <p id="exam-send-status" style="display: none; margin-top: 1rem; padding: 0.85rem 1rem; border-radius: 8px; font-size: 0.9rem;"></p>
             </div>
             <div class="modal-footer">
-              <button onclick="closeExamReview()" class="btn-secondary">Voltar</button>
-              <button onclick="submitExamFinal()" class="primary-btn">Confirmar Envio ✉️</button>
+              <button onclick="closeExamReview()" class="btn-secondary" id="exam-review-back">Voltar</button>
+              <button onclick="submitExamFinal()" class="primary-btn" id="exam-submit-btn">Confirmar Envio ✉️</button>
             </div>
           </div>
         </div>
 
         <div id="exam-success-card" class="card" style="display: none; text-align: center; max-width: 600px; margin: 2rem auto;">
-          <h2>🎉 Prova Entregue com Sucesso!</h2>
-          <p style="color: var(--text-light); margin-top: 1rem;">O relatório da dupla foi gerado e registrado.</p>
+          <h2>✅ Prova entregue!</h2>
+          <p style="color: var(--text-light); margin-top: 1rem;">O relatório foi enviado por e-mail para o professor.</p>
+          <p style="color: var(--text-light); margin-top: 0.5rem; font-size: 0.9rem;">Você já pode fechar esta página.</p>
         </div>
       </section>
 
@@ -472,6 +474,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="data.js"></script>
   <script src="validator.js"></script>
   <script src="app.js"></script>
