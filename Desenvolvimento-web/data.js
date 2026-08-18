@@ -1034,6 +1034,153 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
           }
         }
       ]
+    },
+    {
+      id: 4,
+      name: "Questão 4: Formulário de Cadastro",
+      description: "Monte um formulário com rótulos e campos, organizado em coluna.<br><br><strong>Passo 1.</strong> Crie um <code>&lt;form&gt;</code> com a classe <code>form-cadastro</code>.<br><strong>Passo 2.</strong> Dentro do formulário, coloque nesta ordem:<br>• <code>&lt;label for=\"nome\"&gt;Nome:&lt;/label&gt;</code><br>• <code>&lt;input type=\"text\" id=\"nome\"&gt;</code><br>• <code>&lt;label for=\"senha\"&gt;Senha:&lt;/label&gt;</code><br>• <code>&lt;input type=\"password\" id=\"senha\"&gt;</code><br>• <code>&lt;button type=\"submit\"&gt;Cadastrar&lt;/button&gt;</code><br><strong>Passo 3.</strong> No CSS, na regra <code>.form-cadastro</code>, escreva:<br>• <code>display: flex;</code><br>• <code>flex-direction: column;</code><br>• <code>gap: 8px;</code>",
+      starterCode: `<style>
+  .form-cadastro {
+    /* Passo 3: escreva as 3 regras aqui */
+
+  }
+</style>
+
+<!-- Passos 1 e 2: crie o formulário aqui -->
+`,
+      testCases: [
+        {
+          id: 1,
+          label: "Existe um <form> com a classe form-cadastro?",
+          validate: (doc) => doc.querySelector('form.form-cadastro') !== null
+        },
+        {
+          id: 2,
+          label: "Existe o campo de texto com id 'nome'?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            return f.querySelector('input[type="text"]#nome') !== null;
+          }
+        },
+        {
+          id: 3,
+          label: "Existe o campo de senha com id 'senha'?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            return f.querySelector('input[type="password"]#senha') !== null;
+          }
+        },
+        {
+          id: 4,
+          label: "Os dois <label> apontam para os campos com o atributo for?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            return f.querySelector('label[for="nome"]') !== null &&
+                   f.querySelector('label[for="senha"]') !== null;
+          }
+        },
+        {
+          id: 5,
+          label: "Existe o botão de envio (type=\"submit\")?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            return f.querySelector('button[type="submit"]') !== null;
+          }
+        },
+        {
+          id: 6,
+          label: "O formulário usa display: flex em coluna com gap de 8px?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            const s = window.getComputedStyle(f);
+            const temGap = s.gap === "8px" || s.rowGap === "8px";
+            return s.display === "flex" && s.flexDirection === "column" && temGap;
+          }
+        }
+      ]
+    },
+    {
+      id: 5,
+      name: "Questão 5: Cartão de Perfil",
+      description: "Junte tudo o que você aprendeu em um único componente: caixa, Flexbox e imagem.<br><br><strong>Passo 1.</strong> Crie uma <code>&lt;div&gt;</code> com a classe <code>perfil</code>.<br><strong>Passo 2.</strong> Dentro dela, coloque nesta ordem:<br>• <code>&lt;img class=\"foto\" src=\"https://picsum.photos/80\" alt=\"Foto\"&gt;</code><br>• <code>&lt;h3&gt;Ana Souza&lt;/h3&gt;</code><br><strong>Passo 3.</strong> No CSS, na regra <code>.perfil</code>, escreva:<br>• <code>display: flex;</code><br>• <code>align-items: center;</code><br>• <code>gap: 16px;</code><br>• <code>padding: 16px;</code><br>• <code>border: 1px solid gray;</code><br><strong>Passo 4.</strong> No CSS, na regra <code>.foto</code>, escreva:<br>• <code>width: 80px;</code><br>• <code>height: 80px;</code><br>• <code>border-radius: 50%;</code>",
+      starterCode: `<style>
+  .perfil {
+    /* Passo 3: escreva as 5 regras aqui */
+
+  }
+
+  .foto {
+    /* Passo 4: escreva as 3 regras aqui */
+
+  }
+</style>
+
+<!-- Passos 1 e 2: crie a div .perfil com a imagem e o h3 -->
+`,
+      testCases: [
+        {
+          id: 1,
+          label: "Existe uma <div> com a classe perfil?",
+          validate: (doc) => doc.querySelector('div.perfil') !== null
+        },
+        {
+          id: 2,
+          label: "Existem a imagem .foto e o <h3> dentro do perfil?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.perfil');
+            if (!el) return false;
+            return el.querySelector('img.foto') !== null && el.querySelector('h3') !== null;
+          }
+        },
+        {
+          id: 3,
+          label: "O texto do <h3> é 'Ana Souza'?",
+          validate: (doc) => {
+            const h3 = doc.querySelector('div.perfil h3');
+            if (!h3) return false;
+            return h3.textContent.trim().toLowerCase() === "ana souza";
+          }
+        },
+        {
+          id: 4,
+          label: "O perfil usa display: flex, align-items: center e gap: 16px?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.perfil');
+            if (!el) return false;
+            const s = window.getComputedStyle(el);
+            const temGap = s.gap === "16px" || s.columnGap === "16px";
+            return s.display === "flex" && s.alignItems === "center" && temGap;
+          }
+        },
+        {
+          id: 5,
+          label: "O perfil tem padding de 16px e borda cinza de 1px?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.perfil');
+            if (!el) return false;
+            const s = window.getComputedStyle(el);
+            return s.paddingTop === "16px" &&
+                   s.borderTopWidth === "1px" &&
+                   s.borderTopStyle === "solid" &&
+                   s.borderTopColor === "rgb(128, 128, 128)";
+          }
+        },
+        {
+          id: 6,
+          label: "A imagem tem 80x80 e é circular (border-radius: 50%)?",
+          validate: (doc) => {
+            const img = doc.querySelector('div.perfil img.foto');
+            if (!img) return false;
+            const s = window.getComputedStyle(img);
+            return s.width === "80px" && s.height === "80px" && s.borderRadius === "50%";
+          }
+        }
+      ]
     }
   ],
   exercisesJS: [
