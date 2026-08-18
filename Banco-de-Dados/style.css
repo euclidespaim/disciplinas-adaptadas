@@ -230,10 +230,6 @@ header {
   font-weight: 600;
 }
 
-.badge-icon {
-  font-size: 1rem;
-}
-
 /* Workspace */
 .main-workspace {
   flex-grow: 1;

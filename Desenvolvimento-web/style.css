@@ -245,10 +245,6 @@ header {
   box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
 }
 
-.nav-link .badge-icon {
-  font-size: 1rem;
-}
-
 /* Área Principal de Conteúdo (Main Workspace) */
 .main-workspace {
   flex-grow: 1;
