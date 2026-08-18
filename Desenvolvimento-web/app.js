@@ -763,18 +763,53 @@ function enableTabKeyPress(textareaId, onInputCallback) {
   const textarea = document.getElementById(textareaId);
   if (!textarea) return;
 
+  // setupChallenges/setupExam são chamados a cada troca de aba. Sem esta
+  // trava os listeners se acumulam e uma única tecla Tab passa a inserir
+  // vários recuos de uma vez.
+  if (textarea.dataset.editorConfigurado === "1") return;
+  textarea.dataset.editorConfigurado = "1";
+
+  const pre = textarea.nextElementSibling;
+
+  // O texto do textarea é transparente: o que o aluno enxerga é a camada <pre>.
+  // Se as duas rolarem separadamente, o código aparece congelado enquanto o
+  // cursor se move. Por isso a sincronia precisa acontecer em toda rolagem,
+  // e não apenas quando o conteúdo muda.
+  if (pre) {
+    textarea.addEventListener('scroll', () => syncEditorScroll(textarea, pre));
+
+    // O navegador rola o textarea para acompanhar o cursor DEPOIS dos nossos
+    // handlers; o quadro seguinte garante que a camada visível acompanhe.
+    const sincronizarNoProximoQuadro = () => {
+      requestAnimationFrame(() => syncEditorScroll(textarea, pre));
+    };
+    ['input', 'keydown', 'keyup', 'click', 'select'].forEach(evt => {
+      textarea.addEventListener(evt, sincronizarNoProximoQuadro);
+    });
+  }
+
   textarea.addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
       e.preventDefault();
-      const start = this.selectionStart;
-      const end = this.selectionEnd;
       const spaces = "  ";
-      this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start + spaces.length;
+
+      // insertText mantém o histórico de desfazer (Ctrl+Z) funcionando.
+      // Atribuir em this.value apagaria esse histórico.
+      let inserido = false;
+      try {
+        inserido = document.execCommand('insertText', false, spaces);
+      } catch (err) {
+        inserido = false;
+      }
+
+      if (!inserido) {
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + spaces.length;
+      }
 
       if (onInputCallback) onInputCallback(this.value);
-      
-      const pre = this.nextElementSibling;
       if (pre) updateEditorHighlight(this, pre);
     }
   });
