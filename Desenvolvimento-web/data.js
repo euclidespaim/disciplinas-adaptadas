@@ -14,7 +14,7 @@ const SITE_DATA = {
         {
           id: "html-basics",
           title: "1. Estrutura e Tags HTML",
-          description: "O HTML (HyperText Markup Language) constrói o esqueleto físico de páginas web. Usamos tags demarcadoras como <code>&lt;h1&gt;</code> para títulos de destaque, <code>&lt;p&gt;</code> para parágrafos e <code>&lt;a&gt;</code> para hiperlinks.",
+          description: "O HTML (HyperText Markup Language) constrói o esqueleto físico de páginas web. Usamos tags demarcadoras como <code>&lt;h1&gt;</code> para títulos de destaque, <code>&lt;p&gt;</code> para parágrafos e <code>&lt;a&gt;</code> para hiperlinks.<br>Os títulos vão de <code>&lt;h1&gt;</code> (o mais importante) até <code>&lt;h6&gt;</code> (o menos importante). Use <code>&lt;h2&gt;</code> e <code>&lt;h3&gt;</code> para subtítulos dentro da página.",
           example: `<h1>Meu Primeiro Título</h1>
 <p>Este é um parágrafo contendo um <a href="https://google.com">link externo</a>.</p>`,
           analogy: "<strong>Analogia:</strong> O HTML é a estrutura de tijolos e colunas de uma casa."
@@ -194,6 +194,7 @@ let telefone;           // undefined`,
           description: "Operadores processam e comparam dados no JS:<br>• <strong>Aritméticos:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (resto de divisão).<br>• <strong>Atribuição:</strong> <code>=</code>, <code>+=</code>, <code>-=</code>.<br>• <strong>Comparação Rígida:</strong> <code>===</code> (igualdade de valor e tipo), <code>!==</code> (diferença de valor e tipo).<br>• <strong>Lógicos:</strong> <code>&&</code> (E), <code>||</code> (OU), <code>!</code> (NÃO).",
           example: `let a = 10;
 a += 5; // a vira 15
+let sobra = 27 % 5; // 2 (resto da divisao de 27 por 5)
 let resultado = (15 === "15"); // false (tipo diferente)
 let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
           analogy: "<strong>Analogia:</strong> Operadores são os motores de cálculo e sensores que dizem se condições lógicas são verdadeiras ou falsas."
@@ -583,7 +584,7 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 5,
       moduleId: "mod-1",
       name: "Nível 5: O Box Model na Prática 📦",
-      description: "Crie uma <code>&lt;div&gt;</code> com a classe <code>painel</code> contendo qualquer texto. No CSS, estilize a classe <code>.painel</code> para ter:<br>• Preenchimento interno (<code>padding</code>) de <code>20px</code>.<br>• Borda sólida preta de <code>2px</code> (<code>border: 2px solid black</code>).<br>• Margem externa (<code>margin</code>) de <code>10px</code>.<br>• Cor de fundo de destaque (ex: <code>lightgray</code> ou hexadecimais).",
+      description: "Monte uma caixa usando as 4 camadas do Box Model.<br><br><strong>Passo 1.</strong> Crie uma <code>&lt;div&gt;</code> com a classe <code>painel</code> e escreva um texto dentro dela.<br><strong>Passo 2.</strong> No CSS, na regra <code>.painel</code>, escreva:<br>• <code>padding: 20px;</code><br>• <code>border: 2px solid black;</code><br>• <code>margin: 10px;</code><br>• <code>background-color: lightgray;</code>",
       starterCode: `<style>\n  .painel {\n    /* Adicione as regras de Box Model aqui: */\n    \n  }\n</style>\n\n<!-- Crie a div com classe painel abaixo: -->\n<div class="painel">\n  Conteúdo do Painel\n</div>`,
       testCases: [
         {
@@ -623,6 +624,17 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
             const style = window.getComputedStyle(painel);
             return style.marginTop === "10px" && style.marginRight === "10px";
           }
+        },
+        {
+          id: 5,
+          label: "Possui cor de fundo (background-color)?",
+          validate: (doc) => {
+            const painel = doc.querySelector('div.painel');
+            if (!painel) return false;
+            const bg = window.getComputedStyle(painel).backgroundColor;
+            // Aceita qualquer cor definida, desde que não seja o fundo padrão (transparente).
+            return bg !== "" && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)";
+          }
         }
       ]
     },
@@ -630,13 +642,22 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 6,
       moduleId: "mod-2",
       name: "Nível 6: Alinhamento com Flexbox 📐",
-      description: "Crie uma <code>&lt;div&gt;</code> com a classe <code>menu-flex</code> contendo duas tags <code>&lt;button&gt;</code>. No CSS, transforme <code>.menu-flex</code> em um container Flexbox (<code>display: flex</code>) e alinhe os botões com distribuição de espaço nas pontas usando <code>justify-content: space-between</code>.",
+      description: "Alinhe dois botões nas pontas usando Flexbox.<br><br><strong>Passo 1.</strong> Crie uma <code>&lt;div&gt;</code> com a classe <code>menu-flex</code>.<br><strong>Passo 2.</strong> Dentro dela, crie <strong>2</strong> elementos <code>&lt;button&gt;</code>.<br><strong>Passo 3.</strong> No CSS, na regra <code>.menu-flex</code>, escreva:<br>• <code>display: flex;</code><br>• <code>justify-content: space-between;</code>",
       starterCode: `<style>\n  .menu-flex {\n    /* Adicione as regras de Flexbox aqui: */\n    \n  }\n</style>\n\n<div class="menu-flex">\n  <button>Início</button>\n  <button>Contato</button>\n</div>`,
       testCases: [
         {
           id: 1,
           label: "Existe o container .menu-flex?",
           validate: (doc) => doc.querySelector('div.menu-flex') !== null
+        },
+        {
+          id: 4,
+          label: "Existem 2 botões dentro do .menu-flex?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.menu-flex');
+            if (!el) return false;
+            return el.querySelectorAll('button').length === 2;
+          }
         },
         {
           id: 2,
@@ -662,7 +683,7 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 7,
       moduleId: "mod-3",
       name: "Nível 7: Interatividade com :hover 🖱️",
-      description: "Crie um botão <code>&lt;button class=\"btn-interativo\"&gt;Clique Aqui&lt;/button&gt;</code>. No CSS, defina a cor de fundo inicial do botão como azul (<code>blue</code>) e adicione uma regra de pseudo-classe <code>.btn-interativo:hover</code> para que a cor mude para verde (<code>green</code>) ao passar o mouse.",
+      description: "Faça o botão mudar de cor quando o mouse passar por cima.<br><br>O botão e a cor azul já estão prontos no editor.<br><br><strong>Passo único.</strong> No CSS, embaixo do comentário, escreva a regra:<br><code>.btn-interativo:hover { background-color: green; }</code>",
       starterCode: `<style>\n  .btn-interativo {\n    background-color: blue;\n    color: white;\n    padding: 10px 20px;\n    border: none;\n  }\n  \n  /* Adicione a regra :hover abaixo: */\n  \n</style>\n\n<button class="btn-interativo">Clique Aqui</button>`,
       testCases: [
         {
@@ -672,14 +693,32 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
         },
         {
           id: 2,
-          label: "Possui regra de CSS contendo a pseudo-classe :hover?",
+          label: "A cor de fundo inicial do botão é azul (blue)?",
           validate: (doc) => {
-            const styles = doc.querySelectorAll('style');
-            let hasHoverRule = false;
-            styles.forEach(s => {
-              if (s.innerHTML.includes(':hover')) hasHoverRule = true;
+            const btn = doc.querySelector('button.btn-interativo');
+            if (!btn) return false;
+            return window.getComputedStyle(btn).backgroundColor === "rgb(0, 0, 255)";
+          }
+        },
+        {
+          id: 3,
+          label: "Existe a regra .btn-interativo:hover com fundo verde (green)?",
+          validate: (doc) => {
+            // Percorre as regras CSS reais da página para inspecionar o estado :hover,
+            // que não aparece no getComputedStyle do botão.
+            let ok = false;
+            Array.from(doc.styleSheets).forEach(sheet => {
+              let regras;
+              try { regras = sheet.cssRules; } catch (e) { return; }
+              Array.from(regras || []).forEach(regra => {
+                if (!regra.selectorText || !regra.style) return;
+                const seletor = regra.selectorText.replace(/\s+/g, '');
+                if (!seletor.includes('.btn-interativo:hover')) return;
+                const cor = regra.style.backgroundColor;
+                if (cor === "green" || cor === "rgb(0, 128, 0)") ok = true;
+              });
             });
-            return hasHoverRule;
+            return ok;
           }
         }
       ]
@@ -741,7 +780,7 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 10,
       moduleId: "mod-4",
       name: "Nível 10: Card de Produto Completo 🏆",
-      description: "Monte o seu primeiro componente completo! Crie uma <code>&lt;div class=\"card-produto\"&gt;</code> contendo:<br>• Um título <code>&lt;h3&gt;Fone Bluetooth&lt;/h3&gt;</code>.<br>• Um parágrafo <code>&lt;p&gt;R$ 199,00&lt;/p&gt;</code>.<br>• Um botão <code>&lt;button class=\"btn-comprar\"&gt;Comprar&lt;/button&gt;</code>.<br>No CSS, faça o <code>.card-produto</code> ter <code>padding: 20px</code>, <code>border: 1px solid gray</code>, <code>border-radius: 12px</code> e fundo branco.",
+      description: "Monte o seu primeiro componente completo, juntando tudo o que você aprendeu.<br><br><strong>Passo 1.</strong> Crie uma <code>&lt;div&gt;</code> com a classe <code>card-produto</code>.<br><strong>Passo 2.</strong> Dentro dela, coloque nesta ordem:<br>• <code>&lt;h3&gt;Fone Bluetooth&lt;/h3&gt;</code><br>• <code>&lt;p&gt;R$ 199,00&lt;/p&gt;</code><br>• <code>&lt;button class=\"btn-comprar\"&gt;Comprar&lt;/button&gt;</code><br><strong>Passo 3.</strong> No CSS, na regra <code>.card-produto</code>, escreva:<br>• <code>padding: 20px;</code><br>• <code>border: 1px solid gray;</code><br>• <code>border-radius: 12px;</code><br>• <code>background-color: white;</code>",
       starterCode: `<style>\n  .card-produto {\n    /* Adicione os estilos do card abaixo: */\n    \n  }\n  \n  .btn-comprar {\n    background-color: #0D9488;\n    color: white;\n    border: none;\n    padding: 8px 16px;\n    border-radius: 6px;\n  }\n</style>\n\n<!-- Crie a div.card-produto com h3, p e button abaixo: -->\n`,
       testCases: [
         {
@@ -768,6 +807,27 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
             if (!card) return false;
             const style = window.getComputedStyle(card);
             return style.paddingTop === "20px" && style.borderRadius === "12px";
+          }
+        },
+        {
+          id: 4,
+          label: "Card possui borda cinza sólida de 1px?",
+          validate: (doc) => {
+            const card = doc.querySelector('div.card-produto');
+            if (!card) return false;
+            const s = window.getComputedStyle(card);
+            return s.borderTopWidth === "1px" &&
+                   s.borderTopStyle === "solid" &&
+                   s.borderTopColor === "rgb(128, 128, 128)";
+          }
+        },
+        {
+          id: 5,
+          label: "O fundo do card é branco (white)?",
+          validate: (doc) => {
+            const card = doc.querySelector('div.card-produto');
+            if (!card) return false;
+            return window.getComputedStyle(card).backgroundColor === "rgb(255, 255, 255)";
           }
         }
       ]
@@ -981,13 +1041,13 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 1,
       moduleId: "mod-5",
       name: "Nível 1: Variáveis e Tipos Primitivos 💎",
-      description: "Declare uma constante chamada <code>nome</code> contendo o texto <code>\"Desenvolvimento\"</code> e uma variável mutável chamada <code>ano</code> contendo o número <code>2026</code>.",
-      starterCode: `// Crie a constante 'nome' e a variável 'ano' abaixo:\n`,
+      description: "Declare duas informações usando os dois tipos de declaração.<br><br><strong>Passo 1.</strong> Crie uma <strong>constante</strong> com <code>const</code>, chamada <code>nome</code>, com o texto <code>\"Desenvolvimento\"</code>.<br><strong>Passo 2.</strong> Crie uma <strong>variável</strong> com <code>let</code>, chamada <code>ano</code>, com o número <code>2026</code>.",
+      starterCode: `// Passo 1: crie a constante 'nome' com const\n// Passo 2: crie a variável 'ano' com let\n`,
       testCases: [
         {
           id: 1,
-          label: "A constante 'nome' foi declarada?",
-          validate: (scope) => scope.nome !== undefined
+          label: "A constante 'nome' foi declarada com const?",
+          validate: (scope, ret, code) => /\bconst\s+nome\b/.test(code)
         },
         {
           id: 2,
@@ -996,8 +1056,8 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
         },
         {
           id: 3,
-          label: "A variável 'ano' foi declarada?",
-          validate: (scope) => scope.ano !== undefined
+          label: "A variável 'ano' foi declarada com let?",
+          validate: (scope, ret, code) => /\blet\s+ano\b/.test(code)
         },
         {
           id: 4,
@@ -1029,17 +1089,22 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 3,
       moduleId: "mod-6",
       name: "Nível 3: Operadores de Atribuição ➕",
-      description: "Declare uma variável mutável chamada <code>pontos</code> com o valor inicial de <code>10</code>. Na linha seguinte, some <code>5</code> a ela usando o operador de atribuição simplificada (<code>+=</code>).",
-      starterCode: `// Crie a variável 'pontos' e adicione 5 a ela abaixo:\n`,
+      description: "Some um valor a uma variável usando a forma simplificada.<br><br><strong>Passo 1.</strong> Crie uma variável com <code>let</code>, chamada <code>pontos</code>, com o valor <code>10</code>.<br><strong>Passo 2.</strong> Na linha seguinte, escreva <code>pontos += 5;</code>",
+      starterCode: `// Passo 1: crie a variável 'pontos' com o valor 10\n// Passo 2: escreva pontos += 5;\n`,
       testCases: [
         {
           id: 1,
-          label: "A variável 'pontos' foi declarada?",
-          validate: (scope) => scope.pontos !== undefined
+          label: "A variável 'pontos' foi declarada com let?",
+          validate: (scope, ret, code) => /\blet\s+pontos\b/.test(code)
+        },
+        {
+          id: 3,
+          label: "Usou o operador += para somar?",
+          validate: (scope, ret, code) => /\bpontos\s*\+=/.test(code)
         },
         {
           id: 2,
-          label: "A variável 'pontos' foi inicializada com 10 e incrementada com += 5 (total 15)?",
+          label: "O valor final de 'pontos' é 15?",
           validate: (scope) => scope.pontos === 15
         }
       ]
@@ -1048,8 +1113,8 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 4,
       moduleId: "mod-6",
       name: "Nível 4: Comparadores Rígidos ⚖️",
-      description: "Escreva uma expressão de comparação rígida que compare o número <code>7</code> com a string <code>\"7\"</code> usando o operador <code>===</code> de modo que a expressão avalie e retorne <code>false</code>.",
-      starterCode: `// Escreva a expressão abaixo (o resultado deve ser retornado no final do código):\n`,
+      description: "Compare um número com um texto e veja por que o resultado é <code>false</code>.<br><br><strong>Passo único.</strong> Escreva, na última linha, a expressão que compara o número <code>7</code> com o texto <code>\"7\"</code> usando <code>===</code>:<br><code>7 === \"7\"</code><br><br>O operador <code>===</code> compara o valor <strong>e</strong> o tipo. Como um é número e o outro é texto, o resultado é <code>false</code>.",
+      starterCode: `// Passo único: escreva a expressão 7 === "7" abaixo\n`,
       testCases: [
         {
           id: 1,
@@ -1063,8 +1128,12 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
         },
         {
           id: 3,
-          label: "Comparou o número 7 com a string '7'?",
-          validate: (scope, returnValue, code) => code.includes('7') && (code.includes('"7"') || code.includes("'7'"))
+          label: "Comparou o número 7 com o texto '7'?",
+          validate: (scope, returnValue, code) => {
+            // Aceita as duas ordens: 7 === "7" ou "7" === 7.
+            const limpo = code.replace(/\/\/[^\n]*/g, '').replace(/\s+/g, '');
+            return /7===("7"|'7')/.test(limpo) || /("7"|'7')===7/.test(limpo);
+          }
         }
       ]
     },
@@ -1072,8 +1141,8 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
       level: 5,
       moduleId: "mod-6",
       name: "Nível 5: Operações Lógicas Booleanas 🧠",
-      description: "Dadas as variáveis booleanas <code>temCurso</code> (com valor <code>true</code>) e <code>temTempo</code> (com valor <code>false</code>), escreva uma expressão lógica utilizando o operador <code>||</code> (OR) para verificar se o aluno pode estudar (se ele tiver o curso OU se ele tiver tempo). A expressão lógica deve ser a última linha de código para ser retornada.",
-      starterCode: `let temCurso = true;\nlet temTempo = false;\n\n// Escreva a expressão lógica usando as duas variáveis e o operador || abaixo:\n`,
+      description: "Verifique se o aluno pode estudar: basta ter o curso <strong>ou</strong> ter tempo.<br><br>As duas variáveis já estão prontas no editor.<br><br><strong>Passo único.</strong> Escreva, na última linha, a expressão usando os <strong>nomes das variáveis</strong> e o operador <code>||</code>:<br><code>temCurso || temTempo</code>",
+      starterCode: `let temCurso = true;\nlet temTempo = false;\n\n// Passo único: escreva temCurso || temTempo abaixo\n`,
       testCases: [
         {
           id: 1,
@@ -1089,6 +1158,18 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
           id: 3,
           label: "Utilizou o operador lógico || (OR)?",
           validate: (scope, returnValue, code) => code.includes('||')
+        },
+        {
+          id: 4,
+          label: "Usou as duas variáveis (e não os valores true/false direto)?",
+          validate: (scope, returnValue, code) => {
+            // Ignora as duas linhas de declaração já prontas no editor.
+            const expressao = code
+              .replace(/\/\/[^\n]*/g, '')
+              .replace(/let\s+temCurso\s*=[^;\n]*[;\n]?/g, '')
+              .replace(/let\s+temTempo\s*=[^;\n]*[;\n]?/g, '');
+            return /temCurso/.test(expressao) && /temTempo/.test(expressao);
+          }
         }
       ]
     }
