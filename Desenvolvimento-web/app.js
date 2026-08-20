@@ -1405,13 +1405,39 @@ function montarRelatorioExame() {
     ].join('\n');
   }).join('\n\n');
 
+  const dataEnvio = new Date().toLocaleString('pt-BR');
+  const resumo = `${aprovadas} de ${SITE_DATA.exam.length} questões aprovadas`;
+
+  // Relatório completo em texto único. Vai também em {{message}} porque o
+  // template padrão do EmailJS usa esse nome no corpo do e-mail — sem isso,
+  // a mensagem chega em branco.
+  const relatorioCompleto = [
+    `AVALIACAO 1 - DESENVOLVIMENTO WEB`,
+    ``,
+    `Aluno(a) 1: ${nome1}`,
+    `Aluno(a) 2: ${nome2}`,
+    `Data de envio: ${dataEnvio}`,
+    `Resultado: ${resumo}`,
+    ``,
+    blocos
+  ].join('\n');
+
   return {
+    // Destinatário e campos padrão do EmailJS
     email: EMAILJS_CONFIG.destinatario,
+    to_email: EMAILJS_CONFIG.destinatario,
+    name: `${nome1}${nome2 && nome2 !== '(sem dupla)' ? ' e ' + nome2 : ''}`,
+    title: `Avaliação DevWeb - ${nome1}`,
+    subject: `Avaliação DevWeb - ${nome1}`,
+    message: relatorioCompleto,
+    time: dataEnvio,
+    // Campos nomeados, para um template personalizado
     aluno_1: nome1,
     aluno_2: nome2,
-    data_envio: new Date().toLocaleString('pt-BR'),
-    resumo: `${aprovadas} de ${SITE_DATA.exam.length} questões aprovadas`,
-    detalhes: blocos
+    data_envio: dataEnvio,
+    resumo: resumo,
+    detalhes: blocos,
+    relatorio: relatorioCompleto
   };
 }
 
