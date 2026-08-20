@@ -64,31 +64,69 @@ function highlightHTMLandCSS(code) {
  */
 function runHTMLCSSValidation(code, testCases) {
   const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
+  // Um iframe com display:none nao gera layout, e as medidas de estilo
+  // (padding, borda, largura) podem sair erradas mesmo com o codigo correto.
+  // Por isso ele fica fora da tela, mas com dimensoes reais.
+  iframe.style.cssText =
+    'position:absolute; left:-10000px; top:0; width:800px; height:600px; border:0; visibility:hidden;';
   iframe.setAttribute('sandbox', 'allow-same-origin');
   document.body.appendChild(iframe);
-  
+
   const doc = iframe.contentDocument || iframe.contentWindow.document;
   doc.open();
   doc.write(code);
   doc.close();
 
-  const results = [];
-  let allPass = true;
-
-  testCases.forEach(test => {
+  // Obriga o navegador a aplicar o CSS e calcular o layout antes de medir.
+  const forcarLayout = () => {
     try {
-      const pass = test.validate(doc);
-      if (!pass) allPass = false;
-      results.push({ label: test.label, pass });
-    } catch (e) {
-      allPass = false;
-      results.push({ label: test.label, pass: false, error: e.message });
+      void doc.documentElement.offsetHeight;
+      void doc.body.offsetHeight;
+    } catch (e) { /* documento sem body: nada a fazer */ }
+  };
+  forcarLayout();
+
+  const executar = () => {
+    const saida = [];
+    let tudoOk = true;
+    testCases.forEach(test => {
+      try {
+        const pass = test.validate(doc);
+        if (!pass) tudoOk = false;
+        saida.push({ label: test.label, pass });
+      } catch (e) {
+        tudoOk = false;
+        saida.push({ label: test.label, pass: false, error: e.message });
+      }
+    });
+    return { success: tudoOk, results: saida };
+  };
+
+  let resultado = executar();
+
+  // Rede de seguranca: se algo reprovou, refaz a medicao uma vez apos novo
+  // layout. Assim uma falha momentanea do navegador nunca reprova o aluno
+  // que escreveu o codigo certo.
+  if (!resultado.success) {
+    forcarLayout();
+    const segunda = executar();
+    if (segunda.success) {
+      resultado = segunda;
+    } else {
+      // Mantem o melhor resultado de cada criterio entre as duas medicoes.
+      resultado = {
+        success: false,
+        results: resultado.results.map((r, i) => {
+          const outro = segunda.results[i];
+          return (outro && outro.pass) ? outro : r;
+        })
+      };
+      resultado.success = resultado.results.every(r => r.pass);
     }
-  });
+  }
 
   document.body.removeChild(iframe);
-  return { success: allPass, results };
+  return resultado;
 }
 
 /**

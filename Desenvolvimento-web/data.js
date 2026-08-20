@@ -1093,13 +1093,30 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
         },
         {
           id: 6,
-          label: "O formulário usa display: flex em coluna com gap de 8px?",
+          label: "O formulário usa display: flex?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            return window.getComputedStyle(f).display === "flex";
+          }
+        },
+        {
+          id: 7,
+          label: "O flex-direction é column?",
+          validate: (doc) => {
+            const f = doc.querySelector('form.form-cadastro');
+            if (!f) return false;
+            return window.getComputedStyle(f).flexDirection === "column";
+          }
+        },
+        {
+          id: 8,
+          label: "O gap é de 8px?",
           validate: (doc) => {
             const f = doc.querySelector('form.form-cadastro');
             if (!f) return false;
             const s = window.getComputedStyle(f);
-            const temGap = s.gap === "8px" || s.rowGap === "8px";
-            return s.display === "flex" && s.flexDirection === "column" && temGap;
+            return s.gap === "8px" || s.rowGap === "8px";
           }
         }
       ]
@@ -1148,36 +1165,70 @@ let permissao = (a > 12) && (10 !== 9); // true && true -> true`,
         },
         {
           id: 4,
-          label: "O perfil usa display: flex, align-items: center e gap: 16px?",
+          label: "O perfil usa display: flex?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.perfil');
+            if (!el) return false;
+            return window.getComputedStyle(el).display === "flex";
+          }
+        },
+        {
+          id: 7,
+          label: "O align-items é center?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.perfil');
+            if (!el) return false;
+            return window.getComputedStyle(el).alignItems === "center";
+          }
+        },
+        {
+          id: 8,
+          label: "O gap é de 16px?",
           validate: (doc) => {
             const el = doc.querySelector('div.perfil');
             if (!el) return false;
             const s = window.getComputedStyle(el);
-            const temGap = s.gap === "16px" || s.columnGap === "16px";
-            return s.display === "flex" && s.alignItems === "center" && temGap;
+            return s.gap === "16px" || s.columnGap === "16px";
           }
         },
         {
           id: 5,
-          label: "O perfil tem padding de 16px e borda cinza de 1px?",
+          label: "O perfil tem padding de 16px?",
+          validate: (doc) => {
+            const el = doc.querySelector('div.perfil');
+            if (!el) return false;
+            return window.getComputedStyle(el).paddingTop === "16px";
+          }
+        },
+        {
+          id: 9,
+          label: "O perfil tem borda cinza sólida de 1px?",
           validate: (doc) => {
             const el = doc.querySelector('div.perfil');
             if (!el) return false;
             const s = window.getComputedStyle(el);
-            return s.paddingTop === "16px" &&
-                   s.borderTopWidth === "1px" &&
+            return s.borderTopWidth === "1px" &&
                    s.borderTopStyle === "solid" &&
                    s.borderTopColor === "rgb(128, 128, 128)";
           }
         },
         {
           id: 6,
-          label: "A imagem tem 80x80 e é circular (border-radius: 50%)?",
+          label: "A imagem tem 80px de largura e 80px de altura?",
           validate: (doc) => {
             const img = doc.querySelector('div.perfil img.foto');
             if (!img) return false;
             const s = window.getComputedStyle(img);
-            return s.width === "80px" && s.height === "80px" && s.borderRadius === "50%";
+            return s.width === "80px" && s.height === "80px";
+          }
+        },
+        {
+          id: 10,
+          label: "A imagem é circular (border-radius: 50%)?",
+          validate: (doc) => {
+            const img = doc.querySelector('div.perfil img.foto');
+            if (!img) return false;
+            return window.getComputedStyle(img).borderRadius === "50%";
           }
         }
       ]
