@@ -325,26 +325,8 @@ function syncPreScroll(textarea) {
 }
 
 function resetSQLSandbox() {
-  // Restaura dados iniciais
-  sandboxDB = {
-    tabelas: {
-      alunos: {
-        colunas: ["RA", "Nome", "Idade", "CodTurma"],
-        linhas: [
-          { RA: 101, Nome: "Ana Silva", Idade: 16, CodTurma: "T1" },
-          { RA: 102, Nome: "Bruno Souza", Idade: 15, CodTurma: "T1" },
-          { RA: 103, Nome: "Carlos Lima", Idade: 17, CodTurma: "T2" }
-        ]
-      },
-      turmas: {
-        colunas: ["CodTurma", "NomeTurma", "Sala"],
-        linhas: [
-          { CodTurma: "T1", NomeTurma: "Desenvolvimento Web", Sala: "Laboratório 1" },
-          { CodTurma: "T2", NomeTurma: "Lógica de Programação", Sala: "Laboratório 2" }
-        ]
-      }
-    }
-  };
+  // Restaura dados iniciais a partir da fonte única do validator.js
+  sandboxDB = criarSandboxInicial();
   atualizarTabelasSQLVisuais();
   const consolePanel = document.getElementById("sim-sql-console");
   consolePanel.innerHTML = '<div class="console-msg">Banco de dados restaurado ao estado padrão inicial.</div>';
@@ -695,6 +677,37 @@ function selectChallenge(level) {
   // Constrói a área de trabalho interativa dependendo do nível
   const activeArea = document.getElementById("challenge-interactive-area");
   
+  // Desafio de SQL: o aluno escreve o comando de verdade
+  if (challenge.type === "sql") {
+    activeArea.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="font-size:0.85rem; color:var(--text-light);">
+          Escreva o comando e clique em <strong>Validar Resposta</strong>. O banco usado no teste é sempre o inicial, então pode errar à vontade.
+        </div>
+        <div class="editor-wrapper notranslate" translate="no">
+          <textarea id="chal-sql-editor" class="code-textarea" spellcheck="false" translate="no"></textarea>
+          <pre id="chal-sql-highlight"><code></code></pre>
+        </div>
+        <div id="chal-sql-tabelas" style="font-size:0.8rem; color:var(--text-light);">
+          Tabelas disponíveis: <code>alunos</code> (RA, Nome, Idade, CodTurma) e <code>turmas</code> (CodTurma, NomeTurma, Sala).
+        </div>
+      </div>
+    `;
+    const ed = document.getElementById("chal-sql-editor");
+    ed.value = challengeUserAnswers.sqlTexto || challenge.starterCode || "";
+    const pre = ed.nextElementSibling;
+    const pintar = () => {
+      const cod = pre.querySelector("code");
+      if (cod) cod.innerHTML = highlightSQL(ed.value) + "\n";
+      pre.scrollTop = ed.scrollTop;
+      pre.scrollLeft = ed.scrollLeft;
+    };
+    ed.addEventListener("input", () => { challengeUserAnswers = { sqlTexto: ed.value }; pintar(); });
+    ed.addEventListener("scroll", () => { pre.scrollTop = ed.scrollTop; pre.scrollLeft = ed.scrollLeft; });
+    pintar();
+    return;
+  }
+
   if (level === 1 || level === 2 || level === 3) {
     // Desafios de Classificação Drag & Drop
     let targetsHtml = challenge.targets.map(tgt => `
@@ -847,6 +860,35 @@ function validateChallengeSelection() {
   const challenge = SITE_DATA.challenges.find(c => c.level === activeChallengeLevel);
   if (!challenge) return;
 
+  // Desafio de SQL: compara o efeito do comando com o do gabarito
+  if (challenge.type === "sql") {
+    const texto = (challengeUserAnswers && challengeUserAnswers.sqlTexto) || "";
+    const veredito = validarDesafioSQL(texto, challenge.gabarito);
+
+    if (!veredito.success) {
+      resPanel.innerHTML = `<div class="console-error">❌ ${veredito.motivo}</div>`;
+      return;
+    }
+
+    completedChallenges.add(activeChallengeLevel);
+    salvarProgressoLocal();
+    atualizarMetricasReport();
+    atualizarBoletimTexto();
+    atualizarPainelProgressoHome();
+
+    const proximo = SITE_DATA.challenges.find(c => c.level === activeChallengeLevel + 1);
+    resPanel.innerHTML = `
+      <div class="console-msg" style="color:var(--color-success); font-weight:bold; font-size:1.1rem; margin-bottom:0.5rem;">
+        🎉 Nível ${activeChallengeLevel} Concluído com Sucesso!
+      </div>
+      <div style="font-size:0.85rem; color:#A8A29E; line-height:1.4;">
+        ${challenge.explanation || ""}
+      </div>
+      ${proximo ? `<button onclick="selectChallenge(${activeChallengeLevel + 1})" class="primary-btn" style="margin-top:1rem; font-size:0.85rem;">Avançar para o Nível ${activeChallengeLevel + 1} ➔</button>` : ""}
+    `;
+    return;
+  }
+
   // Valida se respondeu tudo
   if (activeChallengeLevel <= 3) {
     const totalItems = challenge.items.length;
@@ -881,7 +923,7 @@ function validateChallengeSelection() {
     `;
     
     // Mostra se o aluno desbloqueou novas lições
-    if (activeChallengeLevel < 5) {
+    if (SITE_DATA.challenges.some(c => c.level === activeChallengeLevel + 1)) {
       feedbackHtml += `<button onclick="selectChallenge(${activeChallengeLevel + 1})" class="primary-btn" style="margin-top:1rem; font-size:0.85rem;">Avançar para o Nível ${activeChallengeLevel + 1} ➔</button>`;
     }
     

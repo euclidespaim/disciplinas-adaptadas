@@ -182,6 +182,92 @@ Solução: Criar a tabela Clientes e a tabela Vendas conectadas por chaves.`,
           analogy: "<strong>Analogia:</strong> 1FN: Cada gaveta só guarda um tipo de objeto (nada de misturar meias e cintos). 2FN: Toda a etiqueta da gaveta diz respeito a quem ela pertence. 3FN: Informações secundárias não brigam entre si na mesma pasta."
         }
       ]
+    },
+    {
+      id: "mod-6",
+      number: 6,
+      title: "Módulo 6: Fundamentos de SQL",
+      badge: "🗃️",
+      concepts: [
+        {
+          id: "sql-o-que-e",
+          title: "1. Banco de Dados, SGBD e SQL",
+          description: "Os três termos aparecem juntos o tempo todo, mas significam coisas diferentes — confundi-los é o erro mais comum de quem começa.<br>" +
+                       "• <strong>Banco de dados:</strong> o conteúdo, ou seja, as tabelas e os dados guardados nelas.<br>" +
+                       "• <strong>SGBD:</strong> o programa que guarda, protege e responde (MySQL, PostgreSQL, SQLite).<br>" +
+                       "• <strong>SQL:</strong> a língua usada para pedir alguma coisa ao SGBD.<br><br>" +
+                       "O modelo relacional nasceu em 1970, quando Edgar F. Codd, da IBM, propôs organizar os dados em tabelas e separar a forma como são guardados da forma como são consultados. Por isso o resultado de uma consulta é sempre outra tabela.",
+          example: `-- O núcleo do SQL é igual em todos os SGBDs.
+-- O que muda são detalhes, chamados de dialetos:
+
+-- Texto variável:     VARCHAR (MySQL) | TEXT (SQLite)
+-- Chave automática:   AUTO_INCREMENT (MySQL) | SERIAL (PostgreSQL)`,
+          analogy: "<strong>Analogia:</strong> A biblioteca é o banco de dados (o acervo), o bibliotecário é o SGBD (quem sabe onde tudo está e controla quem pega o quê) e o pedido feito no balcão é o SQL."
+        },
+        {
+          id: "sql-declarativo",
+          title: "2. Uma Linguagem Declarativa",
+          description: "Em uma linguagem procedural, como Python ou JavaScript, você escreve o passo a passo. Em uma linguagem declarativa, você descreve o resultado desejado e deixa o sistema descobrir o caminho.<br><br>" +
+                       "Antes de responder, o SGBD percorre um caminho: analisa a sintaxe, passa pelo <strong>otimizador</strong> (que escolhe, entre vários caminhos possíveis, o mais rápido), monta um plano de execução e só então lê os dados. É por isso que a mesma consulta pode ficar mais rápida amanhã sem você mudar uma vírgula.",
+          example: `-- Procedural seria: abra a lista, percorra do primeiro ao
+-- último, verifique a idade, guarde o nome, mostre a lista.
+
+-- Declarativo é apenas descrever o que se quer:
+SELECT Nome FROM alunos WHERE Idade > 16;`,
+          analogy: "<strong>Analogia:</strong> Dizer ao motorista \"vire à direita, siga 300 metros, entre à esquerda\" é procedural. Dizer \"me leve à rodoviária\" é declarativo — e ele, que conhece a cidade, escolhe a melhor rota."
+        },
+        {
+          id: "sql-tabela-tipos",
+          title: "3. Anatomia da Tabela, Tipos e NULL",
+          description: "A <strong>coluna</strong> (atributo) tem nome e tipo; a <strong>linha</strong> (registro ou tupla) representa uma ocorrência inteira, e a ordem das linhas não importa.<br><br>" +
+                       "Ao criar a tabela você escolhe o <strong>tipo</strong> (que espécie de valor cabe ali), o <strong>domínio</strong> (quais valores são aceitáveis, como nota entre 0 e 10) e as <strong>restrições</strong>, que o banco passa a cobrar sozinho.<br><br>" +
+                       "<strong>NULL</strong> não é zero, nem texto vazio, nem falso: significa \"não sabemos\" ou \"não se aplica\". Zero é uma informação (\"tem zero faltas\"); NULL é a falta de informação. Por isso se usa <code>IS NULL</code>, nunca <code>= NULL</code>.",
+          example: `-- Numérico:    INTEGER, REAL, DECIMAL
+-- Texto:       CHAR, VARCHAR, TEXT
+-- Data e hora: DATE, TIME, TIMESTAMP
+-- Lógico:      BOOLEAN
+
+-- CHAR tem tamanho fixo; VARCHAR usa só o espaço
+-- necessário, por isso é o mais comum.`,
+          analogy: "<strong>Analogia:</strong> Em um formulário de papel, se alguém escreve \"amanhã\" no campo de data de nascimento, ninguém impede. No banco, a coluna DATE recusa o valor — a regra deixa de depender da boa vontade de quem digita."
+        },
+        {
+          id: "sql-categorias",
+          title: "4. As Categorias de Comandos",
+          description: "Os comandos são agrupados por aquilo que fazem. Saber a categoria ajuda a lembrar o comando:<br>" +
+                       "• <strong>DDL</strong> (Data Definition Language): define a estrutura — <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>.<br>" +
+                       "• <strong>DML</strong> (Data Manipulation Language): mexe no conteúdo — <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.<br>" +
+                       "• <strong>DQL</strong> (Data Query Language): consulta os dados — <code>SELECT</code>.<br>" +
+                       "• <strong>DCL</strong> (Data Control Language): controla permissões — <code>GRANT</code>, <code>REVOKE</code>.<br>" +
+                       "• <strong>TCL</strong> (Transaction Control Language): agrupa comandos que valem \"tudo ou nada\" — <code>COMMIT</code>, <code>ROLLBACK</code>.",
+          example: `-- DDL: cria a estrutura
+CREATE TABLE alunos (
+    id INTEGER PRIMARY KEY,
+    nome TEXT NOT NULL,
+    idade INTEGER
+);`,
+          analogy: "<strong>Analogia:</strong> DDL é a planta da casa, DML é a mudança dos móveis, DQL é olhar pela janela para ver o que tem lá dentro e DCL é decidir quem ganha a chave."
+        },
+        {
+          id: "sql-comandos",
+          title: "5. Os Comandos Essenciais",
+          description: "Cinco comandos resolvem a maior parte do dia a dia:<br>" +
+                       "• <code>CREATE TABLE</code> cria a estrutura.<br>" +
+                       "• <code>INSERT INTO</code> acrescenta registros.<br>" +
+                       "• <code>SELECT</code> consulta, com <code>*</code> para todas as colunas ou a lista de colunas desejadas.<br>" +
+                       "• <code>WHERE</code> filtra, com os operadores <code>=</code>, <code>&lt;&gt;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>.<br>" +
+                       "• <code>UPDATE</code> altera e <code>DELETE</code> remove.<br><br>" +
+                       "<strong>Atenção:</strong> um <code>UPDATE</code> ou <code>DELETE</code> sem <code>WHERE</code> atinge todos os registros da tabela.",
+          example: `INSERT INTO alunos VALUES (104, 'Daniela Reis', 16, 'T1');
+
+SELECT Nome, Idade FROM alunos WHERE Idade > 15;
+
+UPDATE alunos SET Idade = 18 WHERE RA = 101;
+
+DELETE FROM alunos WHERE RA = 103;`,
+          analogy: "<strong>Analogia:</strong> O WHERE é a mira. Sem ele, o UPDATE e o DELETE agem como um balde de tinta jogado na sala inteira em vez de um pincel no ponto certo."
+        }
+      ]
     }
   ],
 
@@ -366,11 +452,112 @@ Solução: Criar a tabela Clientes e a tabela Vendas conectadas por chaves.`,
       ],
       correctAnswer: 2,
       explanation: "A 3FN remove dependências transitivas, garantindo que colunas não-chave dependam exclusivamente da chave primária."
+    },
+    {
+      id: 16,
+      moduleId: "mod-6",
+      question: "Qual a diferença entre banco de dados e SGBD?",
+      options: [
+        "São sinônimos: os dois termos significam a mesma coisa",
+        "O banco de dados é o conteúdo (as tabelas e os dados); o SGBD é o programa que os gerencia",
+        "O banco de dados é o programa; o SGBD é a linguagem de consulta",
+        "O SGBD só existe em sistemas na nuvem"
+      ],
+      correctAnswer: 1,
+      explanation: "O banco de dados é o acervo; o SGBD é o bibliotecário que sabe onde tudo está e controla o acesso. O SQL é o pedido feito no balcão."
+    },
+    {
+      id: 17,
+      moduleId: "mod-6",
+      question: "Quem propôs o modelo relacional e em que ano?",
+      options: [
+        "Edgar F. Codd, em 1970",
+        "Tim Berners-Lee, em 1989",
+        "Larry Ellison, em 1979",
+        "Um comitê da ANSI, em 1986"
+      ],
+      correctAnswer: 0,
+      explanation: "Codd, pesquisador da IBM, publicou 'A Relational Model of Data for Large Shared Data Banks' em 1970. O modelo domina a área há mais de 50 anos."
+    },
+    {
+      id: 18,
+      moduleId: "mod-6",
+      question: "Por que dizemos que o SQL é uma linguagem declarativa?",
+      options: [
+        "Porque exige declarar todas as variáveis antes de usá-las",
+        "Porque você descreve o resultado desejado, e o SGBD descobre o caminho",
+        "Porque todo comando precisa terminar com ponto e vírgula",
+        "Porque só funciona depois de declarar o tipo de cada coluna"
+      ],
+      correctAnswer: 1,
+      explanation: "Em uma linguagem procedural você escreve o passo a passo. No SQL você apenas descreve o que quer — como dizer ao motorista 'me leve à rodoviária' em vez de ditar cada curva."
+    },
+    {
+      id: 19,
+      moduleId: "mod-6",
+      question: "O que significa NULL em uma coluna?",
+      options: [
+        "O número zero",
+        "Um texto vazio",
+        "A ausência de valor: não sabemos ou não se aplica",
+        "O valor falso (false)"
+      ],
+      correctAnswer: 2,
+      explanation: "Zero é uma informação ('tem zero faltas'); NULL é a falta de informação. Por isso comparações usam IS NULL, e não = NULL."
+    },
+    {
+      id: 20,
+      moduleId: "mod-6",
+      question: "A que categoria pertence o comando CREATE TABLE?",
+      options: [
+        "DML",
+        "DQL",
+        "DDL",
+        "DCL"
+      ],
+      correctAnswer: 2,
+      explanation: "DDL (Data Definition Language) define a estrutura: CREATE, ALTER e DROP. Quem mexe no conteúdo é a DML."
+    },
+    {
+      id: 21,
+      moduleId: "mod-6",
+      question: "O que acontece com um UPDATE escrito sem WHERE?",
+      options: [
+        "O comando é recusado pelo SGBD",
+        "Apenas a primeira linha é alterada",
+        "Todos os registros da tabela são alterados",
+        "Nada acontece: o comando é ignorado"
+      ],
+      correctAnswer: 2,
+      explanation: "Sem o filtro, a alteração atinge a tabela inteira. O mesmo vale para o DELETE — por isso o WHERE deve ser escrito antes de executar."
+    },
+    {
+      id: 22,
+      moduleId: "mod-6",
+      question: "Por que o nome do aluno costuma ser uma má escolha de chave primária?",
+      options: [
+        "Porque textos não podem ser chave primária",
+        "Porque dois alunos podem ter o mesmo nome e alguém pode mudar de nome",
+        "Porque nomes ocupam muito espaço em disco",
+        "Porque a chave primária precisa ser sempre numérica"
+      ],
+      correctAnswer: 1,
+      explanation: "A chave primária nunca se repete, nunca fica vazia e de preferência nunca muda. Por isso costuma-se criar um id que o próprio banco preenche."
+    },
+    {
+      id: 23,
+      moduleId: "mod-6",
+      question: "O que garante a integridade referencial?",
+      options: [
+        "Que toda coluna respeite o seu tipo de dado",
+        "Que toda linha tenha uma chave primária preenchida",
+        "Que toda chave estrangeira aponte para uma linha que realmente existe",
+        "Que nenhuma coluna aceite o valor NULL"
+      ],
+      correctAnswer: 2,
+      explanation: "São três integridades: de domínio (o tipo), de entidade (a chave primária) e referencial (a chave estrangeira apontando para algo que existe)."
     }
-  ],
-
-  // 5 Desafios Conceituais Interativos
-  challenges: [
+  ],  challenges: [
     {
       level: 1,
       name: "Nível 1: Dado, Informação ou Conhecimento? 🧠",
@@ -433,11 +620,53 @@ Solução: Criar a tabela Clientes e a tabela Vendas conectadas por chaves.`,
       ],
       correctAnswer: 1,
       explanation: "A Primeira Forma Normal proíbe listas de valores dentro de uma única célula. A correção clássica consiste em desmembrar os valores em registros/linhas separadas ou transferi-los para uma tabela dependente."
+    },
+    {
+      level: 6,
+      type: "sql",
+      name: "Nível 6: Consultando com SELECT",
+      description: "Escreva uma consulta que traga <strong>todas as colunas</strong> e <strong>todas as linhas</strong> da tabela <code>alunos</code>.<br><br>Dica: o <code>*</code> significa \"todas as colunas\".",
+      starterCode: "-- Escreva o comando abaixo:\n",
+      gabarito: "SELECT * FROM alunos;",
+      explanation: "O SELECT é o comando da categoria DQL. O asterisco traz todas as colunas, e sem WHERE ele traz todas as linhas da tabela."
+    },
+    {
+      level: 7,
+      type: "sql",
+      name: "Nível 7: Escolhendo Colunas",
+      description: "Traga <strong>apenas</strong> as colunas <code>Nome</code> e <code>Idade</code> da tabela <code>alunos</code>.<br><br>Dica: separe os nomes das colunas por vírgula, no lugar do <code>*</code>.",
+      starterCode: "-- Escreva o comando abaixo:\n",
+      gabarito: "SELECT Nome, Idade FROM alunos;",
+      explanation: "Pedir só as colunas necessárias deixa a consulta mais rápida e o resultado mais fácil de ler. Lembre-se: o resultado de um SELECT também é uma tabela."
+    },
+    {
+      level: 8,
+      type: "sql",
+      name: "Nível 8: Filtrando com WHERE",
+      description: "Traga <strong>todas as colunas</strong> dos alunos que têm <strong>mais de 15 anos</strong>.<br><br>Dica: o filtro usa a coluna <code>Idade</code> e o operador <code>&gt;</code>.",
+      starterCode: "-- Escreva o comando abaixo:\n",
+      gabarito: "SELECT * FROM alunos WHERE Idade > 15;",
+      explanation: "O WHERE é a mira da consulta. Sem ele, o SELECT devolveria os três alunos; com o filtro, apenas Ana (16) e Carlos (17) atendem à condição."
+    },
+    {
+      level: 9,
+      type: "sql",
+      name: "Nível 9: Inserindo um Registro",
+      description: "Insira um novo aluno na tabela <code>alunos</code> com estes valores, nesta ordem:<br>• RA: <code>104</code><br>• Nome: <code>Daniela Reis</code><br>• Idade: <code>16</code><br>• CodTurma: <code>T1</code><br><br>Dica: textos vão entre aspas simples; números, não.",
+      starterCode: "-- Escreva o comando abaixo:\n",
+      gabarito: "INSERT INTO alunos VALUES (104, 'Daniela Reis', 16, 'T1');",
+      explanation: "O INSERT INTO pertence à categoria DML. A ordem dos valores precisa acompanhar a ordem das colunas da tabela — ou você informa explicitamente quais colunas está preenchendo."
+    },
+    {
+      level: 10,
+      type: "sql",
+      name: "Nível 10: Alterando com UPDATE",
+      description: "O aluno de RA <code>102</code> fez aniversário. Altere a <code>Idade</code> dele para <code>16</code>.<br><br><strong>Atenção:</strong> não esqueça do <code>WHERE</code>, ou todos os alunos terão a idade alterada.",
+      starterCode: "-- Escreva o comando abaixo:\n",
+      gabarito: "UPDATE alunos SET Idade = 16 WHERE RA = 102;",
+      explanation: "Este é o comando mais perigoso do dia a dia: um UPDATE sem WHERE atinge a tabela inteira. Escreva sempre o filtro antes de executar."
     }
-  ],
-
-  // Avaliação 1 (3 Questões práticas baseadas nos slides)
-  exam: [
+  ],  exam: [
     {
       id: 1,
       name: "Questão 1: Definindo Cardinalidade da Regra de Negócio 🎢",

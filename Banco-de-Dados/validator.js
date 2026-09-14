@@ -4,31 +4,54 @@
  */
 
 // Banco de dados em memória para o Simulador Live Sandbox
-let sandboxDB = {
-  tabelas: {
-    alunos: {
-      colunas: ["RA", "Nome", "Idade", "CodTurma"],
-      linhas: [
-        { RA: 101, Nome: "Ana Silva", Idade: 16, CodTurma: "T1" },
-        { RA: 102, Nome: "Bruno Souza", Idade: 15, CodTurma: "T1" },
-        { RA: 103, Nome: "Carlos Lima", Idade: 17, CodTurma: "T2" }
-      ]
-    },
-    turmas: {
-      colunas: ["CodTurma", "NomeTurma", "Sala"],
-      linhas: [
-        { CodTurma: "T1", NomeTurma: "Desenvolvimento Web", Sala: "Laboratório 1" },
-        { CodTurma: "T2", NomeTurma: "Lógica de Programação", Sala: "Laboratório 2" }
-      ]
+// Estado inicial do banco do sandbox. Fonte única, usada tanto pelo botão
+// "Resetar" quanto pela validação dos desafios de SQL.
+function criarSandboxInicial() {
+  return {
+    tabelas: {
+      alunos: {
+        colunas: ["RA", "Nome", "Idade", "CodTurma"],
+        linhas: [
+          { RA: 101, Nome: "Ana Silva", Idade: 16, CodTurma: "T1" },
+          { RA: 102, Nome: "Bruno Souza", Idade: 15, CodTurma: "T1" },
+          { RA: 103, Nome: "Carlos Lima", Idade: 17, CodTurma: "T2" }
+        ]
+      },
+      turmas: {
+        colunas: ["CodTurma", "NomeTurma", "Sala"],
+        linhas: [
+          { CodTurma: "T1", NomeTurma: "Desenvolvimento Web", Sala: "Laboratório 1" },
+          { CodTurma: "T2", NomeTurma: "Lógica de Programação", Sala: "Laboratório 2" }
+        ]
+      }
     }
-  }
-};
+  };
+}
+
+let sandboxDB = criarSandboxInicial();
 
 /**
  * Motor SQL em JavaScript super simplificado para fins educativos
  */
+/**
+ * Deixa o comando pronto para ser interpretado: remove comentários, normaliza
+ * espaços e tira o ponto e vírgula final.
+ * A ordem importa — os comentários saem enquanto as quebras de linha ainda
+ * existem, senão "--" engoliria o comando inteiro. E sem remover o ponto e
+ * vírgula, um filtro como "WHERE Idade > 15;" compararia com o texto "15;",
+ * que não é número, e nunca seria satisfeito.
+ */
+function limparComandoSQL(query) {
+  return String(query || "")
+    .replace(/--[^\n\r]*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/;+\s*$/, "")
+    .trim();
+}
+
 function executarSQLSimulado(query) {
-  query = query.trim().replace(/\s+/g, " ");
+  query = limparComandoSQL(query);
   const queryLower = query.toLowerCase();
   
   if (queryLower.startsWith("create table")) {
@@ -361,4 +384,87 @@ function highlightSQL(code) {
   html = html.replace(/\b([0-9]+)\b/g, '<span class="hl-number">$1</span>');
   
   return html;
+}
+
+
+// ==========================================================
+// VALIDAÇÃO DOS DESAFIOS DE SQL
+// ==========================================================
+
+// Roda um comando em um banco limpo e devolve o resultado junto com o
+// estado final das tabelas, sem tocar no sandbox que o aluno usa na aba
+// do simulador.
+function executarEmBancoLimpo(comando) {
+  const guardado = sandboxDB;
+  sandboxDB = criarSandboxInicial();
+  let saida;
+  try {
+    saida = executarSQLSimulado(comando);
+  } catch (e) {
+    saida = { success: false, error: e.message };
+  }
+  const estadoFinal = JSON.parse(JSON.stringify(sandboxDB.tabelas));
+  sandboxDB = guardado;
+  return { saida, estadoFinal };
+}
+
+// Texto comparável de um conjunto de linhas, ignorando a ordem.
+function normalizarLinhas(colunas, linhas) {
+  if (!Array.isArray(linhas)) return "";
+  const textos = linhas.map(l => (Array.isArray(l) ? l : []).map(v => String(v)).join("\u241F"));
+  return textos.slice().sort().join("\u241E");
+}
+
+// Texto comparável do banco inteiro (para CREATE, INSERT, UPDATE e DELETE).
+function normalizarBanco(tabelas) {
+  return Object.keys(tabelas).sort().map(nome => {
+    const t = tabelas[nome];
+    const linhas = t.linhas.map(row => t.colunas.map(c => String(row[c])).join("\u241F"));
+    return nome + "|" + t.colunas.join(",") + "|" + linhas.slice().sort().join("\u241E");
+  }).join("\u2028");
+}
+
+/**
+ * Compara o comando do aluno com o gabarito executando os dois em bancos
+ * limpos e idênticos. Qualquer comando que produza o mesmo efeito é aceito.
+ */
+function validarDesafioSQL(comandoAluno, gabarito) {
+  // Usa o comando já limpo: o starterCode começa com um comentário, e olhar
+  // o texto bruto faria um SELECT ser tratado como comando de escrita.
+  const texto = limparComandoSQL(comandoAluno);
+  if (texto === "") {
+    return { success: false, motivo: "Escreva o comando SQL antes de validar." };
+  }
+
+  const aluno = executarEmBancoLimpo(texto);
+
+  if (!aluno.saida.success) {
+    return { success: false, motivo: aluno.saida.error || "O comando não pôde ser executado." };
+  }
+
+  const esperado = executarEmBancoLimpo(gabarito);
+
+  // Para consultas, o que importa é o conjunto de linhas devolvido.
+  const ehConsulta = texto.toLowerCase().startsWith("select");
+  if (ehConsulta) {
+    const colAluno = (aluno.saida.colunas || []).join(",").toLowerCase();
+    const colEsper = (esperado.saida.colunas || []).join(",").toLowerCase();
+    if (colAluno !== colEsper) {
+      return { success: false, motivo: `As colunas retornadas não são as esperadas. Vieram: ${colAluno || "(nenhuma)"}.` };
+    }
+    const linhasAluno = normalizarLinhas(aluno.saida.colunas, aluno.saida.rows);
+    const linhasEsper = normalizarLinhas(esperado.saida.colunas, esperado.saida.rows);
+    if (linhasAluno !== linhasEsper) {
+      const n = (aluno.saida.rows || []).length;
+      const m = (esperado.saida.rows || []).length;
+      return { success: false, motivo: `O resultado não confere. Sua consulta trouxe ${n} linha(s); o esperado eram ${m}.` };
+    }
+    return { success: true, resultado: aluno.saida };
+  }
+
+  // Para os demais comandos, compara o estado final do banco.
+  if (normalizarBanco(aluno.estadoFinal) !== normalizarBanco(esperado.estadoFinal)) {
+    return { success: false, motivo: "O comando rodou, mas o banco não ficou no estado esperado. Confira os valores e a condição do WHERE." };
+  }
+  return { success: true, resultado: aluno.saida };
 }
