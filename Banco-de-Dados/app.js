@@ -1,7 +1,10 @@
 // Controller principal da SPA de Banco de Dados 101
 let studentName = "";
 let viewedConcepts = new Set();
-let completedChallenges = new Set(); // Níveis concluídos: 1 a 5
+let completedChallenges = new Set(); // Níveis concluídos (ver SITE_DATA.challenges)
+
+// Teoria: módulo aberto no momento
+let activeTheoryModuleId = null;
 
 // Quiz State
 let quizAnswers = {}; // { questionId: selectedOptionIndex }
@@ -17,16 +20,42 @@ let examSubmitted = false;
 let activeExamQuestion = 1;
 let examUserAnswers = {}; // { questionId: selectedOptionIndex }
 
+// ==========================================
+// TOTAIS DO CURSO
+// Sempre derivados do data.js: quando entra um módulo,
+// uma questão ou um desafio novo, a contagem acompanha
+// sozinha. Nunca escrever esses números à mão.
+// ==========================================
+
+function totalConceitos() {
+  return SITE_DATA.modules.reduce((soma, mod) => soma + mod.concepts.length, 0);
+}
+
+function totalQuestoes() {
+  return SITE_DATA.quiz.length;
+}
+
+function totalDesafios() {
+  return SITE_DATA.challenges.length;
+}
+
+function nomeCurtoModulo(mod) {
+  return mod.short || mod.title.split(": ").slice(1).join(": ") || mod.title;
+}
+
 // Inicialização do site
 document.addEventListener("DOMContentLoaded", () => {
   carregarProgressoLocal();
   switchTab("home");
   inicializarSidebarAccordion();
+  renderSidebarTheoryLinks();
+  renderLevelBadges();
+  atualizarRotuloQuizMenu();
   inicializarQuiz();
-  selectTheoryConcept("data-info");
+  selectTheoryConcept(SITE_DATA.modules[0].concepts[0].id);
   setSimulatorMode("sql");
   atualizarTabelasSQLVisuais();
-  selectChallenge(1);
+  selectChallenge(SITE_DATA.challenges[0].level);
   setupExamQuestionsList();
   
   // Sincroniza rolagem do editor SQL do sandbox
@@ -60,6 +89,9 @@ function switchTab(tabId) {
     }
   });
 
+  // Os links de teoria dividem a mesma aba: só o módulo em foco fica marcado
+  if (tabId === "theory") syncSidebarTheoryActive();
+
   // Fecha sidebar no mobile ao trocar de aba
   const sidebar = document.getElementById("main-sidebar");
   if (sidebar && window.innerWidth <= 900) {
@@ -91,13 +123,51 @@ function inicializarSidebarAccordion() {
 // TEORIA E VISUALIZADORES DINÂMICOS
 // ==========================================
 
-function selectTheoryConcept(conceptId) {
-  // Marca conceito como visualizado
-  viewedConcepts.add(conceptId);
-  salvarProgressoLocal();
-  atualizarMetricasReport();
-  atualizarBoletimTexto();
+// Monta os links de teoria da sidebar: um por módulo, abrindo o 1º conceito dele
+function renderSidebarTheoryLinks() {
+  const box = document.getElementById("sidebar-theory-links");
+  if (!box) return;
 
+  box.innerHTML = SITE_DATA.modules.map(mod => {
+    const primeiro = mod.concepts[0];
+    if (!primeiro) return "";
+    return `
+          <button class="nav-link" data-tab="theory" data-module="${mod.id}" onclick="switchTab('theory'); selectTheoryConcept('${primeiro.id}')">
+            Mod ${mod.number}: ${nomeCurtoModulo(mod)}
+          </button>`;
+  }).join("");
+}
+
+function syncSidebarTheoryActive() {
+  document.querySelectorAll("#sidebar-theory-links .nav-link").forEach(link => {
+    link.classList.toggle("active", link.getAttribute("data-module") === activeTheoryModuleId);
+  });
+}
+
+// Navegação da teoria em dois níveis: módulos em cima, conceitos do módulo logo abaixo
+function renderTheoryNav(activeModule, conceptId) {
+  const modNav = document.getElementById("theory-module-nav");
+  if (modNav) {
+    modNav.innerHTML = SITE_DATA.modules.map(mod => {
+      const primeiro = mod.concepts[0];
+      if (!primeiro) return "";
+      const ativo = mod.id === activeModule.id ? " active" : "";
+      return `<button class="theory-tab-btn${ativo}" data-module="${mod.id}" data-concept="${primeiro.id}" onclick="selectTheoryConcept('${primeiro.id}')">Mod ${mod.number}: ${nomeCurtoModulo(mod)}</button>`;
+    }).join("");
+  }
+
+  const conceptNav = document.getElementById("theory-concept-nav");
+  if (conceptNav) {
+    conceptNav.innerHTML = activeModule.concepts.map(c => {
+      const classes = ["theory-concept-btn"];
+      if (c.id === conceptId) classes.push("active");
+      if (viewedConcepts.has(c.id)) classes.push("viewed");
+      return `<button class="${classes.join(" ")}" data-concept="${c.id}" onclick="selectTheoryConcept('${c.id}')">${c.title}</button>`;
+    }).join("");
+  }
+}
+
+function selectTheoryConcept(conceptId) {
   // Acha o conceito no data.js
   let foundConcept = null;
   let foundModule = null;
@@ -113,13 +183,17 @@ function selectTheoryConcept(conceptId) {
 
   if (!foundConcept) return;
 
-  // Atualiza botões ativos na sub-navegação da teoria
-  document.querySelectorAll(".theory-tab-btn").forEach(btn => {
-    btn.classList.remove("active");
-    if (btn.getAttribute("data-concept") === conceptId) {
-      btn.classList.add("active");
-    }
-  });
+  // Marca conceito como visualizado
+  viewedConcepts.add(conceptId);
+  activeTheoryModuleId = foundModule.id;
+  salvarProgressoLocal();
+  atualizarMetricasReport();
+  atualizarBoletimTexto();
+  atualizarPainelProgressoHome();
+
+  // Redesenha a navegação de módulos e conceitos
+  renderTheoryNav(foundModule, conceptId);
+  syncSidebarTheoryActive();
 
   // Injeta conteúdo do conceito
   const bodyArea = document.getElementById("theory-concept-body");
@@ -139,10 +213,10 @@ function selectTheoryConcept(conceptId) {
   `;
 
   // Renderiza gráfico ilustrativo na coluna direita do visualizador
-  renderTheoryVisualizer(conceptId);
+  renderTheoryVisualizer(conceptId, foundModule);
 }
 
-function renderTheoryVisualizer(conceptId) {
+function renderTheoryVisualizer(conceptId, mod) {
   const area = document.getElementById("theory-visualizer-area");
   if (!area) return;
 
@@ -282,6 +356,39 @@ function renderTheoryVisualizer(conceptId) {
       </div>
     `;
   }
+
+  // Conceitos sem gráfico próprio mostram o mapa do módulo: onde o aluno está
+  // e o que vem antes e depois. Evita que o painel fique preso no gráfico anterior.
+  else {
+    renderModuleMap(area, mod, conceptId);
+  }
+}
+
+function renderModuleMap(area, mod, conceptId) {
+  if (!mod) {
+    area.innerHTML = "";
+    return;
+  }
+
+  const passos = mod.concepts.map((c, idx) => {
+    const atual = c.id === conceptId ? " current" : "";
+    return `
+      <div class="module-map-step${atual}">
+        <span class="module-map-num">${idx + 1}</span>
+        <span>${c.title.replace(/^\d+\.\s*/, "")}</span>
+      </div>`;
+  }).join("");
+
+  const posicao = mod.concepts.findIndex(c => c.id === conceptId) + 1;
+
+  area.innerHTML = `
+    <div class="module-map">
+      <div style="font-size: 0.8rem; color: var(--text-light); text-align: center; margin-bottom: 0.25rem;">
+        ${mod.badge} <strong>${nomeCurtoModulo(mod)}</strong> — conceito ${posicao} de ${mod.concepts.length}
+      </div>
+      ${passos}
+    </div>
+  `;
 }
 
 // ==========================================
@@ -532,6 +639,11 @@ function triggerModelingDemo(step) {
 // QUIZ INTERATIVO
 // ==========================================
 
+function atualizarRotuloQuizMenu() {
+  const label = document.getElementById("nav-quiz-label");
+  if (label) label.innerText = `Quiz Teórico (${totalQuestoes()}Q)`;
+}
+
 function inicializarQuiz() {
   const container = document.getElementById("quiz-container");
   if (!container) return;
@@ -563,7 +675,7 @@ function inicializarQuiz() {
       <div id="quiz-result-score-card" style="display: none; background-color: var(--accent-teal-light); border: 2px solid var(--accent-teal); border-radius: var(--border-radius-md); padding: 1.5rem; text-align: center; width: 100%; max-width: 500px;">
         <h3 style="color: var(--primary-navy); font-family: var(--font-title);">Seu Resultado no Quiz</h3>
         <p style="font-size: 1.5rem; font-weight: bold; color: var(--accent-teal-hover); margin: 0.5rem 0;" id="quiz-score-display">Nota: 0 / 10.0</p>
-        <p style="font-size: 0.85rem; color: var(--text-light);" id="quiz-score-detail">Você acertou 0 de 15 questões.</p>
+        <p style="font-size: 0.85rem; color: var(--text-light);" id="quiz-score-detail">Você acertou 0 de ${SITE_DATA.quiz.length} questões.</p>
       </div>
     </div>
   `;
@@ -1291,9 +1403,9 @@ function atualizarMetricasReport() {
     });
   }
 
-  document.getElementById("report-viewed-concepts").innerText = `${viewedCount}/5`;
-  document.getElementById("report-quiz-score").innerText = `${correctCount}/15`;
-  document.getElementById("report-challenges-completed").innerText = `${challengesCount}/5`;
+  document.getElementById("report-viewed-concepts").innerText = `${viewedCount}/${totalConceitos()}`;
+  document.getElementById("report-quiz-score").innerText = `${correctCount}/${totalQuestoes()}`;
+  document.getElementById("report-challenges-completed").innerText = `${challengesCount}/${totalDesafios()}`;
 }
 
 function atualizarBoletimTexto() {
@@ -1314,7 +1426,7 @@ function atualizarBoletimTexto() {
     SITE_DATA.quiz.forEach(q => {
       if (quizAnswers[q.id] === q.correctAnswer) correctCount++;
     });
-    quizStatusText = `${((correctCount / 15) * 10).toFixed(1)} / 10.0 (${correctCount} acertos)`;
+    quizStatusText = `${((correctCount / totalQuestoes()) * 10).toFixed(1)} / 10.0 (${correctCount} acertos)`;
   }
 
   // Diagnóstico Rápido
@@ -1338,9 +1450,9 @@ function atualizarBoletimTexto() {
   txt += `Aluno: ${studentName}\n`;
   txt += `Data do Relatório: ${new Date().toLocaleDateString()}\n`;
   txt += `======================================================\n\n`;
-  txt += `1. Trilha de Teoria Lida: ${viewedCount} de 5 conceitos (${((viewedCount/5)*100).toFixed(0)}%)\n`;
+  txt += `1. Trilha de Teoria Lida: ${viewedCount} de ${totalConceitos()} conceitos (${((viewedCount / totalConceitos()) * 100).toFixed(0)}%)\n`;
   txt += `2. Nota no Quiz: ${quizStatusText}\n`;
-  txt += `3. Desafios Concluídos: Níveis [${Array.from(completedChallenges).sort().join(", ")}] (${challengesCount} de 5 concluídos)\n\n`;
+  txt += `3. Desafios Concluídos: Níveis [${Array.from(completedChallenges).sort((a, b) => a - b).join(", ")}] (${challengesCount} de ${totalDesafios()} concluídos)\n\n`;
   txt += `DIAGNÓSTICO PEDAGÓGICO:\n`;
   txt += `----------------------\n`;
   txt += `${diagnostico}\n\n`;
@@ -1457,13 +1569,28 @@ function carregarProgressoLocal() {
   }
 }
 
+// Uma medalha por desafio existente no data.js
+function renderLevelBadges() {
+  const box = document.getElementById("level-badge-container");
+  if (!box) return;
+
+  box.innerHTML = SITE_DATA.challenges.map(ch => `
+                <div class="level-badge" id="badge-lvl-${ch.level}" title="${ch.name}" onclick="switchTab('challenges'); selectChallenge(${ch.level});">${ch.level}</div>`
+  ).join("");
+
+  const label = document.getElementById("challenges-status-label");
+  if (label) {
+    label.innerText = `Status dos Desafios (Níveis 1-${totalDesafios()}):`;
+  }
+}
+
 function atualizarPainelProgressoHome() {
   const viewedCount = viewedConcepts.size;
   const challengesCount = completedChallenges.size;
   const quizDone = quizSubmitted ? 1 : 0;
   
-  // Total itens da trilha: 5 conceitos lidos + 5 níveis concluídos + 1 quiz feito = 11 itens
-  const totalItems = 11;
+  // Itens da trilha: todo conceito lido + todo desafio concluído + o quiz feito
+  const totalItems = totalConceitos() + totalDesafios() + 1;
   const progressCount = viewedCount + challengesCount + quizDone;
   const percent = Math.min(100, Math.round((progressCount / totalItems) * 100));
 
@@ -1474,7 +1601,8 @@ function atualizarPainelProgressoHome() {
   if (fill) fill.style.width = `${percent}%`;
 
   // Medalhas de níveis na home
-  for (let i = 1; i <= 5; i++) {
+  for (const ch of SITE_DATA.challenges) {
+    const i = ch.level;
     const badge = document.getElementById(`badge-lvl-${i}`);
     if (badge) {
       badge.className = "level-badge";

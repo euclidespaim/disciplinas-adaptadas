@@ -379,7 +379,7 @@ header {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.9rem;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
@@ -410,6 +410,95 @@ header {
   height: 3px;
   background-color: var(--accent-teal);
   border-radius: 3px;
+}
+
+/* Segundo nivel: conceitos do modulo ativo */
+.theory-concept-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.theory-concept-btn {
+  background-color: #F1F5F9;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theory-concept-btn:hover {
+  border-color: var(--accent-teal);
+  color: var(--accent-teal-hover);
+}
+
+.theory-concept-btn.active {
+  background-color: var(--accent-teal);
+  border-color: var(--accent-teal);
+  color: #FFFFFF;
+}
+
+/* Marca os conceitos que o aluno ja abriu */
+.theory-concept-btn.viewed::before {
+  content: '\2713\00a0';
+  color: var(--color-success);
+}
+
+.theory-concept-btn.active.viewed::before {
+  color: #FFFFFF;
+}
+
+/* Mapa do modulo: fallback do visualizador para conceitos sem grafico proprio */
+.module-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.module-map-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  background-color: #F8FAFC;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-light);
+  text-align: left;
+}
+
+.module-map-step.current {
+  background-color: var(--accent-teal-light);
+  border-color: var(--accent-teal);
+  color: var(--accent-teal-hover);
+  font-weight: 600;
+}
+
+.module-map-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.module-map-step.current .module-map-num {
+  background-color: var(--accent-teal);
+  color: #FFFFFF;
 }
 
 .theory-body-content {

@@ -9,6 +9,7 @@ const SITE_DATA = {
       id: "mod-1",
       number: 1,
       title: "Módulo 1: Introdução a Banco de Dados",
+      short: "Dado x Info",
       badge: "🔍",
       concepts: [
         {
@@ -53,6 +54,7 @@ Delete: DELETE FROM Alunos WHERE RA = 101;`,
       id: "mod-2",
       number: 2,
       title: "Módulo 2: Sistemas de Gerenciamento (SGBD)",
+      short: "SGBD e Pilares",
       badge: "🗄️",
       concepts: [
         {
@@ -92,6 +94,7 @@ NoSQL: Documento JSON contendo dados flexíveis do perfil do jogador.`,
       id: "mod-3",
       number: 3,
       title: "Módulo 3: Modelo Entidade-Relacionamento (MER)",
+      short: "Modelo ER",
       badge: "📐",
       concepts: [
         {
@@ -122,6 +125,7 @@ Atributos: RA (Identificador), Nome, Data de Nascimento`,
       id: "mod-4",
       number: 4,
       title: "Módulo 4: Transformação para o Modelo Relacional",
+      short: "Transformação",
       badge: "🔄",
       concepts: [
         {
@@ -160,6 +164,7 @@ N:N: Aluno(RA [PK]), Disciplina(CodDisc [PK]) e Matricula(RA [FK], CodDisc [FK])
       id: "mod-5",
       number: 5,
       title: "Módulo 5: Normalização de Dados",
+      short: "Normalização",
       badge: "🧼",
       concepts: [
         {
@@ -187,6 +192,7 @@ Solução: Criar a tabela Clientes e a tabela Vendas conectadas por chaves.`,
       id: "mod-6",
       number: 6,
       title: "Módulo 6: Fundamentos de SQL",
+      short: "Fundamentos de SQL",
       badge: "🗃️",
       concepts: [
         {
