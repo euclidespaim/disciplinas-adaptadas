@@ -7,7 +7,7 @@
   <title>Banco de Dados 101 - Turma 101</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗄️</text></svg>">
   <!-- ?v=... quebra o cache do navegador: mudar a data a cada atualizacao do site -->
-  <link rel="stylesheet" href="style.css?v=2026-11-23">
+  <link rel="stylesheet" href="style.css?v=2026-11-23b">
 </head>
 <body>
 
@@ -448,31 +448,34 @@
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="prep-abrir"><span></span></label><div class="lab-step-body"><p>Abra o banco da aula. Se o arquivo ainda não existir, o SQLite cria:</p>
 <div class="lab-term"><div class="lab-term-bar"><span>Terminal do VS Code (PowerShell)</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>sqlite3 aula.db</code></pre></div>
-<div class="lab-note lab-note-tip"><strong>Repare</strong><p>O começo da linha muda para <code>sqlite&gt;</code>. A partir daqui, o que você digita vai para o banco de dados, e não para o Windows.</p></div>
+<div class="lab-note lab-note-tip"><strong>Repare</strong><p>O começo da linha muda para <code>SQLite-3.54 aula.db-&gt;</code>, em cores. A partir daqui, o que você digita vai para o banco de dados, e não para o Windows.</p></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="prep-modo"><span></span></label><div class="lab-step-body"><p>Ajuste a exibição das respostas, uma linha de cada vez:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.headers on
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.headers on
 .mode column</code></pre></div>
 </div></li>
 </ol>
 <div class="lab-notes-grid">
 <div class="lab-note lab-note-tip"><strong>Dois tipos de comando</strong><p>Os que começam com ponto (<code>.tables</code>, <code>.mode</code>, <code>.quit</code>) são do próprio SQLite e não levam ponto e vírgula. Os comandos SQL (CREATE, INSERT, SELECT, UPDATE, DELETE) sempre terminam com <code>;</code>.</p></div>
-<div class="lab-note lab-note-warn"><strong>Esqueceu o ponto e vírgula?</strong><p>O começo da linha muda para <code>...&gt;</code> e o banco fica esperando o fim do comando. Digite <code>;</code> e aperte Enter.</p></div>
+<div class="lab-note lab-note-warn"><strong>Esqueceu o ponto e vírgula?</strong><p>A linha seguinte começa só com <code>;-&gt;</code>: é o SQLite avisando que o comando ainda não terminou. Digite <code>;</code> e aperte Enter.</p></div>
 </div>
 </div>
 <div class="card lab-part" id="lab1-p1"><div class="lab-part-head"><span class="lab-part-num">1</span><h3>Do slide para a tela</h3><span class="lab-part-time">10 min</span></div>
 <p class="lab-intro">Vamos digitar o exemplo da tabela <b>alunos</b>, o mesmo dos slides. Aperte Enter no fim de cada linha.</p><ol class="lab-steps">
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p1-create"><span></span></label><div class="lab-step-body"><p>Crie a tabela:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>CREATE TABLE alunos (
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>CREATE TABLE alunos (
     id INTEGER PRIMARY KEY,
     nome TEXT NOT NULL,
     idade INTEGER
 );</code></pre></div>
+<div class="lab-note lab-note-tip"><strong>Repare</strong><p>Enquanto o comando não termina, cada linha nova começa com <code>);-&gt;</code>: é o SQLite mostrando o que ainda falta fechar.</p></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p1-tables"><span></span></label><div class="lab-step-body"><p>Confira se ela existe e veja como foi criada:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.tables
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.tables
 .schema alunos</code></pre></div>
-<details class="lab-out"><summary>Deve aparecer</summary><pre>alunos
+<details class="lab-out"><summary>Deve aparecer</summary><pre> name
+------
+alunos
 CREATE TABLE alunos (
     id INTEGER PRIMARY KEY,
     nome TEXT NOT NULL,
@@ -480,7 +483,7 @@ CREATE TABLE alunos (
 );</pre></details>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p1-insert"><span></span></label><div class="lab-step-body"><p>Insira três alunos:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>INSERT INTO alunos (nome, idade)
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>INSERT INTO alunos (nome, idade)
 VALUES ('Ana Souza', 16);
 INSERT INTO alunos (nome, idade)
 VALUES ('Bruno Lima', 15);
@@ -488,20 +491,20 @@ INSERT INTO alunos (nome, idade)
 VALUES ('Carla Dias', 17);</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p1-select"><span></span></label><div class="lab-step-body"><p>Consulte a tabela inteira:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM alunos;</code></pre></div>
-<details class="lab-out"><summary>Deve aparecer</summary><pre>id  nome        idade
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM alunos;</code></pre></div>
+<details class="lab-out"><summary>Deve aparecer</summary><pre>id     nome     idade
 --  ----------  -----
-1   Ana Souza   16
-2   Bruno Lima  15
-3   Carla Dias  17</pre></details>
+ 1  Ana Souza      16
+ 2  Bruno Lima     15
+ 3  Carla Dias     17</pre></details>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p1-where"><span></span></label><div class="lab-step-body"><p>Agora só uma coluna, e depois só uma parte das linhas:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT nome FROM alunos;
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT nome FROM alunos;
 SELECT nome, idade FROM alunos WHERE idade &gt; 15;</code></pre></div>
-<details class="lab-out"><summary>Na última consulta, deve aparecer</summary><pre>nome        idade
+<details class="lab-out"><summary>Na última consulta, deve aparecer</summary><pre>   nome     idade
 ----------  -----
-Ana Souza   16
-Carla Dias  17</pre></details>
+Ana Souza      16
+Carla Dias     17</pre></details>
 </div></li>
 </ol>
 <div class="lab-question"><strong>Pergunta para responder</strong><p>Você não digitou o id de nenhum aluno. De onde vieram os números 1, 2 e 3?</p></div>
@@ -509,19 +512,19 @@ Carla Dias  17</pre></details>
 <div class="card lab-part" id="lab1-p2"><div class="lab-part-head"><span class="lab-part-num">2</span><h3>Errando de propósito</h3><span class="lab-part-time">5 min</span></div>
 <p class="lab-intro">Os comandos abaixo estão <b>errados de propósito</b>. Digite um de cada vez e leia a mensagem que o banco devolve. Mesmo em inglês, ela diz o que deu errado.</p><ol class="lab-steps lab-steps-num">
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p2-1"><span></span></label><div class="lab-step-body"><p>Comando 1</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>INSERT INTO alunos (id, nome, idade) VALUES (1, 'Diego Melo', 16);</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>INSERT INTO alunos (id, nome, idade) VALUES (1, 'Diego Melo', 16);</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p2-2"><span></span></label><div class="lab-step-body"><p>Comando 2</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>INSERT INTO alunos (idade) VALUES (16);</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>INSERT INTO alunos (idade) VALUES (16);</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p2-3"><span></span></label><div class="lab-step-body"><p>Comando 3</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELEC * FROM alunos;</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELEC * FROM alunos;</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p2-4"><span></span></label><div class="lab-step-body"><p>Comando 4</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM aluno;</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM aluno;</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p2-5"><span></span></label><div class="lab-step-body"><p>Comando 5</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM alunos WHERE nome = 'ana souza';</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM alunos WHERE nome = 'ana souza';</code></pre></div>
 </div></li>
 </ol>
 <div class="lab-question"><strong>Pergunta para responder</strong><p>Qual regra da tabela barrou o comando 1? E o comando 2? O comando 5 não deu erro, mas também não mostrou ninguém. Por quê?</p></div>
@@ -563,13 +566,16 @@ INSERT INTO jogos (titulo, genero, ano, nota, jogadores) VALUES
 ('Zelda: Breath of the Wild', 'Aventura', 2017, 9.6, 6),
 ('Outlast', 'Terror', 2013, 7.0, 2);</pre></details>
 </div></li>
-<li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p3-read"><span></span></label><div class="lab-step-body"><p>Volte ao terminal, onde está o <code>sqlite&gt;</code>, e carregue o arquivo:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.read jogos.sql
+<li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p3-read"><span></span></label><div class="lab-step-body"><p>Volte ao terminal, onde o SQLite está aberto, e carregue o arquivo:</p>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.read jogos.sql
 .tables</code></pre></div>
-<details class="lab-out"><summary>Deve aparecer</summary><pre>alunos  jogos</pre></details>
+<details class="lab-out"><summary>Deve aparecer</summary><pre> name
+------
+alunos
+jogos</pre></details>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p3-select"><span></span></label><div class="lab-step-body"><p>Veja a tabela nova inteira. Devem aparecer <b>20 jogos</b>.</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM jogos;</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>SELECT * FROM jogos;</code></pre></div>
 <table class="sim-table lab-cols"><thead><tr><th>Coluna</th><th>O que guarda</th></tr></thead><tbody><tr><td><code>titulo</code></td><td>nome do jogo</td></tr><tr><td><code>genero</code></td><td>Tiro, Plataforma, Corrida, Luta...</td></tr><tr><td><code>ano</code></td><td>ano de lançamento</td></tr><tr><td><code>nota</code></td><td>média que uma turma deu ao jogo, de 0 a 10 (inventada para a aula)</td></tr><tr><td><code>jogadores</code></td><td>quantos alunos dessa turma jogam (inventado para a aula)</td></tr></tbody></table>
 <div class="lab-note lab-note-tip"><strong>A célula vazia</strong><p>O Hades aparece sem nota: aquela célula vazia é um NULL.</p></div>
 </div></li>
@@ -593,28 +599,28 @@ INSERT INTO jogos (titulo, genero, ano, nota, jogadores) VALUES
 <div class="card lab-part" id="lab1-p4"><div class="lab-part-head"><span class="lab-part-num">4</span><h3>Alterar e apagar com cuidado</h3><span class="lab-part-time">10 min</span></div>
 <ol class="lab-steps">
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p4-update"><span></span></label><div class="lab-step-body"><p><b>Dê nota ao Hades.</b> A turma jogou e deu nota 8.8:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>UPDATE jogos SET nota = 8.8
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>UPDATE jogos SET nota = 8.8
 WHERE titulo = 'Hades';
 SELECT titulo, nota FROM jogos
 WHERE titulo = 'Hades';</code></pre></div>
 <details class="lab-out"><summary>Deve aparecer</summary><pre>titulo  nota
 ------  ----
-Hades   8.8</pre></details>
+Hades    8.8</pre></details>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p4-virgula"><span></span></label><div class="lab-step-body"><p><b>Use vírgula no lugar do ponto</b> e leia o erro:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>UPDATE jogos SET nota = 9,5
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>UPDATE jogos SET nota = 9,5
 WHERE titulo = 'Celeste';</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p4-delete"><span></span></label><div class="lab-step-body"><p><b>Apague o jogo mais antigo.</b> Depois, escreva você mesmo um SELECT que mostre os jogos de Puzzle. Quantos sobraram?</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>DELETE FROM jogos WHERE ano &lt; 2000;</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>DELETE FROM jogos WHERE ano &lt; 2000;</code></pre></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p4-desastre"><span></span></label><div class="lab-step-body"><p><b>O desastre controlado.</b> Um erro que acontece de verdade é esquecer o WHERE. Faça de propósito:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>UPDATE jogos SET nota = 0;
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>UPDATE jogos SET nota = 0;
 SELECT titulo, nota FROM jogos;</code></pre></div>
 <div class="lab-note lab-note-warn"><strong>O que aconteceu</strong><p>Todos os jogos ficaram com nota 0.0.</p></div>
 </div></li>
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="p4-desfazer"><span></span></label><div class="lab-step-body"><p>Para desfazer, carregue o arquivo de novo e confira:</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.read jogos.sql
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.read jogos.sql
 SELECT titulo, nota FROM jogos;</code></pre></div>
 <div class="lab-note lab-note-tip"><strong>Repare</strong><p>As notas voltaram, o Tetris voltou e o Hades ficou de novo sem nota: o arquivo apaga a tabela e cria tudo do zero.</p></div>
 </div></li>
@@ -624,7 +630,7 @@ SELECT titulo, nota FROM jogos;</code></pre></div>
 <div class="card lab-part" id="lab1-fim"><div class="lab-part-head"><span class="lab-part-num">5</span><h3>Para encerrar</h3><span class="lab-part-time">1 min</span></div>
 <ol class="lab-steps">
 <li class="lab-step"><label class="lab-check" title="Marcar como feito"><input type="checkbox" data-lab-step="fim-quit"><span></span></label><div class="lab-step-body"><p>Para sair do SQLite, digite o comando abaixo. O arquivo <b>aula.db</b> continua na pasta sql, com as tabelas alunos e jogos.</p>
-<div class="lab-term"><div class="lab-term-bar"><span>Dentro do sqlite&gt;</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.quit</code></pre></div>
+<div class="lab-term"><div class="lab-term-bar"><span>Dentro do SQLite</span><button type="button" class="lab-copy">Copiar</button></div><pre><code>.quit</code></pre></div>
 </div></li>
 </ol>
 </div>
@@ -801,8 +807,8 @@ SELECT titulo, nota FROM jogos;</code></pre></div>
   </footer>
 
   <!-- Carregamento de Scripts -->
-  <script src="data.js?v=2026-11-23"></script>
-  <script src="validator.js?v=2026-11-23"></script>
-  <script src="app.js?v=2026-11-23"></script>
+  <script src="data.js?v=2026-11-23b"></script>
+  <script src="validator.js?v=2026-11-23b"></script>
+  <script src="app.js?v=2026-11-23b"></script>
 </body>
 </html>
