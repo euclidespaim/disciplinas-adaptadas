@@ -1634,3 +1634,109 @@ function resetProgress() {
     location.reload();
   }
 }
+
+// ==========================================
+// PRÁTICA EM LABORATÓRIO: copiar comandos e marcar passos feitos
+// ==========================================
+// Os passos marcados ficam só no navegador do aluno. No laboratório o perfil pode
+// ser apagado, então tudo continua funcionando mesmo sem conseguir gravar.
+const LAB1_CHAVE = "bd101_lab1_passos";
+
+function lerPassosLab1() {
+  try {
+    return JSON.parse(localStorage.getItem(LAB1_CHAVE)) || {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function gravarPassosLab1(feitos) {
+  try {
+    localStorage.setItem(LAB1_CHAVE, JSON.stringify(feitos));
+  } catch (e) {
+    // sem armazenamento: o progresso vale só enquanto a página estiver aberta
+  }
+}
+
+function atualizarProgressoLab1() {
+  const caixas = document.querySelectorAll("#lab1-tab [data-lab-step]");
+  const feitos = [...caixas].filter(cb => cb.checked).length;
+  const fill = document.getElementById("lab1-fill");
+  const texto = document.getElementById("lab1-count");
+  if (fill) fill.style.width = caixas.length ? `${(feitos / caixas.length) * 100}%` : "0%";
+  if (texto) texto.textContent = `${feitos} de ${caixas.length} passos`;
+}
+
+async function copiarTextoLab(texto) {
+  try {
+    await navigator.clipboard.writeText(texto);
+    return true;
+  } catch (e) {
+    // sem a API (página aberta como arquivo local): copia por seleção
+    const area = document.createElement("textarea");
+    area.value = texto;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    const ok = document.execCommand("copy");
+    area.remove();
+    return ok;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const secao = document.getElementById("lab1-tab");
+  if (!secao) return;
+
+  const feitos = lerPassosLab1();
+  secao.querySelectorAll("[data-lab-step]").forEach(cb => {
+    cb.checked = !!feitos[cb.dataset.labStep];
+    cb.closest(".lab-step")?.classList.toggle("done", cb.checked);
+    cb.addEventListener("change", () => {
+      const atual = lerPassosLab1();
+      if (cb.checked) atual[cb.dataset.labStep] = true;
+      else delete atual[cb.dataset.labStep];
+      gravarPassosLab1(atual);
+      cb.closest(".lab-step")?.classList.toggle("done", cb.checked);
+      atualizarProgressoLab1();
+    });
+  });
+  atualizarProgressoLab1();
+
+  document.getElementById("lab1-reset")?.addEventListener("click", () => {
+    if (!confirm("Desmarcar todos os passos da Prática 1?")) return;
+    gravarPassosLab1({});
+    secao.querySelectorAll("[data-lab-step]").forEach(cb => {
+      cb.checked = false;
+      cb.closest(".lab-step")?.classList.remove("done");
+    });
+    atualizarProgressoLab1();
+  });
+
+  // Copiar: o botão leva o texto do bloco de terminal dele, ou do elemento em data-copy-target
+  document.querySelectorAll(".lab-copy").forEach(botao => {
+    const rotulo = botao.textContent;
+    botao.addEventListener("click", async () => {
+      const alvo = botao.dataset.copyTarget
+        ? document.getElementById(botao.dataset.copyTarget)
+        : botao.closest(".lab-term")?.querySelector("code");
+      if (!alvo) return;
+      const ok = await copiarTextoLab(alvo.textContent);
+      botao.textContent = ok ? "Copiado" : "Não copiou";
+      botao.classList.toggle("ok", ok);
+      setTimeout(() => {
+        botao.textContent = rotulo;
+        botao.classList.remove("ok");
+      }, 1500);
+    });
+  });
+
+  // Índice da prática: rola até a parte sem mexer no endereço da página
+  secao.querySelectorAll(".lab-toc-item").forEach(link => {
+    link.addEventListener("click", ev => {
+      ev.preventDefault();
+      document.querySelector(link.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+});
